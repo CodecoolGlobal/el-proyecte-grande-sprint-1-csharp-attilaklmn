@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj": {}
+    "C:\\Users\\mehty\\Documents\\gitcodecool\\C#\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj": {
+    "C:\\Users\\mehty\\Documents\\gitcodecool\\C#\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj",
+        "projectUniqueName": "C:\\Users\\mehty\\Documents\\gitcodecool\\C#\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj",
         "projectName": "webapi",
-        "projectPath": "C:\\Users\\User\\source\\repos\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\obj\\",
+        "projectPath": "C:\\Users\\mehty\\Documents\\gitcodecool\\C#\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\webapi.csproj",
+        "packagesPath": "C:\\Users\\mehty\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mehty\\Documents\\gitcodecool\\C#\\el-proyecte-grande-sprint-1-csharp-attilaklmn\\webapi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\mehty\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -69,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.412\\RuntimeIdentifierGraph.json"
         }
       }
     }
