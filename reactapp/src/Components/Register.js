@@ -16,6 +16,7 @@ const Register = (props) => {
   const [emailErrorText, setEmailErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
+  const [usernameErrorText, setUsernameErrorText] = useState("");
 
   const emailValidatorRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordValidatorRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
@@ -23,6 +24,11 @@ const Register = (props) => {
   const notValidPasswordFormatText =
     "Password must contain at least 6 characters, upper and lower case letters and a number";
   const notMatchingPasswordsText = "The passwords must match!";
+  const minimumUsernameLength = 4;
+  const notLongEnoughUserNameText =
+    "The username must be at least " +
+    minimumUsernameLength +
+    " characters long!";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,19 +39,7 @@ const Register = (props) => {
     }
   };
 
-  const checkFields = () => {
-    return checkEmail();
-  };
-
-  const checkEmail = () => {
-    if (emailValidatorRegex.test(email)) {
-      return true;
-    } else {
-      setEmailError(true);
-      setEmailErrorText(notValidFormatText);
-      return false;
-    }
-  };
+  const checkFields = () => {};
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -85,6 +79,17 @@ const Register = (props) => {
     }
   };
 
+  const handleUsernameChange = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    if (newUsername.length < minimumUsernameLength) {
+      setUsernameError(true);
+      setUsernameErrorText(notLongEnoughUserNameText);
+    } else {
+      setUsernameError(false);
+    }
+  };
+
   return (
     <div>
       Register
@@ -111,9 +116,9 @@ const Register = (props) => {
             label="Username"
             type="username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
             error={usernameError}
-            helperText={usernameError ? "Incorrect Username!" : ""}
+            helperText={usernameError ? usernameErrorText : ""}
           />
           <TextField
             id="email"
