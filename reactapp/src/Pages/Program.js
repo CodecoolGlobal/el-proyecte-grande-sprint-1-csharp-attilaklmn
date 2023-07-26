@@ -1,4 +1,5 @@
 import { Container, Paper } from "@mui/material";
+import ProgramList from "../Components/ProgramList";
 
 
 const Program = () => {
@@ -20,7 +21,7 @@ const Program = () => {
         }}
         elevation={3}
       >
-        Program.
+        <ProgramList />
       </Paper>
     </Container>
     )
