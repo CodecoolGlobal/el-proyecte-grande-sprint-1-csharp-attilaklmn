@@ -13,8 +13,43 @@ const Register = (props) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [secondPasswordError, setSecondPasswordError] = useState(false);
+  const [emailErrorText, setEmailErrorText] = useState("");
 
-  const handleSubmit = () => {};
+  const emailValidatorRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const notValidFormatText = "Not valid format!";
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (checkFields()) {
+      alert("Registered");
+    } else {
+      alert("error");
+    }
+  };
+
+  const checkFields = () => {
+    return checkEmail();
+  };
+
+  const checkEmail = () => {
+    if (emailValidatorRegex.test(email)) {
+      return true;
+    } else {
+      setEmailError(true);
+      setEmailErrorText(notValidFormatText);
+      return false;
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (emailValidatorRegex.test(email)) {
+      setEmailError(false);
+    } else {
+      setEmailError(true);
+      setEmailErrorText(notValidFormatText);
+    }
+  };
 
   return (
     <div>
@@ -51,9 +86,9 @@ const Register = (props) => {
             label="Email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
             error={emailError}
-            helperText={emailError ? "Incorrect email!" : ""}
+            helperText={emailError ? emailErrorText : ""}
           />
           <TextField
             id="password"
