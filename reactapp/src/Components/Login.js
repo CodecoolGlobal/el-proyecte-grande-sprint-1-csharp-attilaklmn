@@ -41,6 +41,8 @@ const Login = (props) => {
           throw new Error(`HTTP error ${response.status}`);
         }
       }
+      localStorage.setItem("cinemaSharpUser", username);
+      window.location.reload(false);
       const data = await response.json();
       return data;
     } catch (error) {

@@ -1,11 +1,19 @@
 import { Container, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useContext } from "react";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
+import { UserContext } from "../App";
 
 const User = () => {
+  const { user, setUser } = useContext(UserContext);
   const [choiceState, setChoiseState] = useState("initial");
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    setUser();
+  };
 
   return (
     <Container
@@ -25,19 +33,31 @@ const User = () => {
         }}
         elevation={3}
       >
-        {choiceState === "initial" ? (
+        {!user && (
           <Fragment>
-            <Button variant="contained" onClick={() => setChoiseState("login")}>
-              Login
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => setChoiseState("register")}
-            >
-              Register
-            </Button>
+            {choiceState === "initial" ? (
+              <Fragment>
+                <Button
+                  variant="contained"
+                  onClick={() => setChoiseState("login")}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => setChoiseState("register")}
+                >
+                  Register
+                </Button>
+              </Fragment>
+            ) : null}
           </Fragment>
-        ) : null}
+        )}
+        {user && (
+          <Button variant="contained" onClick={() => handleLogout()}>
+            Logout
+          </Button>
+        )}
         {choiceState === "login" ? (
           <Login onBackClick={setChoiseState} />
         ) : null}
