@@ -1,36 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import ProgrammeList from './Pages/ProgrammeList';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    //element: <Layout />,
-    //errorElement: <ErrorPage />,
-    children: [
-      /*{
-        path: "/",
-        element: <EmployeeList equipmentCheck={false}/>,
-      },*/
-      {
-        path: "/programme",
-        element: <ProgrammeList />,
-      },
-      /*{
-        path: "/update/:id",
-        element: <EmployeeUpdater />,
-      },*/
-    ],
-  },
-]);
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
 
