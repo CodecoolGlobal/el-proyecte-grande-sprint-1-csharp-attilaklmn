@@ -1,4 +1,4 @@
-﻿namespace webapi;
+﻿namespace webapi.Repo;
 
 public interface IMovieRepository<T>
 {

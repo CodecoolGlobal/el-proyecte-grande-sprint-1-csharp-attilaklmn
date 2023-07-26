@@ -1,4 +1,7 @@
-﻿namespace webapi;
+﻿using webapi.Model;
+using webapi.Repo;
+
+namespace webapi.Service;
 
 public class MovieService : IMovieService<Movie>
 {

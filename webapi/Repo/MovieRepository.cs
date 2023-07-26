@@ -1,4 +1,6 @@
-﻿namespace webapi;
+﻿using webapi.Model;
+
+namespace webapi.Repo;
 
 public class MovieRepository : IMovieRepository<Movie>
 {

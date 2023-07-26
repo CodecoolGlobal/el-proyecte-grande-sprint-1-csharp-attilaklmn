@@ -1,4 +1,4 @@
-﻿namespace webapi;
+﻿namespace webapi.Service;
 
 public interface IMovieService<T>
 {
