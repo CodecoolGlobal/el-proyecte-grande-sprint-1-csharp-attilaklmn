@@ -21,4 +21,15 @@ public class MovieController : ControllerBase
         var movies = _movieService.GetAll();
         return Ok(movies);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(Guid id)
+    {
+        var movie = _movieService.GetById(id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+        return Ok(movie);
+    }
 }
