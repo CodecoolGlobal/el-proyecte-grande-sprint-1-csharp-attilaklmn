@@ -1,9 +1,14 @@
 import { Container, Paper } from "@mui/material";
-
+import Button from "@mui/material/Button";
+import { useState, Fragment } from "react";
+import Login from "../Components/Login";
+import Register from "../Components/Register";
 
 const User = () => {
-    return (
-        <Container
+  const [choiceState, setChoiseState] = useState("initial");
+
+  return (
+    <Container
       sx={{
         display: "flex",
         alignItems: "center",
@@ -20,10 +25,24 @@ const User = () => {
         }}
         elevation={3}
       >
-        User
+        {choiceState === "initial" ? (
+          <Fragment>
+            <Button variant="contained" onClick={() => setChoiseState("login")}>
+              Login
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setChoiseState("register")}
+            >
+              Register
+            </Button>
+          </Fragment>
+        ) : null}
+        {choiceState === "login" ? <Login /> : null}
+        {choiceState === "register" ? <Register /> : null}
       </Paper>
     </Container>
-    )
-}
+  );
+};
 
 export default User;
