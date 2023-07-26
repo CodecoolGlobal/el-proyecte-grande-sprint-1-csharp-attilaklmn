@@ -1,22 +1,29 @@
+import { useNavigate } from "react-router";
+
 const { useState, useEffect } = require("react");
 const { default: ProgramTable } = require("../Components/ProgramTable");
 
 
-const fetchPrograms = () => fetch("/allprogrammes").then(res => res.json())
+const fetchScreenings = () => fetch("/screening/all").then(res => res.json())
 
 
 const ProgramList = (props) => {
 
-    const[program, setProgram] = useState([])
+    const[screeningList, setScreeningList] = useState([])
+    const navigate = useNavigate();
 
 
     useEffect(() => {
-        fetchPrograms().then(programs => setProgram(programs));
+        fetchScreenings().then(screenings => setScreeningList(screenings));
     });
 
     return(
         <>
-        <ProgramTable programs={program} />
+        {screeningList.map(e => {
+            return (<div onClick={() => {
+                navigate(`/reservation/${e.id}/${e.roomId}`)
+            }}>{e.id}</div>);
+        })}
         </>
     )
 }
