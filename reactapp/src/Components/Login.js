@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
-const Login = () => {
+const Login = (props) => {
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+  };
+
+  const handleUsernameChange = (event) => {
+    const newUsername = event.target.value;
+    setUsername(newUsername);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchLogin();
+  };
+
+  const fetchLogin = async () => {
+    try {
+      const response = await fetch("/user/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          setError(true);
+          throw new Error("Unauthorized: Invalid username or password");
+        } else {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      alert("Error fetching login process: ", error);
+    }
+  };
+
   return (
     <div>
       Login
@@ -13,8 +58,14 @@ const Login = () => {
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <div
             style={{
               display: "flex",
@@ -25,10 +76,12 @@ const Login = () => {
           >
             Username
             <TextField
-              required
-              id="outlined-required"
-              label="Required"
-              defaultValue="Username"
+              id="username"
+              label="Username"
+              type="username"
+              value={username}
+              onChange={handleUsernameChange}
+              error={error}
             />
           </div>
           <div
@@ -41,14 +94,22 @@ const Login = () => {
           >
             Password
             <TextField
-              required
-              id="outlined-required"
-              label="Required"
-              defaultValue="Password"
+              id="password"
+              label="Password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              error={error}
             />
           </div>
         </div>
+        <Button variant="contained" type="submit">
+          Login
+        </Button>
       </Box>
+      <Button variant="contained" onClick={() => props.onBackClick("initial")}>
+        Back
+      </Button>
     </div>
   );
 };

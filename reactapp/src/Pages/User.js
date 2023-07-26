@@ -38,8 +38,12 @@ const User = () => {
             </Button>
           </Fragment>
         ) : null}
-        {choiceState === "login" ? <Login /> : null}
-        {choiceState === "register" ? <Register /> : null}
+        {choiceState === "login" ? (
+          <Login onBackClick={setChoiseState} />
+        ) : null}
+        {choiceState === "register" ? (
+          <Register onBackClick={setChoiseState} />
+        ) : null}
       </Paper>
     </Container>
   );
