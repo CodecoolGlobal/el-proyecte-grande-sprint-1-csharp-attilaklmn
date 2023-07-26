@@ -43,8 +43,8 @@ const Login = (props) => {
       }
       localStorage.setItem("cinemaSharpUser", username);
       window.location.reload(false);
-      const data = await response.json();
-      return data;
+      //const data = await response.json();
+      //return data;
     } catch (error) {
       alert("Error fetching login process: ", error);
     }

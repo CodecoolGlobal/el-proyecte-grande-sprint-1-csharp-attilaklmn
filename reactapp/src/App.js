@@ -19,8 +19,7 @@ function App() {
   useEffect(() => {
     const loggedInUser = localStorage.getItem("cinemaSharpUser");
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
+      setUser(loggedInUser);
     }
   }, []);
 

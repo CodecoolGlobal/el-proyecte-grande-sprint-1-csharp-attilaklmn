@@ -10,7 +10,6 @@ const User = () => {
   const [choiceState, setChoiseState] = useState("initial");
 
   const handleLogout = (e) => {
-    e.preventDefault();
     localStorage.clear();
     setUser();
   };
