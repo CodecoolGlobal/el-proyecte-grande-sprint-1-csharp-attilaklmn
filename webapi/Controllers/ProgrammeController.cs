@@ -5,16 +5,16 @@ namespace webapi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ProgramController : ControllerBase
+public class ProgrammeController : ControllerBase
 {
     private IProgramService _programService;
 
-    public ProgramController(IProgramService programService)
+    public ProgrammeController(IProgramService programService)
     {
         _programService = programService;
     }
 
-    [HttpGet("/allprograms")]
+    [HttpGet("/allprogrammes")]
     public IActionResult GetPrograms()
     {
         return Ok(_programService.GetPrograms());
