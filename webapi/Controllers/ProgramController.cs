@@ -14,7 +14,7 @@ public class ProgramController : ControllerBase
         _programService = programService;
     }
 
-    [HttpGet("/allprograms")]
+    [HttpGet("/allprogrammes")]
     public IActionResult GetPrograms()
     {
         return Ok(_programService.GetPrograms());
