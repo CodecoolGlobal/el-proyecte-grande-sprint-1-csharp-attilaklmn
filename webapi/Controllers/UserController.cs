@@ -5,7 +5,7 @@ namespace webapi.Controllers;
 
 
 [ApiController]
-[Route("user/[controller]")]
+[Route("[controller]")]
 public class UserController : ControllerBase
 {
     private IUserService _userService;
@@ -15,7 +15,7 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost("user/login")]
+    [HttpPost("login")]
     public IActionResult LoginUser()
     {
         return Ok();
