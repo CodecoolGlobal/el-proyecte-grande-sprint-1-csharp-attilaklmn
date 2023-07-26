@@ -1,8 +1,12 @@
+using webapi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddSingleton<IMovieRepository<Movie>, MovieRepository>();
+builder.Services.AddTransient<IMovieService<Movie>, MovieService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
