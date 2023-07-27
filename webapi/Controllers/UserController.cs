@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using webapi.Model;
 using webapi.Service;
 
 namespace webapi.Controllers;
@@ -16,8 +17,13 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult LoginUser()
+    public IActionResult LoginUser([FromBody] UserModelDTO userModelDto)
     {
-        return Ok();
+        return Ok(_userService.LoginUser(userModelDto));
+    }
+    [HttpPost("register")]
+    public IActionResult RegisterUser([FromBody] RegistrationModelDTO registrationModelDto)
+    {
+        return Ok(_userService.RegisterUser(registrationModelDto));
     }
 }
