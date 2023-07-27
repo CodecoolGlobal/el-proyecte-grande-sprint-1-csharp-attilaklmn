@@ -12,14 +12,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IMovieRepository<Movie>, MovieRepository>();
 builder.Services.AddTransient<IMovieService<Movie>, MovieService>();
-builder.Services.AddSingleton<IRepository<Programme>, ProgramRepository>();
-builder.Services.AddSingleton<IProgramService, ProgramService>();
 builder.Services.AddSingleton<IReservationRepository<Reservation>, ReservationRepository>();
 builder.Services.AddSingleton<IReservationService<Reservation>, ReservationService>();
 builder.Services.AddSingleton<IScreeningRepository<Screening>, ScreeningRepository>();
 builder.Services.AddSingleton<IScreeningService<Screening>, ScreeningService>();
+builder.Services.AddSingleton<IRoomRepository<Room>, RoomRepository>();
+builder.Services.AddSingleton<IRoomService<Room>, RoomService>();
 
 
+builder.Services.AddSingleton<IUserService, UserService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
