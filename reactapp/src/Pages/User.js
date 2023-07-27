@@ -1,9 +1,21 @@
 import { Container, Paper } from "@mui/material";
-
+import Button from "@mui/material/Button";
+import { useState, Fragment, useContext } from "react";
+import Login from "../Components/Login";
+import Register from "../Components/Register";
+import { UserContext } from "../App";
 
 const User = () => {
-    return (
-        <Container
+  const { user, setUser } = useContext(UserContext);
+  const [choiceState, setChoiseState] = useState("initial");
+
+  const handleLogout = (e) => {
+    localStorage.clear();
+    setUser();
+  };
+
+  return (
+    <Container
       sx={{
         display: "flex",
         alignItems: "center",
@@ -20,10 +32,40 @@ const User = () => {
         }}
         elevation={3}
       >
-        User
+        {!user && (
+          <Fragment>
+            {choiceState === "initial" ? (
+              <Fragment>
+                <Button
+                  variant="contained"
+                  onClick={() => setChoiseState("login")}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => setChoiseState("register")}
+                >
+                  Register
+                </Button>
+              </Fragment>
+            ) : null}
+          </Fragment>
+        )}
+        {user && (
+          <Button variant="contained" onClick={() => handleLogout()}>
+            Logout
+          </Button>
+        )}
+        {choiceState === "login" ? (
+          <Login onBackClick={setChoiseState} />
+        ) : null}
+        {choiceState === "register" ? (
+          <Register onBackClick={setChoiseState} />
+        ) : null}
       </Paper>
     </Container>
-    )
-}
+  );
+};
 
 export default User;
