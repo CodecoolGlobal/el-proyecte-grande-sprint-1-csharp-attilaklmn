@@ -1,4 +1,4 @@
-import MovieCover from "./MovieCover";
+import MovieCover from "../../MovieCover";
 
 const MovieCard = ({ movieList }) => {
 
@@ -6,7 +6,7 @@ const MovieCard = ({ movieList }) => {
     return (
       <div className="movieCard" key={movie.id}>
         <div className="movieImg">
-          <MovieCover movieTitle={movie.title.replace(" ", "+")}/>
+          <MovieCover movieTitle={movie.title.replace(" ", "+")} size="w500"/>
         </div>
         <div className="movieTitle">{movie.title}</div>
         <div className="movieCast">

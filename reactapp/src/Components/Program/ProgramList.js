@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import MovieCard from "../../Components/MovieCard/MovieCard";
+import FilterByScreening from "./FilterByScreening";
 
-const MovieList = () => {
+const ProgramList = () => {
     const [movieList, setMovieList] = useState([]);
 
     useEffect(() => {
@@ -10,8 +10,8 @@ const MovieList = () => {
         .then((movieList) => setMovieList(movieList));
     }, []);
 
-    return <div id="movieList">{<MovieCard movieList={movieList}/>}</div>
+    return <div id="programList">{<FilterByScreening movieList={movieList}/>}</div>
 
 };
 
-export default MovieList;
+export default ProgramList;

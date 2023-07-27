@@ -1,5 +1,5 @@
 import { Container, Paper } from "@mui/material";
-import ProgramList from "../Components/ProgramList";
+import ProgramList from "../Components/Program/ProgramList";
 
 
 const Program = () => {

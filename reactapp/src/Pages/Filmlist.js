@@ -1,5 +1,5 @@
 import { Container, Paper } from "@mui/material";
-import MovieList from "./MovieList/MovieList";
+import MovieList from "../Components/MovieList/MovieList";
 
 
 const Filmlist = () => {
