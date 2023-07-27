@@ -12,8 +12,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IMovieRepository<Movie>, MovieRepository>();
 builder.Services.AddTransient<IMovieService<Movie>, MovieService>();
-builder.Services.AddSingleton<IRepository<Programme>, ProgramRepository>();
-builder.Services.AddSingleton<IProgramService, ProgramService>();
 builder.Services.AddSingleton<IReservationRepository<Reservation>, ReservationRepository>();
 builder.Services.AddSingleton<IReservationService<Reservation>, ReservationService>();
 builder.Services.AddSingleton<IScreeningRepository<Screening>, ScreeningRepository>();
