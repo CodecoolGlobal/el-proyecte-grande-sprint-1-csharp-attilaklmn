@@ -51,17 +51,14 @@ const Register = (props) => {
         }),
       });
       if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error("Unauthorized: Invalid username or password");
-        } else {
-          throw new Error(`HTTP error ${response.status}`);
-        }
+        const data = await response.json();
+        throw new Error(data.message);
       } else {
         alert("registered");
         window.location.reload(false);
       }
     } catch (error) {
-      alert("Error fetching login process: ", error);
+      alert("Error: " + error.message);
     }
   };
 

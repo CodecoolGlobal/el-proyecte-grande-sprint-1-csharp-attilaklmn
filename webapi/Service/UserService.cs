@@ -11,6 +11,6 @@ public class UserService : IUserService
 
     public HttpResponseModel RegisterUser(RegistrationModelDTO registrationModelDto)
     {
-        return new HttpResponseModel(200, "");
+        return new HttpResponseModel(401, "bab");
     }
 }
