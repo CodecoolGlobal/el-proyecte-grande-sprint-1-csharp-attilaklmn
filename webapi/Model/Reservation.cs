@@ -2,10 +2,10 @@
 {
     public class Reservation
     {
-        public Guid Id;
-        public Guid ScreeningId;
-        public Guid SeatId;
-        public bool Finalized;
+        public Guid Id { get; set; }
+        public Guid ScreeningId { get; set; }
+        public Guid SeatId { get; set; }
+        public bool Finalized { get; set; }
 
         public Reservation(Guid screeningId, Guid seatId)
         {
