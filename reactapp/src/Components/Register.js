@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");
@@ -33,61 +33,82 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkFields()) {
-      alert("Registered");
+      alert("registered");
     } else {
       alert("error");
     }
   };
 
-  const checkFields = () => {};
+  const checkFields = () => {
+    checkUsernameRegex();
+    checkEmailRegex();
+    checkPasswordRegex();
+    checkIfPasswordsMatch(password, secondPassword);
+    return usernameError && emailError && passwordError && secondPasswordError;
+  };
 
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    if (emailValidatorRegex.test(newEmail)) {
+  const checkEmailRegex = () => {
+    if (emailValidatorRegex.test(email)) {
       setEmailError(false);
+      return true;
     } else {
       setEmailError(true);
       setEmailErrorText(notValidFormatText);
+      return false;
     }
   };
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    if (passwordValidatorRegex.test(newPassword)) {
+  const checkPasswordRegex = () => {
+    if (passwordValidatorRegex.test(password)) {
       setPasswordError(false);
+      return true;
     } else {
       setPasswordError(true);
       setPasswordErrorText(notValidPasswordFormatText);
+      return false;
     }
-    checkIfPasswordsMatch(newPassword, secondPassword);
   };
 
-  const handleSecondPasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setSecondPassword(newPassword);
-    checkIfPasswordsMatch(newPassword, password);
+  const checkUsernameRegex = () => {
+    if (username.length < minimumUsernameLength) {
+      setUsernameError(true);
+      setUsernameErrorText(notLongEnoughUserNameText);
+      return false;
+    } else {
+      setUsernameError(false);
+      return true;
+    }
   };
 
   const checkIfPasswordsMatch = (password, secondPassword) => {
     if (password !== secondPassword) {
       setSecondPasswordError(true);
       setSecondPasswordErrorText(notMatchingPasswordsText);
+      return false;
     } else {
       setSecondPasswordError(false);
+      return true;
     }
+  };
+
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+  };
+
+  const handleSecondPasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setSecondPassword(newPassword);
   };
 
   const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
-    if (newUsername.length < minimumUsernameLength) {
-      setUsernameError(true);
-      setUsernameErrorText(notLongEnoughUserNameText);
-    } else {
-      setUsernameError(false);
-    }
   };
 
   return (
