@@ -2,7 +2,7 @@ import API_KEY from "../config";
 
 import React, { useEffect, useState } from "react";
 
-const MovieCover = ({ movieTitle }) => {
+const MovieCover = ({ movieTitle, size }) => {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState("");
 
@@ -14,7 +14,7 @@ const MovieCover = ({ movieTitle }) => {
       setResponse(movieData.results[0].poster_path)});
   });
 
-  return loading === false ? (<img src={"http://image.tmdb.org/t/p/w500" + response} alt="" />) : (<p>Image loading...</p>)
+  return loading === false ? (<img src={`http://image.tmdb.org/t/p/${size}` + response} alt="" />) : (<p>Image loading...</p>)
 };
 
 export default MovieCover;
