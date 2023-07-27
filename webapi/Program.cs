@@ -16,6 +16,8 @@ builder.Services.AddSingleton<IReservationRepository<Reservation>, ReservationRe
 builder.Services.AddSingleton<IReservationService<Reservation>, ReservationService>();
 builder.Services.AddSingleton<IScreeningRepository<Screening>, ScreeningRepository>();
 builder.Services.AddSingleton<IScreeningService<Screening>, ScreeningService>();
+builder.Services.AddSingleton<IRoomRepository<Room>, RoomRepository>();
+builder.Services.AddSingleton<IRoomService<Room>, RoomService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

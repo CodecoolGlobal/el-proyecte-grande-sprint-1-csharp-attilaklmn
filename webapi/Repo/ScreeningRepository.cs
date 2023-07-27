@@ -7,18 +7,16 @@ namespace webapi.Repo
 
         private HashSet<Screening> _screenings;
         private IMovieRepository<Movie> _movieRepository;
+        private IRoomRepository<Room> _roomRepository;
         
-        private HashSet<Room> rooms = new()
-            {
-                new Room("room1", 5, 5),
-                new Room("room2", 7, 7)
-            };
+       
 
 
-        public ScreeningRepository(IMovieRepository<Movie> movieRepository)
+        public ScreeningRepository(IMovieRepository<Movie> movieRepository, IRoomRepository<Room> roomRepository)
         {
 
             _movieRepository = movieRepository;
+            _roomRepository = roomRepository;
             _screenings = SeedScreenings();
         }
 
@@ -26,7 +24,7 @@ namespace webapi.Repo
         {
             return new HashSet<Screening>()
             {
-                new Screening(rooms.First().Id, _movieRepository.GetAll().First().Id, DateTime.Parse("2023-08-01"))
+                new Screening(_roomRepository.GetAll().First().Id, _movieRepository.GetAll().First().Id, DateTime.Parse("2023-08-01"))
             };
         }
 
