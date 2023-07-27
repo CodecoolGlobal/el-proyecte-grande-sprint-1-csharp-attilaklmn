@@ -17,6 +17,16 @@ namespace webapi.Service
             return _reservationRepository.GetAll();
         }
 
+        public IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id)
+        {
+            return _reservationRepository.GetReservedSeatsByScreeningId(id);
+        }
+
+        public bool IsSeatReserved(ReservedChecker reservedChecker)
+        {
+            return _reservationRepository.IsSeatReserved(reservedChecker);
+        }
+
         public bool ReserveIfPossible(Reservation temporaryReservation)
         {
             return _reservationRepository.ReserveIfPossible(temporaryReservation);

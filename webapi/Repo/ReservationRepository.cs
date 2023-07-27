@@ -16,6 +16,23 @@ namespace webapi.Repo
             return _reservations;
         }
 
+        public IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id)
+        {
+            return _reservations.Where(e => e.ScreeningId == id).Select(e => e.SeatId);
+        }
+
+        public bool IsSeatReserved(ReservedChecker reservedChecker)
+        {
+            foreach (Reservation reservation in _reservations)
+            {
+                if (reservation.ScreeningId == reservedChecker.ScreeningId && reservation.SeatId == reservedChecker.SeatId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool ReserveIfPossible(Reservation reservation)
         {
             bool isReserved = IsSeatReserved(reservation);
