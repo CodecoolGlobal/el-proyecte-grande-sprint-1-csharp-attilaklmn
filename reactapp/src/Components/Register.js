@@ -32,7 +32,7 @@ const Register = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!checkFields()) {
+    if (checkFields()) {
       fetchRegister();
     } else {
       alert("error");
@@ -56,20 +56,21 @@ const Register = (props) => {
         } else {
           throw new Error(`HTTP error ${response.status}`);
         }
+      } else {
+        alert("registered");
+        window.location.reload(false);
       }
-      alert("registered");
-      window.location.reload(false);
     } catch (error) {
       alert("Error fetching login process: ", error);
     }
   };
 
   const checkFields = () => {
-    checkUsernameRegex();
-    checkEmailRegex();
-    checkPasswordRegex();
-    checkIfPasswordsMatch(password, secondPassword);
-    return usernameError || emailError || passwordError || secondPasswordError;
+    const usernameError = checkUsernameRegex();
+    const emailError = checkEmailRegex();
+    const passwordError = checkPasswordRegex();
+    const secondPasswordError = checkIfPasswordsMatch(password, secondPassword);
+    return usernameError && emailError && passwordError && secondPasswordError;
   };
 
   const checkEmailRegex = () => {

@@ -39,7 +39,6 @@ function App() {
             <Route path="/user" element={<User />} />
           </Routes>
         </UserContext.Provider>
-        <ResponsiveAppBar />
       </BrowserRouter>
     </div>
   );
