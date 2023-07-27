@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IScreeningRepository<Screening>, ScreeningReposito
 builder.Services.AddSingleton<IScreeningService<Screening>, ScreeningService>();
 
 
+builder.Services.AddSingleton<IUserService, UserService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
