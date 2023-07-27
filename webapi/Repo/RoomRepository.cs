@@ -28,5 +28,10 @@ namespace webapi.Repo
         {
             return _roomRepository.FirstOrDefault(e => e.Id == id);
         }
+
+        public Dictionary<int, HashSet<Seat>> GetSeats(Guid id)
+        {
+            return _roomRepository.First(e => e.Id == id).Seats;
+        }
     }
 }

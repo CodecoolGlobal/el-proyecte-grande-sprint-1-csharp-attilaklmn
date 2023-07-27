@@ -16,5 +16,10 @@ namespace webapi.Service
         {
             return _roomRepository.GetById(id);
         }
+
+        public Dictionary<int, HashSet<Seat>> GetSeats(Guid id)
+        {
+            return _roomRepository.GetSeats(id);
+        }
     }
 }
