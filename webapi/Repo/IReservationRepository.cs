@@ -6,6 +6,11 @@ namespace webapi.Repo
     {
         HashSet<T> GetAll();
         bool ReserveIfPossible(Reservation reservation);
-        
+
+        bool IsSeatReserved(ReservedChecker reservedChecker);
+
+        IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id);
+
+
     }
 }
