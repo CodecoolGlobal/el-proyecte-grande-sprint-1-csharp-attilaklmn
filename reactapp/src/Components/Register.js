@@ -33,9 +33,35 @@ const Register = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkFields()) {
+      fetchRegister();
       alert("registered");
     } else {
       alert("error");
+    }
+  };
+
+  const fetchRegister = async () => {
+    try {
+      const response = await fetch("/user/register", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password,
+        }),
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Unauthorized: Invalid username or password");
+        } else {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+      }
+
+      window.location.reload(false);
+    } catch (error) {
+      alert("Error fetching login process: ", error);
     }
   };
 
