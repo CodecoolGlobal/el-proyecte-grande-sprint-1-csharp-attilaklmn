@@ -1,7 +1,10 @@
 import { Container, Paper } from "@mui/material";
+import { useParams } from "react-router";
 
 
 const Reservation = () => {
+    const { screeningId, roomId } = useParams();
+
     return (
         <Container
       sx={{
@@ -20,7 +23,7 @@ const Reservation = () => {
         }}
         elevation={3}
       >
-        Reservation.
+        Reservation of (Screening){screeningId} in (Room){roomId}
       </Paper>
     </Container>
     )

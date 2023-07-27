@@ -24,4 +24,9 @@ public class MovieRepository : IMovieRepository<Movie>
     {
         return _movies;
     }
+
+    public Movie? GetById(Guid id)
+    {
+        return _movies.FirstOrDefault(e => e.Id == id);
+    }
 }
