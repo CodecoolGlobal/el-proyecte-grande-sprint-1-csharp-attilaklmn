@@ -4,13 +4,13 @@ namespace webapi.Service;
 
 public class UserService : IUserService
 {
-    public bool LoginUser(UserModelDTO userModelDto)
+    public HttpResponseModel LoginUser(UserModelDTO userModelDto)
     {
-        return true;
+        return new HttpResponseModel(200, "");
     }
 
-    public bool RegisterUser(RegistrationModelDTO registrationModelDto)
+    public HttpResponseModel RegisterUser(RegistrationModelDTO registrationModelDto)
     {
-        return true;
+        return new HttpResponseModel(200, "");
     }
 }

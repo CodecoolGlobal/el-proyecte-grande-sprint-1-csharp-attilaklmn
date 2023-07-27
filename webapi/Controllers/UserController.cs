@@ -19,11 +19,25 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public IActionResult LoginUser([FromBody] UserModelDTO userModelDto)
     {
-        return Ok(_userService.LoginUser(userModelDto));
+        HttpResponseModel httpResponse = _userService.LoginUser(userModelDto);
+        if (httpResponse.StatusCode == 200)
+        {
+            return Ok();
+        } else
+        {
+            return StatusCode(httpResponse.StatusCode, new { Message = httpResponse.Message });
+        }
     }
     [HttpPost("register")]
     public IActionResult RegisterUser([FromBody] RegistrationModelDTO registrationModelDto)
     {
-        return Ok(_userService.RegisterUser(registrationModelDto));
+        HttpResponseModel httpResponse = _userService.RegisterUser(registrationModelDto);
+        if (httpResponse.StatusCode == 200)
+        {
+            return Ok();
+        } else
+        {
+            return StatusCode(httpResponse.StatusCode, new { Message = httpResponse.Message });
+        }
     }
 }
