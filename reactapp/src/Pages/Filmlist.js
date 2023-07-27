@@ -1,4 +1,5 @@
 import { Container, Paper } from "@mui/material";
+import MovieList from "./MovieList/MovieList";
 
 
 const Filmlist = () => {
@@ -20,7 +21,7 @@ const Filmlist = () => {
         }}
         elevation={3}
       >
-        Film list.
+        <MovieList/>
       </Paper>
     </Container>
     )
