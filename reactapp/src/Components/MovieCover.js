@@ -1,4 +1,4 @@
-import API_KEY from "../../config";
+import API_KEY from "../config";
 
 import React, { useEffect, useState } from "react";
 

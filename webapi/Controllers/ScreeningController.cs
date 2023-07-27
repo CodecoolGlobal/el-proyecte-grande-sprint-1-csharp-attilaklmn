@@ -20,5 +20,18 @@ namespace webapi.Controllers
         {
             return Ok(_screeningService.GetAll());
         }
+
+        [HttpGet("/screeningByMovieId/{id}")]
+        public IActionResult GetScreenings(Guid id)
+        {
+            return Ok(_screeningService.GetAll().Where(x => x.IsThisThatMovie(id)).ToList());
+        }
+
+        [HttpGet("/isThereScreening/{id}")]
+        public IActionResult IsThereScreen(Guid id)
+        {
+            bool answer = _screeningService.GetAll().Any(x => x.IsThisThatMovie(id));
+            return Ok((new { result = answer }));
+        }
     }
 }

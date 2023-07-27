@@ -1,30 +1,42 @@
-import { useNavigate } from "react-router";
+import MovieCover from "./MovieCover";
+import ScreeningById from "./ScreeningById";
 
 const { useState, useEffect } = require("react");
-const { default: ProgramTable } = require("../Components/ProgramTable");
 
 
-const fetchScreenings = () => fetch("/screening/all").then(res => res.json())
+const fetchMovies = () => fetch("/list").then(res => res.json())
+const fetchIsThereScreening = (id) => fetch(`/isThereScreening/${id}`).then(res => res.json())
 
 
-const ProgramList = (props) => {
+const ProgramList = () => {
 
-    const[screeningList, setScreeningList] = useState([])
-    const navigate = useNavigate();
+    const[movieList, setMovieList] = useState([])
+    const[condition, setCondition] = useState([])
 
 
-    useEffect(() => {
-        fetchScreenings().then(screenings => setScreeningList(screenings));
-    });
+
+    useEffect(() => {fetchMovies().then(movies => setMovieList(movies))}, [])
+
+    
 
     return(
-        <>
-        {screeningList.map(e => {
-            return (<div onClick={() => {
-                navigate(`/reservation/${e.id}/${e.roomId}`)
-            }}>{e.id}</div>);
+        <div id="Program">
+        {movieList.map(x => {
+            return(
+            <div key={x.id} className="ScreeningsForMovie">
+                <div className="movieImg">
+                    <MovieCover movieTitle={x.title.replace(" ", "+")}/>
+                </div>
+                <div className="title">
+                {x.title}
+                </div>
+                <div className="screeningTimes">
+                    <ScreeningById id={x.id} />
+                </div>
+                </div>
+                )
         })}
-        </>
+        </div>
     )
 }
 

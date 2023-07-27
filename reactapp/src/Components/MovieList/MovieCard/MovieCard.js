@@ -1,4 +1,4 @@
-import MovieCover from "./MovieCover";
+import MovieCover from "../../MovieCover";
 
 const MovieCard = ({ movieList }) => {
 
