@@ -15,7 +15,7 @@ namespace webapi.Controllers
             _reservationService = reservationService;
         }
 
-        [HttpGet("reserve")]
+        [HttpPost("reserve")]
         public IActionResult Reserve([FromBody] Reservation reservation)
         {
             bool done = _reservationService.ReserveIfPossible(reservation);
@@ -24,6 +24,21 @@ namespace webapi.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+
+        [HttpPost("isseatreserved")]
+        public IActionResult IsSeatReserved([FromBody] ReservedChecker reservedChecker)
+        {
+            bool isSeatReserved = _reservationService.IsSeatReserved(reservedChecker);
+            
+            return Ok(new { reserved = isSeatReserved });
+        }
+
+        [HttpGet("screening/{screeningId}")]
+        public IActionResult GetReservedSeatsByScreeningId(Guid screeningId)
+        {
+            IEnumerable<Guid> reservedSeats = _reservationService.GetReservedSeatsByScreeningId(screeningId);
+            return Ok(reservedSeats);
         }
     }
 }
