@@ -14,5 +14,10 @@
             MovieId = movieId;
             this.startingDate = startingDate;
         }
+
+        public bool IsThisThatMovie(Guid id)
+        {
+            return MovieId == id;
+        }
     }
 }
