@@ -16,10 +16,10 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult Index()
+    public async Task<IEnumerable<Movie>> Index()
     {
-        var movies = _movieService.GetAll();
-        return Ok(movies);
+        return await _movieService.GetAll();
+        
     }
 
     //[HttpGet("{id}")]
