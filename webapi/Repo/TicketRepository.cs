@@ -2,16 +2,16 @@
 
 namespace webapi.Repo
 {
-    public class ReservationRepository : IReservationRepository<Reservation>
+    public class TicketRepository : ITicketRepository<Ticket>
     {
-        public HashSet<Reservation> _reservations;
+        public HashSet<Ticket> _reservations;
 
-        public ReservationRepository()
+        public TicketRepository()
         {
             _reservations = new();
         }
 
-        public HashSet<Reservation> GetAll()
+        public HashSet<Ticket> GetAll()
         {
             return _reservations;
         }
@@ -23,7 +23,7 @@ namespace webapi.Repo
 
         public bool IsSeatReserved(ReservedChecker reservedChecker)
         {
-            foreach (Reservation reservation in _reservations)
+            foreach (Ticket reservation in _reservations)
             {
                 if (reservation.ScreeningId == reservedChecker.ScreeningId && reservation.SeatId == reservedChecker.SeatId)
                 {
@@ -33,7 +33,7 @@ namespace webapi.Repo
             return false;
         }
 
-        public bool ReserveIfPossible(Reservation reservation)
+        public bool ReserveIfPossible(Ticket reservation)
         {
             bool isReserved = IsSeatReserved(reservation);
             if (!isReserved)
@@ -43,9 +43,9 @@ namespace webapi.Repo
             return !isReserved;
         }
 
-        private bool IsSeatReserved(Reservation checkable)
+        private bool IsSeatReserved(Ticket checkable)
         {
-            foreach (Reservation reservation in _reservations)
+            foreach (Ticket reservation in _reservations)
             {
                 if (reservation.ScreeningId == checkable.ScreeningId && reservation.SeatId == checkable.SeatId)
                 {
@@ -55,7 +55,7 @@ namespace webapi.Repo
             return false;
         }
 
-        private void Reserve(Reservation reservation)
+        private void Reserve(Ticket reservation)
         {
             _reservations.Add(reservation);
         }

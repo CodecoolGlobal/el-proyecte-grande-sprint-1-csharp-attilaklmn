@@ -6,17 +6,17 @@ namespace webapi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReservationController : ControllerBase
+    public class TicketController : ControllerBase
     {
-        private IReservationService<Reservation> _reservationService;
+        private ITicketService<Ticket> _reservationService;
 
-        public ReservationController (IReservationService<Reservation> reservationService)
+        public TicketController (ITicketService<Ticket> reservationService)
         {
             _reservationService = reservationService;
         }
 
         [HttpPost("reserve")]
-        public IActionResult Reserve([FromBody] Reservation reservation)
+        public IActionResult Reserve([FromBody] Ticket reservation)
         {
             bool done = _reservationService.ReserveIfPossible(reservation);
             if (done)

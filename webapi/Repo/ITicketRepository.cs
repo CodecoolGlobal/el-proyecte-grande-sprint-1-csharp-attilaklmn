@@ -1,14 +1,16 @@
 ﻿using webapi.Model;
 
-namespace webapi.Service
+namespace webapi.Repo
 {
-    public interface IReservationService<T>
+    public interface ITicketRepository<T>
     {
         HashSet<T> GetAll();
-        bool ReserveIfPossible(Reservation reservation);
+        bool ReserveIfPossible(Ticket reservation);
 
         bool IsSeatReserved(ReservedChecker reservedChecker);
 
         IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id);
+
+
     }
 }

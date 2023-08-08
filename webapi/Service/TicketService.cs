@@ -3,16 +3,16 @@ using webapi.Repo;
 
 namespace webapi.Service
 {
-    public class ReservationService : IReservationService<Reservation>
+    public class TicketService : ITicketService<Ticket>
     {
-        private IReservationRepository<Reservation> _reservationRepository;
+        private ITicketRepository<Ticket> _reservationRepository;
 
-        public ReservationService(IReservationRepository<Reservation> reservationRepository)
+        public TicketService(ITicketRepository<Ticket> reservationRepository)
         {
             _reservationRepository = reservationRepository;
         }
 
-        public HashSet<Reservation> GetAll()
+        public HashSet<Ticket> GetAll()
         {
             return _reservationRepository.GetAll();
         }
@@ -27,7 +27,7 @@ namespace webapi.Service
             return _reservationRepository.IsSeatReserved(reservedChecker);
         }
 
-        public bool ReserveIfPossible(Reservation temporaryReservation)
+        public bool ReserveIfPossible(Ticket temporaryReservation)
         {
             return _reservationRepository.ReserveIfPossible(temporaryReservation);
         }

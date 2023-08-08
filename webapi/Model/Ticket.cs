@@ -1,13 +1,13 @@
 ﻿namespace webapi.Model
 {
-    public class Reservation
+    public class Ticket
     {
         public Guid Id { get; set; }
         public Guid ScreeningId { get; set; }
         public Guid SeatId { get; set; }
         public bool Finalized { get; set; }
 
-        public Reservation(Guid screeningId, Guid seatId)
+        public Ticket(Guid screeningId, Guid seatId)
         {
             Id = Guid.NewGuid();
             ScreeningId = screeningId;
