@@ -8,9 +8,9 @@ namespace webapi.Controllers;
 
 public class MovieController : ControllerBase
 {
-    private readonly IMovieService<Movie> _movieService;
+    private readonly IMovieService _movieService;
 
-    public MovieController(IMovieService<Movie> movieService)
+    public MovieController(IMovieService movieService)
     {
         _movieService = movieService;
     }
@@ -22,14 +22,14 @@ public class MovieController : ControllerBase
         return Ok(movies);
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var movie = _movieService.GetById(id);
-        if (movie == null)
-        {
-            return NotFound();
-        }
-        return Ok(movie);
-    }
+    //[HttpGet("{id}")]
+    //public IActionResult GetById(Guid id)
+    //{
+    //    var movie = _movieService.GetById(id);
+    //    if (movie == null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    return Ok(movie);
+    //}
 }

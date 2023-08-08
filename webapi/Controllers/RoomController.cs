@@ -8,29 +8,29 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class RoomController : ControllerBase
     {
-        private IRoomService<Room> _roomService;
+        private IRoomService _roomService;
 
-        public RoomController(IRoomService<Room> roomService)
+        public RoomController(IRoomService roomService)
         {
             _roomService = roomService;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
-        {
-            var room = _roomService.GetById(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            return Ok(room);
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult GetById(Guid id)
+        //{
+        //    var room = _roomService.GetById(id);
+        //    if (room == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(room);
+        //}
 
-        [HttpGet("{id}/seats")]
-        public IActionResult GetSeats(Guid id)
-        {
-            var seats = _roomService.GetSeats(id);
-            return Ok(seats);
-        }
+        //[HttpGet("{id}/seats")]
+        //public IActionResult GetSeats(Guid id)
+        //{
+        //    var seats = _roomService.GetSeats(id);
+        //    return Ok(seats);
+        //}
     }
 }
