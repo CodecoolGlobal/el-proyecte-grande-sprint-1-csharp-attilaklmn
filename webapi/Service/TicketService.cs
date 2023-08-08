@@ -1,36 +1,24 @@
-﻿using webapi.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.Data;
+using webapi.Model;
 using webapi.Model.Entity;
 using webapi.Repo;
 
 namespace webapi.Service
 {
-    public class TicketService : ITicketService<Ticket>
+    public class TicketService : ITicketService
     {
-        private ITicketRepository<Ticket> _reservationRepository;
+        private readonly CinemaSharpContext _context;
 
-        public TicketService(ITicketRepository<Ticket> reservationRepository)
+        public TicketService(CinemaSharpContext context)
         {
-            _reservationRepository = reservationRepository;
+            _context = context;
         }
 
-        public HashSet<Ticket> GetAll()
+        public async Task<IEnumerable<Ticket>> GetAll()
         {
-            return _reservationRepository.GetAll();
-        }
-
-        public IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id)
-        {
-            return _reservationRepository.GetReservedSeatsByScreeningId(id);
-        }
-
-        public bool IsSeatReserved(ReservedChecker reservedChecker)
-        {
-            return _reservationRepository.IsSeatReserved(reservedChecker);
-        }
-
-        public bool ReserveIfPossible(Ticket temporaryReservation)
-        {
-            return _reservationRepository.ReserveIfPossible(temporaryReservation);
+            var tickets = await _context.Tickets.ToListAsync();
+            return tickets;
         }
     }
 }

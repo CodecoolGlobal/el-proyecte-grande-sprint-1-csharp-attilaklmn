@@ -3,13 +3,8 @@ using webapi.Model.Entity;
 
 namespace webapi.Service
 {
-    public interface ITicketService<T>
+    public interface ITicketService
     {
-        HashSet<T> GetAll();
-        bool ReserveIfPossible(Ticket reservation);
-
-        bool IsSeatReserved(ReservedChecker reservedChecker);
-
-        IEnumerable<Guid> GetReservedSeatsByScreeningId(Guid id);
+        Task<IEnumerable<Ticket>> GetAll();
     }
 }
