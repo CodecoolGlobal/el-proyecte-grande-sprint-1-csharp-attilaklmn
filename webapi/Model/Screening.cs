@@ -1,23 +1,13 @@
-﻿namespace webapi.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace webapi.Model
 {
     public class Screening
     {
-        public Guid Id { get; set; }
-        public Guid RoomId { get; set; }
-        public Guid MovieId { get; set; }
-        public DateTime startingDate { get; set; }
-
-        public Screening(Guid roomId, Guid movieId, DateTime startingDate)
-        {
-            Id = Guid.NewGuid();
-            RoomId = roomId;
-            MovieId = movieId;
-            this.startingDate = startingDate;
-        }
-
-        public bool IsThisThatMovie(Guid id)
-        {
-            return MovieId == id;
-        }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+        public Room Room { get; set; } = null!;
+        public Movie Movie { get; set; } = null!;
+        public DateTime StartingDate { get; set; }
     }
 }
