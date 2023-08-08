@@ -1,7 +1,9 @@
-﻿namespace webapi.Service
+﻿using webapi.Model.Entity;
+
+namespace webapi.Service
 {
-    public interface IScreeningService<T>
+    public interface IScreeningService
     {
-        HashSet<T> GetAll();
+        Task<IEnumerable<Screening>> GetAll();
     }
 }

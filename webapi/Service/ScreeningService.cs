@@ -1,20 +1,22 @@
-﻿using webapi.Model.Entity;
-using webapi.Repo;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.Data;
+using webapi.Model.Entity;
 
 namespace webapi.Service
 {
-    public class ScreeningService : IScreeningService<Screening>
+    public class ScreeningService : IScreeningService
     {
-        private IScreeningRepository<Screening> _screeningRepository;
+        private readonly CinemaSharpContext _context;
 
-        public ScreeningService(IScreeningRepository<Screening> screeningRepository)
+        public ScreeningService(CinemaSharpContext context)
         {
-            _screeningRepository = screeningRepository;
+            _context = context;
         }
 
-        public HashSet<Screening> GetAll()
+        public async Task<IEnumerable<Screening>> GetAll()
         {
-            return _screeningRepository.GetAll();
+            var screenings = await _context.Screenings.ToListAsync();
+            return screenings;
         }
     }
 }
