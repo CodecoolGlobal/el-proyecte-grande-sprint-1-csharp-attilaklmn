@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using webapi.Model;
+using webapi.Model.Entity;
 using webapi.Service;
 
 namespace webapi.Controllers
@@ -8,9 +8,9 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class ScreeningController : ControllerBase
     {
-        private IScreeningService<Screening> _screeningService;
+        private IScreeningService _screeningService;
 
-        public ScreeningController(IScreeningService<Screening> screeningService)
+        public ScreeningController(IScreeningService screeningService)
         {
             _screeningService = screeningService;
         }
@@ -21,17 +21,17 @@ namespace webapi.Controllers
             return Ok(_screeningService.GetAll());
         }
 
-        [HttpGet("/screeningByMovieId/{id}")]
-        public IActionResult GetScreenings(Guid id)
-        {
-            return Ok(_screeningService.GetAll().Where(x => x.IsThisThatMovie(id)).ToList());
-        }
+        //[HttpGet("/screeningByMovieId/{id}")]
+        //public IActionResult GetScreenings(Guid id)
+        //{
+        //    return Ok(_screeningService.GetAll().Where(x => x.IsThisThatMovie(id)).ToList());
+        //}
 
-        [HttpGet("/isThereScreening/{id}")]
-        public IActionResult IsThereScreen(Guid id)
-        {
-            bool answer = _screeningService.GetAll().Any(x => x.IsThisThatMovie(id));
-            return Ok((new { result = answer }));
-        }
+        //[HttpGet("/isThereScreening/{id}")]
+        //public IActionResult IsThereScreen(Guid id)
+        //{
+        //    bool answer = _screeningService.GetAll().Any(x => x.IsThisThatMovie(id));
+        //    return Ok((new { result = answer }));
+        //}
     }
 }

@@ -1,25 +1,14 @@
-﻿using webapi.Model;
-using webapi.Repo;
+﻿using webapi.Data;
 
 namespace webapi.Service
 {
-    public class RoomService : IRoomService<Room>
+    public class RoomService : IRoomService
     {
-        private IRoomRepository<Room> _roomRepository;
+        private readonly CinemaSharpContext _context;
 
-        public RoomService(IRoomRepository<Room> roomRepository)
+        public RoomService(CinemaSharpContext context)
         {
-            _roomRepository = roomRepository;
-        }
-
-        public Room GetById(Guid id)
-        {
-            return _roomRepository.GetById(id);
-        }
-
-        public Dictionary<int, HashSet<Seat>> GetSeats(Guid id)
-        {
-            return _roomRepository.GetSeats(id);
+            _context = context;
         }
     }
 }

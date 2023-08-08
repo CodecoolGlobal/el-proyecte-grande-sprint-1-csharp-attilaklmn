@@ -1,10 +1,8 @@
-﻿using webapi.Model;
+﻿using webapi.Model.Entity;
 
 namespace webapi.Service
 {
-    public interface IRoomService<T>
+    public interface IRoomService
     {
-        T GetById(Guid id);
-        Dictionary<int, HashSet<Seat>> GetSeats(Guid id);
     }
 }

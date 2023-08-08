@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using webapi.Model;
+using webapi.Model.Entity;
 using webapi.Service;
 
 namespace webapi.Controllers;
@@ -8,28 +8,28 @@ namespace webapi.Controllers;
 
 public class MovieController : ControllerBase
 {
-    private readonly IMovieService<Movie> _movieService;
+    private readonly IMovieService _movieService;
 
-    public MovieController(IMovieService<Movie> movieService)
+    public MovieController(IMovieService movieService)
     {
         _movieService = movieService;
     }
 
     [HttpGet]
-    public ActionResult Index()
+    public async Task<IEnumerable<Movie>> Index()
     {
-        var movies = _movieService.GetAll();
-        return Ok(movies);
+        return await _movieService.GetAll();
+        
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var movie = _movieService.GetById(id);
-        if (movie == null)
-        {
-            return NotFound();
-        }
-        return Ok(movie);
-    }
+    //[HttpGet("{id}")]
+    //public IActionResult GetById(Guid id)
+    //{
+    //    var movie = _movieService.GetById(id);
+    //    if (movie == null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    return Ok(movie);
+    //}
 }
