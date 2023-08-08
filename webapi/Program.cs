@@ -1,25 +1,26 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using webapi;
+using webapi.Data;
 using webapi.Model.Entity;
 using webapi.Repo;
 using webapi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<CinemaSharpContext>(options =>
+                options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 // Add services to the container.
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<IMovieRepository<Movie>, MovieRepository>();
-builder.Services.AddTransient<IMovieService<Movie>, MovieService>();
-builder.Services.AddSingleton<ITicketRepository<Ticket>, TicketRepository>();
-builder.Services.AddSingleton<ITicketService<Ticket>, TicketService>();
-builder.Services.AddSingleton<IScreeningRepository<Screening>, ScreeningRepository>();
-builder.Services.AddSingleton<IScreeningService<Screening>, ScreeningService>();
-builder.Services.AddSingleton<IRoomRepository<Room>, RoomRepository>();
-builder.Services.AddSingleton<IRoomService<Room>, RoomService>();
-
-
+builder.Services.AddTransient<IMovieService, MovieService>();
+builder.Services.AddSingleton<ITicketService, TicketService>();
+builder.Services.AddSingleton<IScreeningService, ScreeningService>();
+builder.Services.AddSingleton<IRoomService, RoomService>();
 builder.Services.AddSingleton<IUserService, UserService>();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
