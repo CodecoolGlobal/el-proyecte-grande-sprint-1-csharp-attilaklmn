@@ -1,19 +1,14 @@
-﻿namespace webapi.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace webapi.Model
 {
     public class Ticket
     {
-        public Guid Id { get; set; }
-        public Guid ScreeningId { get; set; }
-        public Guid SeatId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+        public Screening Screening { get; set; } = null!;
+        public Seat Seat { get; set; } = null!;
         public bool Finalized { get; set; }
-
-        public Ticket(Guid screeningId, Guid seatId)
-        {
-            Id = Guid.NewGuid();
-            ScreeningId = screeningId;
-            SeatId = seatId;
-            Finalized = false;
-        }
 
         public void SetFinalized()
         {
