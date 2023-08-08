@@ -1,4 +1,4 @@
-﻿using webapi.Model;
+﻿using webapi.Model.Entity;
 
 namespace webapi.Repo;
 

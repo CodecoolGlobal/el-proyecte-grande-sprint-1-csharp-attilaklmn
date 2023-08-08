@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace webapi.Model
+namespace webapi.Model.Entity
 {
     public class Seat
     {

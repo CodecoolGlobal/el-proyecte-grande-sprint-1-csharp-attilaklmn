@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace webapi.Model
+namespace webapi.Model.Entity
 {
     public class Room
     {

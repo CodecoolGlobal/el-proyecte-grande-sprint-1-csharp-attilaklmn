@@ -1,4 +1,4 @@
-﻿using webapi.Model;
+﻿using webapi.Model.Entity;
 
 namespace webapi.Repo
 {
@@ -15,7 +15,7 @@ namespace webapi.Repo
         {
             return new HashSet<Room>()
             {
-                new Room("room1", 5, 5),
+                new Room("room1", 8, 8),
                 new Room("room2", 7, 7)
             };
         }

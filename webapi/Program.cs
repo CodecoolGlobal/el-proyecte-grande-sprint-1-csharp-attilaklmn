@@ -1,6 +1,5 @@
 using webapi;
-
-using webapi.Model;
+using webapi.Model.Entity;
 using webapi.Repo;
 using webapi.Service;
 
