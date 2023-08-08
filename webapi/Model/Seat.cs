@@ -1,18 +1,13 @@
-﻿namespace webapi.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace webapi.Model
 {
     public class Seat
     {
-        public Guid Id { get; set; }
-        public Guid RoomId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+        public Room Room { get; set; } = null!;
         public int Row { get; set; }
         public int Number { get; set; }
-
-        public Seat(Guid roomId, int row, int number)
-        {
-            Id = Guid.NewGuid();
-            RoomId = roomId;
-            Row = row;
-            Number = number;
-        }
     }
 }
