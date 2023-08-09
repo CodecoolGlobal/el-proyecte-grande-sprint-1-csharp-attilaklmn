@@ -6,5 +6,6 @@ namespace webapi.Service
     public interface ITicketService
     {
         Task<IEnumerable<Ticket>> GetAll();
+        Task<bool> ReserveTicket(ReserveTicketRequest request);
     }
 }
