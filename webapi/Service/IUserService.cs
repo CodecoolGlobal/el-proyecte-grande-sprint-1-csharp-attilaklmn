@@ -1,9 +1,10 @@
 using webapi.Model;
+using webapi.Model.Entity;
 
 namespace webapi.Service;
 
 public interface IUserService
 {
-    HttpResponseModel LoginUser(UserModelDto userModelDto);
+    Task LoginUserAsync(LoginModelDto loginModelDto);
     Task RegisterUserAsync(RegistrationModelDto registrationModelDto);
 }

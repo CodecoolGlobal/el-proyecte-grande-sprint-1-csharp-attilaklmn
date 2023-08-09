@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using webapi.Data;
 using webapi.Model;
 using webapi.Model.Entity;
@@ -12,9 +13,19 @@ public class UserService : IUserService
     {
         _context = context;
     }
-    public HttpResponseModel LoginUser(UserModelDto userModelDto)
+    public async Task LoginUserAsync(LoginModelDto loginModelDto)
     {
-        return new HttpResponseModel(200, "");
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);
+
+        if (user == null)
+        {
+            throw new KeyNotFoundException("Username not found!");
+        }
+
+        if (user.Password != loginModelDto.Password)
+        {
+            throw new UnauthorizedAccessException("Invalid username or password.");
+        }
     }
 
     public async Task RegisterUserAsync(RegistrationModelDto registrationModelDto)
