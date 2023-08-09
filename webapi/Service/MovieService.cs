@@ -1,24 +1,22 @@
-﻿using webapi.Model;
-using webapi.Repo;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.Data;
+using webapi.Model.Entity;
+
 
 namespace webapi.Service;
 
-public class MovieService : IMovieService<Movie>
+public class MovieService : IMovieService
 {
-    private IMovieRepository<Movie> _movieRepository { get; }
+    private readonly CinemaSharpContext _context;
 
-    public MovieService(IMovieRepository<Movie> movieRepository)
+    public MovieService(CinemaSharpContext context)
     {
-        _movieRepository = movieRepository;
+        _context = context;
     }
 
-    public HashSet<Movie> GetAll()
+    public async Task<IEnumerable<Movie>> GetAll()
     {
-        return _movieRepository.GetAll();
-    }
-
-    public Movie? GetById(Guid id)
-    {
-        return _movieRepository.GetById(id);
+        var movies = await _context.Movies.ToListAsync();
+        return movies;
     }
 }

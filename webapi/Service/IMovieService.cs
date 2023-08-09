@@ -1,7 +1,8 @@
-﻿namespace webapi.Service;
+﻿using webapi.Model.Entity;
 
-public interface IMovieService<T>
+namespace webapi.Service;
+
+public interface IMovieService
 {
-    HashSet<T> GetAll();
-    T? GetById(Guid id);
+    Task<IEnumerable<Movie>> GetAll();
 }
