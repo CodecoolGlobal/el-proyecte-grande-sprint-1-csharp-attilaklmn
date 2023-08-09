@@ -54,14 +54,14 @@ public class UserService : IUserService
 
         if (isUsernameTaken)
         {
-            throw new UnauthorizedAccessException("Username is already taken!");
+            throw new DataConflictionException("Username is already taken!");
         }
 
         bool isEmailTaken = await _context.Users.AnyAsync(u => u.Password == registrationModelDto.Password);
 
         if (isEmailTaken)
         {
-            throw new UnauthorizedAccessException("E-mail already registered!");
+            throw new DataConflictionException("E-mail already registered!");
         }
 
         var user = new User
@@ -78,7 +78,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            throw new InternalDatabaseError("Error saving user to the database!");
+            throw new InternalDatabaseException("Error saving user to the database!");
         }
     }
 }

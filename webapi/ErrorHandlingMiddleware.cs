@@ -37,9 +37,12 @@ public class ErrorHandlingMiddleware
         else if (exception is KeyNotFoundException)
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        } else if (exception is InternalDatabaseError)
+        } else if (exception is InternalDatabaseException)
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        } else if (exception is DataConflictionException)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Conflict;
         }
 
         var errorResponse = new
