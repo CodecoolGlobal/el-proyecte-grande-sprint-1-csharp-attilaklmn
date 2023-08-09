@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using webapi;
 using webapi.Data;
 using webapi.Service;
 
@@ -23,6 +24,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +37,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 
