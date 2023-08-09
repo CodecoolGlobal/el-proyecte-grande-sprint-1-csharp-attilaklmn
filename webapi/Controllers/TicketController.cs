@@ -9,29 +9,38 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class TicketController : ControllerBase
     {
-        private ITicketService _reservationService;
+        private ITicketService _ticketService;
 
-        public TicketController (ITicketService reservationService)
+        public TicketController (ITicketService ticketService)
         {
-            _reservationService = reservationService;
+            _ticketService = ticketService;
         }
 
-        //[HttpPost("reserve")]
-        //public IActionResult Reserve([FromBody] Ticket reservation)
-        //{
-        //    bool done = _reservationService.ReserveIfPossible(reservation);
-        //    if (done)
-        //    {
-        //        return Ok();
-        //    }
-        //    return BadRequest();
-        //}
+        [HttpPost("reserve")]
+        public async Task<IActionResult> Reserve(ReserveTicketRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            bool reservationResult = await _ticketService.ReserveTicket(request);
+
+            if (reservationResult)
+            {
+                return Ok("Ticket reserved successfully.");
+            }
+            else
+            {
+                return BadRequest("Failed to reserve the ticket.");
+            }
+        }
 
         //[HttpPost("isseatreserved")]
         //public IActionResult IsSeatReserved([FromBody] ReservedChecker reservedChecker)
         //{
         //    bool isSeatReserved = _reservationService.IsSeatReserved(reservedChecker);
-            
+
         //    return Ok(new { reserved = isSeatReserved });
         //}
 
