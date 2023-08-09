@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using webapi.Exceptions;
 
 namespace webapi;
 
@@ -36,6 +37,9 @@ public class ErrorHandlingMiddleware
         else if (exception is KeyNotFoundException)
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+        } else if (exception is InternalDatabaseError)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         }
 
         var errorResponse = new

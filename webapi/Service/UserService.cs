@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using webapi.Data;
+using webapi.Exceptions;
 using webapi.Model;
 using webapi.Model.Entity;
 using webapi.Service.SubService;
@@ -38,7 +39,7 @@ public class UserService : IUserService
         {
             throw new UnauthorizedAccessException("Wrong username format!");
         }
-        
+
         if (!_userDataValidator.ValidatePasswordRegex(registrationModelDto.Password))
         {
             throw new UnauthorizedAccessException("Wrong password format!");
@@ -49,6 +50,20 @@ public class UserService : IUserService
             throw new UnauthorizedAccessException("Wrong e-mail format!");
         }
 
+        bool isUsernameTaken = await _context.Users.AnyAsync(u => u.Username == registrationModelDto.Username);
+
+        if (isUsernameTaken)
+        {
+            throw new UnauthorizedAccessException("Username is already taken!");
+        }
+
+        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Password == registrationModelDto.Password);
+
+        if (isEmailTaken)
+        {
+            throw new UnauthorizedAccessException("E-mail already registered!");
+        }
+
         var user = new User
         {
             Username = registrationModelDto.Username,
@@ -57,6 +72,13 @@ public class UserService : IUserService
         };
 
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new InternalDatabaseError("Error saving user to the database!");
+        }
     }
 }
