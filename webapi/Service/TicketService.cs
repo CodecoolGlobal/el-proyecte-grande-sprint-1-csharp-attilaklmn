@@ -35,7 +35,10 @@ namespace webapi.Service
                 bool ticketExists = await _context.Tickets
                     .AnyAsync(t => t.Screening.Id == request.ScreeningId && t.Seat.Id == request.SeatId);
 
-                if (!ticketExists)
+                if (ticketExists)
+                {
+                    throw new InvalidOperationException("Ticket already reserved");
+                } else
                 {
                     var screening = await _context.Screenings.FindAsync(request.ScreeningId);
                     var seat = await _context.Seats.FindAsync(request.SeatId);
@@ -51,7 +54,7 @@ namespace webapi.Service
                         User = user,
                         Finalized = false
                     };
-                                        
+
                     _context.Tickets.Add(newTicket);
 
                     await _context.SaveChangesAsync();
