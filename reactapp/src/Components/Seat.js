@@ -14,7 +14,7 @@ const fetchIsSeatReserved = async (screeningId, seatId) => {
     return data.reserved;
 }
 
-const reserveSeat = async (screeningId, seatId, user) => {
+const reserveSeat = async (screeningId, seatId, user, reRender) => {
     const response = await fetch("/ticket/reserve", {
         method: "POST",
         headers: {
@@ -31,9 +31,10 @@ const reserveSeat = async (screeningId, seatId, user) => {
             alert("Ticket already reserved.");
         }
     }
+    reRender();
 }
 
-const Seat = ({seat, screeningId, isReserved, setIsLoading, user}) => {
+const Seat = ({seat, screeningId, isReserved, setIsLoading, user, reRender}) => {
     
   const seatStyle = {
     width: "50px",
@@ -49,8 +50,8 @@ const Seat = ({seat, screeningId, isReserved, setIsLoading, user}) => {
     cursor: "pointer"
   };
   const clickHandler = () => {
-    reserveSeat(screeningId, seat.id, user);
     setIsLoading(true);
+    reserveSeat(screeningId, seat.id, user, reRender);
       }
 
   return (<div onClick={clickHandler} style={seatStyle}>{seat.row}-{seat.number}</div>);
