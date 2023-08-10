@@ -19,4 +19,11 @@ public class MovieService : IMovieService
         var movies = await _context.Movies.ToListAsync();
         return movies;
     }
+
+    public async Task<Movie> GetMovieById(long movieId)
+    {
+        List<Movie> movies = await _context.Movies.ToListAsync();
+        Movie movie = movies.FirstOrDefault(x => x.IsThisThatMovie(movieId));
+        return movie;
+    }
 }
