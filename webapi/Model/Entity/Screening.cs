@@ -6,8 +6,8 @@ namespace webapi.Model.Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-        public Room Room { get; set; } = null!;
-        public Movie Movie { get; set; } = null!;
+        public long RoomId { get; set; }
+        public long MovieId { get; set; }
         public DateTime StartingDate { get; set; }
     }
 }
