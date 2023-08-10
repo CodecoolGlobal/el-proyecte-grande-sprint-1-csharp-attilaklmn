@@ -15,22 +15,22 @@ namespace webapi.Controllers
             _roomService = roomService;
         }
 
-        //[HttpGet("{id}")]
-        //public IActionResult GetById(Guid id)
-        //{
-        //    var room = _roomService.GetById(id);
-        //    if (room == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(room);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            var room = await _roomService.GetById(id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+            return Ok(room);
+        }
 
-        //[HttpGet("{id}/seats")]
-        //public IActionResult GetSeats(Guid id)
-        //{
-        //    var seats = _roomService.GetSeats(id);
-        //    return Ok(seats);
-        //}
+        [HttpGet("{id}/seats")]
+        public async Task<IActionResult> GetSeats(long id)
+        {
+            var seats = await _roomService.GetSeatsById(id);
+            return Ok(seats);
+        }
     }
 }

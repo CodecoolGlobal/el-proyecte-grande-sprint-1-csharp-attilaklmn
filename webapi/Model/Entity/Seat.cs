@@ -6,6 +6,7 @@ namespace webapi.Model.Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+        public long RoomId { get; set; }
         public Room Room { get; set; } = null!;
         public int Row { get; set; }
         public int Number { get; set; }

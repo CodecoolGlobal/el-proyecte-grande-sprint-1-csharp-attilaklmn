@@ -1,7 +1,8 @@
 import { Container, Paper } from "@mui/material";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import SeatGrid from "../Components/SeatGrid";
+import { UserContext } from "../App";
 
 const fetchRoom = async (roomId) => {
     const response = await fetch(`/room/${roomId}`);
@@ -20,6 +21,7 @@ const Reservation = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [room, setRoom] = useState(null);
     const [seats, setSeats] = useState(null);
+    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
         fetchRoom(roomId).then(room => {
@@ -54,7 +56,8 @@ const Reservation = () => {
       >
         {!isLoading && `Reservation of (Screening)${screeningId} in ${room.name}`}
         {isLoading && <p>Loading..</p>}
-        {!isLoading && <SeatGrid screeningId={screeningId} seats={seats}/>}
+        {!isLoading && !user && <div>Please login for ticket reservation.</div>}
+        {!isLoading && user && <SeatGrid screeningId={screeningId} room={room} seats={seats} user={user} />}
       </Paper>
     </Container>
     )

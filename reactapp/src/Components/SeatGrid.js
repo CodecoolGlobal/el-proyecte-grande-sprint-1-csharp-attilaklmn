@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Seat from "./Seat";
 
 const fetchReservedSeatIds = async (screeningId) => {
-    const response = await fetch(`/reservation/screening/${screeningId}`);
+    const response = await fetch(`/ticket/screening/${screeningId}`);
     const data = response.json();
     return data;
 }
 
-const SeatGrid = ({ seats, screeningId }) => {
+const SeatGrid = ({ seats, room, screeningId, user }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [seatGrid, setSeatGrid] = useState(null);
 
@@ -20,21 +20,25 @@ const SeatGrid = ({ seats, screeningId }) => {
 
     const createTable = (data) => {
       const seatGrid = [];
-      for (let row in seats) {
+      const seatsToRender = [...seats];
+      for (let row = 0; row < room.rowNumber; row++) {
         const seatRow = [];
-        for (let col = 0; col < seats[row].length; col++) {
-          const isReserved = data.includes(seats[row][col].id);
-          const seat = (
+        for (let col = 0; col < room.columnNumber; col++) {
+          const seat = seatsToRender.shift();
+          
+          const isReserved = data.includes(seat.id);
+          const seatComponent = (
             <Seat
-              key={seats[row][col].id}
+              key={seat.id}
               isReserved={isReserved}
-              seat={seats[row][col]}
+              seat={seat}
               screeningId={screeningId}
               setIsLoading={e => setIsLoading(e)}
+              user={user}
             />
           );
 
-          seatRow.push(seat);
+          seatRow.push(seatComponent);
         }
 
         seatGrid.push(
