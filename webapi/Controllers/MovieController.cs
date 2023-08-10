@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using webapi.Model.DTOs;
 using webapi.Model.Entity;
 using webapi.Service;
 
@@ -32,4 +33,12 @@ public class MovieController : ControllerBase
     //    }
     //    return Ok(movie);
     //}
+    
+    [HttpPost]
+    public IActionResult AddMovie([FromBody] MovieModelDto movieModelDto)
+    {
+        var addedMovie = _movieService.AddMovie(movieModelDto);
+
+        return Ok(addedMovie);
+    }
 }
