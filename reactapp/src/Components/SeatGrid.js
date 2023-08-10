@@ -16,7 +16,13 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
             createTable(data)
             setIsLoading(false);
         });
-    }, [isLoading])
+    }, [])
+
+    const reRender = () => {
+      fetchReservedSeatIds(screeningId).then((data) => {
+        createTable(data)
+    });
+    }
 
     const createTable = (data) => {
       const seatGrid = [];
@@ -35,6 +41,7 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
               screeningId={screeningId}
               setIsLoading={e => setIsLoading(e)}
               user={user}
+              reRender={reRender}
             />
           );
 
@@ -48,6 +55,7 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
         );
       }
       setSeatGrid(seatGrid);
+      setIsLoading(false);
     };
 
     

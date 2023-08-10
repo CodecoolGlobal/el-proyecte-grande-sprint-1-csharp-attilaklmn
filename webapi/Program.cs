@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 builder.Services.AddDbContext<CinemaSharpContext>(options =>
-                options.UseNpgsql(connectionString));
+                options.UseNpgsql("Host=trumpet.db.elephantsql.com;Port=5432;Database=jfteeekn;Username=jfteeekn;Password=5408W67bMpL4DB3O7BMlvoo_YhAs_dlm;"));
 // Add services to the container.
 
 builder.Services.AddControllers();
