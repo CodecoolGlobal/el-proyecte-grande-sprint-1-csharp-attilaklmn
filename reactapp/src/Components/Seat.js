@@ -26,6 +26,11 @@ const reserveSeat = async (screeningId, seatId, user) => {
             username: user
         })
     });
+    if (response.status !== 200) {
+        if (response.status === 400) {
+            alert("Ticket already reserved.");
+        }
+    }
 }
 
 const Seat = ({seat, screeningId, isReserved, setIsLoading, user}) => {
@@ -41,6 +46,7 @@ const Seat = ({seat, screeningId, isReserved, setIsLoading, user}) => {
     fontSize: "16px",
     fontWeight: "bold",
     color: "white",
+    cursor: "pointer"
   };
   const clickHandler = () => {
     reserveSeat(screeningId, seat.id, user);
