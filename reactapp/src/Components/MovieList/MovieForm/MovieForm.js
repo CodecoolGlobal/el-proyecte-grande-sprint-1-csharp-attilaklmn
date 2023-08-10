@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./MovieForm.css";
 
 const MovieForm = ({ movieList, setMovieList }) => {
   const handleSubmit = (e) => {
