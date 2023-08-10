@@ -33,6 +33,26 @@ public class UserService : IUserService
         }
     }
 
+    public async Task LoginAdminAsync(LoginModelDto loginModelDto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);
+
+        if (user == null)
+        {
+            throw new UnauthorizedAccessException("Invalid username or password!");
+        }
+
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(loginModelDto.Password, user.Password))
+        {
+            throw new UnauthorizedAccessException("Invalid username or password!");
+        }
+
+        if (!user.Admin)
+        {
+            throw new UnauthorizedAccessException("Invalid username or password!");
+        }
+    }
+
     public async Task RegisterUserAsync(RegistrationModelDto registrationModelDto)
     {
         if (!_userDataValidator.ValidateUsername(registrationModelDto.Username))

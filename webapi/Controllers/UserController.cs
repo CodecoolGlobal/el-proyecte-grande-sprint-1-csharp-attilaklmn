@@ -28,4 +28,11 @@ public class UserController : ControllerBase
         await _userService.RegisterUserAsync(registrationModelDto);
         return Ok("User created successfully!");
     }
+
+    [HttpPost("login/admin")]
+    public async Task<IActionResult> LoginAdmin([FromBody] LoginModelDto loginModelDto)
+    {
+        await _userService.LoginAdminAsync(loginModelDto);
+        return Ok("Admin logged in!");
+    }
 }

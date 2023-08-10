@@ -13,13 +13,21 @@ export const UserContext = createContext({
   setUser: () => {},
 });
 
+export const AdminContext = createContext({
+  isAdmin: false,
+  setIsAdmin: () => {},
+});
+
 function App() {
   const [user, setUser] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("cinemaSharpUser");
     if (loggedInUser) {
       setUser(loggedInUser);
+    } else {
+      setIsAdmin(false);
     }
   }, []);
 
@@ -27,17 +35,19 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider value={{ user, setUser }}>
-          <ResponsiveAppBar />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/filmlist" element={<Filmlist />} />
-            <Route path="/program" element={<Program />} />
-            <Route
-              path="/reservation/:screeningId/:roomId"
-              element={<Reservation />}
-            />
-            <Route path="/user" element={<User />} />
-          </Routes>
+          <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
+            <ResponsiveAppBar />
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/filmlist" element={<Filmlist />} />
+              <Route path="/program" element={<Program />} />
+              <Route
+                path="/reservation/:screeningId/:roomId"
+                element={<Reservation />}
+              />
+              <Route path="/user" element={<User />} />
+            </Routes>
+          </AdminContext.Provider>
         </UserContext.Provider>
       </BrowserRouter>
     </div>
