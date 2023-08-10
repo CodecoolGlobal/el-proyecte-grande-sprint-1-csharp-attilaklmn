@@ -27,7 +27,7 @@ public class UserService : IUserService
             throw new UnauthorizedAccessException("Invalid username or password!");
         }
 
-        if (user.Password != loginModelDto.Password)
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(loginModelDto.Password, user.Password))
         {
             throw new UnauthorizedAccessException("Invalid username or password!");
         }
@@ -68,7 +68,7 @@ public class UserService : IUserService
         {
             Username = registrationModelDto.Username,
             Email = registrationModelDto.Email,
-            Password = registrationModelDto.Password
+            Password = BCrypt.Net.BCrypt.EnhancedHashPassword(registrationModelDto.Password)
         };
 
         _context.Users.Add(user);
