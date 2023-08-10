@@ -54,7 +54,7 @@ public class DbInitializer
                 new Movie
                 {
                     Title = "Elemental",
-                    Cast = new[] { "LEah Lewis", "Catherine O'Hara" },
+                    Cast = new[] { "Leah Lewis", "Catherine O'Hara" },
                     Summary =
                         "In a city where fire, water, land, and air residents live together, " +
                         "a fiery young woman and a go-with-the-flow guy discover something elemental:" +
