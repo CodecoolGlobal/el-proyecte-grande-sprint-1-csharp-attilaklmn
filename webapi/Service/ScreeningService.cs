@@ -16,6 +16,7 @@ namespace webapi.Service
         public async Task<IEnumerable<Screening>> GetAll()
         {
             var screenings = await _context.Screenings.ToListAsync();
+            Console.WriteLine(screenings.ElementAt(0));
             return screenings;
         }
     }
