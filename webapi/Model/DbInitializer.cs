@@ -114,5 +114,50 @@ public class DbInitializer
             };
             context.Movies.AddRange(movies);
         }
+        if (!context.Rooms.Any())
+        {
+            HashSet<Room> rooms = new()
+            {
+                new Room
+                {
+                    ColumnNumber = 20,
+                    RowNumber = 16,
+                    Name = "BallBuster",
+                    Seats = CreateSeats(20, 16, context)
+                },
+                new Room
+                {
+                    ColumnNumber = 12,
+                    RowNumber = 8,
+                    Name = "HappyFears",
+                    Seats = CreateSeats(12, 8, context)
+                },
+                new Room
+                {
+                    ColumnNumber = 15,
+                    RowNumber = 9,
+                    Name = "SnowTrack",
+                    Seats = CreateSeats(15, 9, context)
+                },
+                new Room
+                {
+                    ColumnNumber = 11,
+                    RowNumber = 7,
+                    Name = "FunnyDoors",
+                    Seats = CreateSeats(11, 7, context)
+                }
+            };
+            context.Rooms.AddRange(rooms);
+            context.SaveChanges();
+        }
+    }
+    
+    private static HashSet<Seat> CreateSeats(int column, int row, CinemaSharpContext context)
+    {
+        HashSet<Seat> seats = Enumerable.Range(1, row)
+            .SelectMany(i => Enumerable.Range(1, column).Select(j => new Seat { Row = i, Number = j })).ToHashSet();
+        context.Seats.AddRange(seats);
+        
+        return seats;
     }
 }
