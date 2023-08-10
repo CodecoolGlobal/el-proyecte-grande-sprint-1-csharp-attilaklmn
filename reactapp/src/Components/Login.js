@@ -34,19 +34,15 @@ const Login = (props) => {
         }),
       });
       if (!response.ok) {
-        if (response.status === 401) {
-          setError(true);
-          throw new Error("Unauthorized: Invalid username or password");
-        } else {
-          throw new Error(`HTTP error ${response.status}`);
-        }
+        const data = await response.json();
+        throw new Error(data.Message);
       }
       localStorage.setItem("cinemaSharpUser", username);
       window.location.reload(false);
       //const data = await response.json();
       //return data;
     } catch (error) {
-      alert("Error fetching login process: ", error);
+      alert("Error: " + error.message);
     }
   };
 
