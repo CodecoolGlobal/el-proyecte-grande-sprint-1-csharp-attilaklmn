@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 const fetchIsSeatReserved = async (screeningId, seatId) => {
     const response = await fetch("/reservation/isseatreserved", {
@@ -15,20 +14,26 @@ const fetchIsSeatReserved = async (screeningId, seatId) => {
     return data.reserved;
 }
 
-const reserveSeat = async (screeningId, seatId) => {
-    const response = await fetch("/reservation/reserve", {
+const reserveSeat = async (screeningId, seatId, user) => {
+    const response = await fetch("/ticket/reserve", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
             screeningId: screeningId,
-            seatId: seatId
+            seatId: seatId,
+            username: user
         })
     });
+    if (response.status !== 200) {
+        if (response.status === 400) {
+            alert("Ticket already reserved.");
+        }
+    }
 }
 
-const Seat = ({seat, screeningId, isReserved, setIsLoading}) => {
+const Seat = ({seat, screeningId, isReserved, setIsLoading, user}) => {
     
   const seatStyle = {
     width: "50px",
@@ -41,9 +46,10 @@ const Seat = ({seat, screeningId, isReserved, setIsLoading}) => {
     fontSize: "16px",
     fontWeight: "bold",
     color: "white",
+    cursor: "pointer"
   };
   const clickHandler = () => {
-    reserveSeat(screeningId, seat.id);
+    reserveSeat(screeningId, seat.id, user);
     setIsLoading(true);
       }
 

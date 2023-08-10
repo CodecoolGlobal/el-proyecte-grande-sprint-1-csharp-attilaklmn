@@ -44,11 +44,11 @@ namespace webapi.Controllers
         //    return Ok(new { reserved = isSeatReserved });
         //}
 
-        //[HttpGet("screening/{screeningId}")]
-        //public IActionResult GetReservedSeatsByScreeningId(Guid screeningId)
-        //{
-        //    IEnumerable<Guid> reservedSeats = _reservationService.GetReservedSeatsByScreeningId(screeningId);
-        //    return Ok(reservedSeats);
-        //}
+        [HttpGet("screening/{screeningId}")]
+        public async Task<IActionResult> GetReservedSeatIdsByScreeningId(long screeningId)
+        {
+            IEnumerable<long> reservedSeats = await _ticketService.GetReservedSeatIdsByScreeningId(screeningId);
+            return Ok(reservedSeats);
+        }
     }
 }

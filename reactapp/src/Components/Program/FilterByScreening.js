@@ -8,7 +8,7 @@ const FilterByScreening = ({ movieList }) => {
     fetch(`/Screening/all`)
       .then((res) => res.json())
       .then((screenings) => setScreenings(screenings));
-  });
+  }, []);
 
   return (
     <Render

@@ -6,6 +6,8 @@ namespace webapi.Service;
 public interface IMovieService
 {
     Task<IEnumerable<Movie>> GetAll();
-
+    
     Movie AddMovie(MovieModelDto movieModelDto);
+
+    Task<Movie> GetMovieById(long movieId);
 }

@@ -20,7 +20,12 @@ public class MovieController : ControllerBase
     public async Task<IEnumerable<Movie>> Index()
     {
         return await _movieService.GetAll();
-        
+    }
+
+    [HttpGet("{id}")]
+    public async Task<Movie> GetMovieById(long id)
+    {
+        return await _movieService.GetMovieById(id);
     }
 
     //[HttpGet("{id}")]

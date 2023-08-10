@@ -20,6 +20,12 @@ namespace webapi.Service
             return tickets;
         }
 
+        public async Task<IEnumerable<long>> GetReservedSeatIdsByScreeningId(long Id)
+        {
+            var seatIds = await _context.Tickets.Where(t => t.Screening.Id == Id).Select(e => e.Seat.Id).ToListAsync();
+            return seatIds;
+        }
+
         public async Task<bool> ReserveTicket(ReserveTicketRequest request)
         {
             using var transaction = _context.Database.BeginTransaction();
@@ -29,11 +35,14 @@ namespace webapi.Service
                 bool ticketExists = await _context.Tickets
                     .AnyAsync(t => t.Screening.Id == request.ScreeningId && t.Seat.Id == request.SeatId);
 
-                if (!ticketExists)
+                if (ticketExists)
+                {
+                    throw new InvalidOperationException("Ticket already reserved");
+                } else
                 {
                     var screening = await _context.Screenings.FindAsync(request.ScreeningId);
                     var seat = await _context.Seats.FindAsync(request.SeatId);
-                    var user = await _context.Users.FindAsync(request.UserId);
+                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
                     if (screening == null || seat == null || user == null)
                     {
                         throw new InvalidOperationException("One or more entities not found.");
@@ -45,7 +54,7 @@ namespace webapi.Service
                         User = user,
                         Finalized = false
                     };
-                                        
+
                     _context.Tickets.Add(newTicket);
 
                     await _context.SaveChangesAsync();

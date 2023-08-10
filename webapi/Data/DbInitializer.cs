@@ -163,22 +163,22 @@ public class DbInitializer
             {
                 new Screening
                 {
-                    Movie = movies[0],
-                    Room = rooms[0],
+                    MovieId = movies[0].Id,
+                    RoomId = rooms[0].Id,
                     StartingDate = startingDate1
                     
                 },
                 new Screening
                 {
-                    Movie = movies[1],
-                    Room = rooms[0],
+                    MovieId = movies[1].Id,
+                    RoomId = rooms[0].Id,
                     StartingDate = startingDate2
                     
                 },
                 new Screening
                 {
-                    Movie = movies[2],
-                    Room = rooms[1],
+                    MovieId = movies[2].Id,
+                    RoomId = rooms[1].Id,
                     StartingDate = startingDate3
                 }
             };

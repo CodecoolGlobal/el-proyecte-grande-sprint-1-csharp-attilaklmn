@@ -11,4 +11,9 @@ public class Movie
     public string? Summary { get; set; }
     public double? UserRating { get; set; }
 
+    public bool IsThisThatMovie(long movieId)
+    {
+        return Id == movieId;
+    }
+
 }

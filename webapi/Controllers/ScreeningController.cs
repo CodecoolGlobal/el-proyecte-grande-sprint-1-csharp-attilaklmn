@@ -16,9 +16,9 @@ namespace webapi.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IEnumerable<Screening>> GetAll()
         {
-            return Ok(_screeningService.GetAll());
+            return await _screeningService.GetAll();
         }
 
         //[HttpGet("/screeningByMovieId/{id}")]
