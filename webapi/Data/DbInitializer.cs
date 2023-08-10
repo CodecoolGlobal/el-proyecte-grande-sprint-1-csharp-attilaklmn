@@ -114,6 +114,7 @@ public class DbInitializer
             };
             context.Movies.AddRange(movies);
         }
+        
         if (!context.Rooms.Any())
         {
             HashSet<Room> rooms = new()
@@ -182,7 +183,6 @@ public class DbInitializer
                 }
             };
             context.Screenings.AddRange(screenings);
-            
             context.SaveChanges();
         }
     }

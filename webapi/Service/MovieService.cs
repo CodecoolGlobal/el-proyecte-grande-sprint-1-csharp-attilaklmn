@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using webapi.Data;
+using webapi.Model.DTOs;
 using webapi.Model.Entity;
 
 
@@ -18,6 +19,21 @@ public class MovieService : IMovieService
     {
         var movies = await _context.Movies.ToListAsync();
         return movies;
+    }
+
+    public Movie AddMovie(MovieModelDto movieModelDto)
+    {
+        var movieEntity = new Movie
+        {
+            Title = movieModelDto.Title,
+            Cast = movieModelDto.Cast,
+            Summary = movieModelDto.Summary
+        };
+
+        _context.Movies.Add(movieEntity);
+        _context.SaveChanges();
+
+        return movieEntity;
     }
 
     public async Task<Movie> GetMovieById(long movieId)
