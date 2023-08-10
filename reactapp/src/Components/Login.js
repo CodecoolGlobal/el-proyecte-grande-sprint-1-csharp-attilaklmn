@@ -33,8 +33,9 @@ const Login = (props) => {
     e.preventDefault();
     if (adminChecked) {
       fetchLogin("/user/login/admin");
+    } else {
+      fetchLogin("/user/login");
     }
-    fetchLogin("/user/login");
   };
 
   const fetchLogin = async (URL) => {
@@ -49,15 +50,18 @@ const Login = (props) => {
       });
       if (!response.ok) {
         const data = await response.json();
+        console.log(0);
         throw new Error(data.Message);
-      }
-      localStorage.setItem("cinemaSharpUser", username);
-      if (adminChecked) {
-        setIsAdmin(true);
       } else {
-        setIsAdmin(false);
+        console.log(1);
+        localStorage.setItem("cinemaSharpUser", username);
+        if (adminChecked) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+        props.onSuccessfulLogin(username);
       }
-      props.onSuccessfulLogin(username);
     } catch (error) {
       alert("Error: " + error.message);
     }

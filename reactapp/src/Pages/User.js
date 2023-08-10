@@ -4,19 +4,22 @@ import { useState, Fragment, useContext, useEffect } from "react";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
 import { UserContext } from "../App";
+import { AdminContext } from "../App";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
   const [choiceState, setChoiseState] = useState("initial");
+  const { isAdmin, setIsAdmin } = useContext(AdminContext);
 
   const handleLogout = (e) => {
     localStorage.clear();
     setUser();
+    setIsAdmin(false);
   };
 
   useEffect(() => {
     setChoiseState("initial");
-  },[user])
+  }, [user]);
 
   return (
     <Container
