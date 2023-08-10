@@ -150,6 +150,41 @@ public class DbInitializer
             context.Rooms.AddRange(rooms);
             context.SaveChanges();
         }
+        
+        if (!context.Screenings.Any())
+        {
+            List<Movie> movies = context.Movies.ToList();
+            List<Room> rooms = context.Rooms.ToList();
+            DateTime startingDate1 = new DateTime(2023, 8, 11, 12, 0, 0, DateTimeKind.Utc);
+            DateTime startingDate2 = new DateTime(2023, 8, 11, 15, 0, 0, DateTimeKind.Utc);
+            DateTime startingDate3 = new DateTime(2023, 8, 11, 13, 0, 0, DateTimeKind.Utc);
+            HashSet<Screening> screenings = new()
+            {
+                new Screening
+                {
+                    Movie = movies[0],
+                    Room = rooms[0],
+                    StartingDate = startingDate1
+                    
+                },
+                new Screening
+                {
+                    Movie = movies[1],
+                    Room = rooms[0],
+                    StartingDate = startingDate2
+                    
+                },
+                new Screening
+                {
+                    Movie = movies[2],
+                    Room = rooms[1],
+                    StartingDate = startingDate3
+                }
+            };
+            context.Screenings.AddRange(screenings);
+            
+            context.SaveChanges();
+        }
     }
     
     private static HashSet<Seat> CreateSeats(int column, int row, CinemaSharpContext context)
