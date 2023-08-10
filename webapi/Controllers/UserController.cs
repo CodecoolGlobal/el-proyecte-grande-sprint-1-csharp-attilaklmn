@@ -9,7 +9,7 @@ namespace webapi.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private IUserService _userService;
+    private readonly IUserService _userService;
 
     public UserController(IUserService userService)
     {
@@ -17,15 +17,15 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult LoginUser([FromBody] UserModelDTO userModelDto)
+    public async Task<IActionResult> LoginUser([FromBody] LoginModelDto loginModelDto)
     {
-        HttpResponseModel httpResponse = _userService.LoginUser(userModelDto);
-        return StatusCode(httpResponse.StatusCode, new { Message = httpResponse.Message });
+        await _userService.LoginUserAsync(loginModelDto);
+        return Ok("User logged in!");
     }
     [HttpPost("register")]
-    public IActionResult RegisterUser([FromBody] RegistrationModelDTO registrationModelDto)
+    public async Task<IActionResult> RegisterUser([FromBody] RegistrationModelDto registrationModelDto)
     {
-        HttpResponseModel httpResponse = _userService.RegisterUser(registrationModelDto);
-        return StatusCode(httpResponse.StatusCode, new { Message = httpResponse.Message });
+        await _userService.RegisterUserAsync(registrationModelDto);
+        return Ok("User created successfully!");
     }
 }

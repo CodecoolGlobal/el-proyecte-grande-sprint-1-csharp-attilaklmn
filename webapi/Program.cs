@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using webapi;
 using webapi.Data;
+using webapi.Model;
 using webapi.Service;
+using webapi.Service.SubService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +20,22 @@ builder.Services.AddTransient<ITicketService, TicketService>();
 builder.Services.AddTransient<IScreeningService, ScreeningService>();
 builder.Services.AddTransient<IRoomService, RoomService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserDataValidator, UserDataValidator>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var dbContext = serviceProvider.GetRequiredService<CinemaSharpContext>();
+    DbInitializer.Initialize(dbContext);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -35,6 +47,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 
