@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using webapi;
 using webapi.Data;
+using webapi.Model;
 using webapi.Service;
 using webapi.Service.SubService;
 
@@ -28,6 +29,13 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var dbContext = serviceProvider.GetRequiredService<CinemaSharpContext>();
+    DbInitializer.Initialize(dbContext);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

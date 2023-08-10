@@ -31,11 +31,18 @@ namespace webapi.Service
 
                 if (!ticketExists)
                 {
+                    var screening = await _context.Screenings.FindAsync(request.ScreeningId);
+                    var seat = await _context.Seats.FindAsync(request.SeatId);
+                    var user = await _context.Users.FindAsync(request.UserId);
+                    if (screening == null || seat == null || user == null)
+                    {
+                        throw new InvalidOperationException("One or more entities not found.");
+                    }
                     var newTicket = new Ticket
                     {
-                        Screening = await _context.Screenings.FindAsync(request.ScreeningId),
-                        Seat = await _context.Seats.FindAsync(request.SeatId),
-                        User = await _context.Users.FindAsync(request.UserId),
+                        Screening = screening,
+                        Seat = seat,
+                        User = user,
                         Finalized = false
                     };
                                         
