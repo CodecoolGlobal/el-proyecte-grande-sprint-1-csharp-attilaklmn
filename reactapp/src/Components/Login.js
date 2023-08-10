@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { AdminContext } from "../App";
 
 const Login = (props) => {
+  const { isAdmin, setIsAdmin } = useContext(AdminContext);
+
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [adminChecked, setAdminChecked] = useState(false);
+
+  const handleAdminCheckChange = (event) => {
+    setAdminChecked(!adminChecked);
+  };
 
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
@@ -20,12 +31,15 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchLogin();
+    if (adminChecked) {
+      fetchLogin("/user/login/admin");
+    }
+    fetchLogin("/user/login");
   };
 
-  const fetchLogin = async () => {
+  const fetchLogin = async (URL) => {
     try {
-      const response = await fetch("/user/login", {
+      const response = await fetch(URL, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -38,9 +52,12 @@ const Login = (props) => {
         throw new Error(data.Message);
       }
       localStorage.setItem("cinemaSharpUser", username);
-      window.location.reload(false);
-      //const data = await response.json();
-      //return data;
+      if (adminChecked) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+      props.onSuccessfulLogin(username);
     } catch (error) {
       alert("Error: " + error.message);
     }
@@ -101,6 +118,23 @@ const Login = (props) => {
             />
           </div>
         </div>
+        <FormGroup
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={adminChecked}
+                onChange={handleAdminCheckChange}
+              />
+            }
+            label="Login as admin"
+          />
+        </FormGroup>
         <Button variant="contained" type="submit">
           Login
         </Button>

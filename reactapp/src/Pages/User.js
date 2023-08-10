@@ -1,6 +1,6 @@
 import { Container, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
-import { useState, Fragment, useContext } from "react";
+import { useState, Fragment, useContext, useEffect } from "react";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
 import { UserContext } from "../App";
@@ -13,6 +13,10 @@ const User = () => {
     localStorage.clear();
     setUser();
   };
+
+  useEffect(() => {
+    setChoiseState("initial");
+  },[user])
 
   return (
     <Container
@@ -58,7 +62,7 @@ const User = () => {
           </Button>
         )}
         {choiceState === "login" ? (
-          <Login onBackClick={setChoiseState} />
+          <Login onSuccessfulLogin={setUser} onBackClick={setChoiseState} />
         ) : null}
         {choiceState === "register" ? (
           <Register onBackClick={setChoiseState} />
