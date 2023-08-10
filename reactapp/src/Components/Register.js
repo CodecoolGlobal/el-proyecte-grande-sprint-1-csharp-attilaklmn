@@ -52,7 +52,7 @@ const Register = (props) => {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message);
+        throw new Error(data.Message);
       } else {
         alert("registered");
         window.location.reload(false);
