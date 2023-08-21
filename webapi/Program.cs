@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using webapi;
 using webapi.Data;
 using webapi.Model;
@@ -11,10 +14,35 @@ var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 builder.Services.AddDbContext<CinemaSharpContext>(options =>
                 options.UseNpgsql("Host=trumpet.db.elephantsql.com;Port=5432;Database=jfteeekn;Username=jfteeekn;Password=5408W67bMpL4DB3O7BMlvoo_YhAs_dlm;"));
+
+// Auth
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+var secretKey = configuration["JWTSettings:SecretKey"];
+var key = Encoding.UTF8.GetBytes(secretKey);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "your-issuer",
+            ValidAudience = "your-audience",
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
 // Add services to the container.
 
 builder.Services.AddControllers();
 
+builder.Services.AddSingleton(configuration);
 builder.Services.AddTransient<IMovieService, MovieService>();
 builder.Services.AddTransient<ITicketService, TicketService>();
 builder.Services.AddTransient<IScreeningService, ScreeningService>();
@@ -45,6 +73,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
