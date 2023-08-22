@@ -20,6 +20,7 @@ export const AdminContext = createContext({
 
 export const CookieContext = createContext({
   setCookie: () => {},
+  getCookie: () => {},
 });
 
 function App() {
@@ -33,13 +34,33 @@ function App() {
     )}; expires=${expires}; path=/`;
   };
 
+  const getCookie = (name) => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return decodeURIComponent(cookie.substring(name.length + 1));
+      }
+    }
+    return null;
+  };
+
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("cinemaSharpUser");
+    const jwtToken = getCookie("jwt_token");
+    if (jwtToken) {
+      setUser(JSON.parse(atob(jwtToken.split(".")[1])).unique_name);
+      setIsAdmin(
+        JSON.parse(atob(jwtToken.split(".")[1])).role === "admin" ? true : false
+      );
+    }
+    /* const loggedInUser = localStorage.getItem("cinemaSharpUser");
     if (loggedInUser) {
       setUser(loggedInUser);
     } else {
       setIsAdmin(false);
-    }
+    }*/
   }, []);
 
   return (

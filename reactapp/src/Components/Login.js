@@ -32,11 +32,11 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (adminChecked) {
+    /*if (adminChecked) {
       fetchLogin("/user/login/admin");
-    } else {
-      fetchLogin("/user/login");
-    }
+    } else {*/
+    fetchLogin("/user/login");
+    // }
   };
 
   const fetchLogin = async (URL) => {
@@ -58,13 +58,13 @@ const Login = (props) => {
         console.log(token);
         console.log(JSON.parse(atob(token.split(".")[1])).role);
         setCookie("jwt_token", token, 1);
-        localStorage.setItem("cinemaSharpUser", username);
+        /*localStorage.setItem("cinemaSharpUser", username);
         localStorage.setItem("cinemaSharpToken", token);
         if (adminChecked) {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
-        }
+        }*/
         props.onSuccessfulLogin(username);
       }
     } catch (error) {
