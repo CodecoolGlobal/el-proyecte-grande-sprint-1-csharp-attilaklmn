@@ -17,13 +17,13 @@ import { useContext, useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { AdminContext } from "../App";
+import { AdminContext, UserContext } from "../App";
 
 const pages = ["Filmlist", "Program", "Reservation", "Login"];
-const userMenu = ["usermenu1", "usermenu2"];
 
 function ResponsiveAppBar() {
   const { isAdmin, adminView, setAdminView } = useContext(AdminContext);
+  const { user } = useContext(UserContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -160,22 +160,12 @@ function ResponsiveAppBar() {
             >
               Reservation
             </Button>
-            <Button
-              key="user"
-              onClick={() => {
-                handleCloseNavMenu();
-                navigate("/user");
-              }}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              User
-            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -194,11 +184,15 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {userMenu.map((e) => (
-                <MenuItem key={e} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{e}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem
+                key="user"
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigate("/user");
+                }}
+              >
+                <Typography textAlign="center">Login/Logout</Typography>
+              </MenuItem>
               {isAdmin && (
                 <FormGroup
                   style={{
