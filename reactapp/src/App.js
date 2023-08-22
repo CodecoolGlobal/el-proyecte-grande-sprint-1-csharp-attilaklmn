@@ -15,7 +15,9 @@ export const UserContext = createContext({
 
 export const AdminContext = createContext({
   isAdmin: false,
+  adminView: false,
   setIsAdmin: () => {},
+  setAdminView: () => {},
 });
 
 export const CookieContext = createContext({
@@ -27,6 +29,7 @@ export const CookieContext = createContext({
 function App() {
   const [user, setUser] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminView, setAdminView] = useState(false);
 
   const setCookie = (name, value, hours) => {
     const expires = new Date(Date.now() + hours * 3600 * 1000).toUTCString();
@@ -67,7 +70,9 @@ function App() {
       <BrowserRouter>
         <CookieContext.Provider value={{ setCookie, getCookie, clearCookie }}>
           <UserContext.Provider value={{ user, setUser }}>
-            <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
+            <AdminContext.Provider
+              value={{ isAdmin, setIsAdmin, adminView, setAdminView }}
+            >
               <ResponsiveAppBar />
               <Routes>
                 <Route exact path="/" element={<Home />} />

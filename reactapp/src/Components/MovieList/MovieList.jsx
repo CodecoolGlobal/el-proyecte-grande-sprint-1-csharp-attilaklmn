@@ -6,7 +6,7 @@ import "./MovieList.css";
 
 const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
-  const { isAdmin, setIsAdmin } = useContext(AdminContext);
+  const { adminView } = useContext(AdminContext);
 
   useEffect(() => {
     fetch("/list")
@@ -16,7 +16,7 @@ const MovieList = () => {
 
   return (
     <>
-      {isAdmin && (
+      {adminView && (
         <div id="movieForm">
           {<MovieForm movieList={movieList} setMovieList={setMovieList} />}
         </div>

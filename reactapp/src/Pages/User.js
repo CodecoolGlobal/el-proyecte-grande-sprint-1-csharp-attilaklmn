@@ -7,14 +7,15 @@ import { AdminContext, CookieContext, UserContext } from "../App";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
-  const { isAdmin, setIsAdmin } = useContext(AdminContext);
+  const { setIsAdmin, setAdminView } = useContext(AdminContext);
   const { clearCookie } = useContext(CookieContext);
   const [choiceState, setChoiseState] = useState("initial");
 
   const handleLogout = (e) => {
     setUser();
     setIsAdmin(false);
-    clearCookie('jwt_token');
+    setAdminView(false);
+    clearCookie("jwt_token");
   };
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const User = () => {
           </Button>
         )}
         {choiceState === "login" ? (
-          <Login onSuccessfulLogin={setUser} onBackClick={setChoiseState} />
+          <Login onBackClick={setChoiseState} />
         ) : null}
         {choiceState === "register" ? (
           <Register onBackClick={setChoiseState} />
