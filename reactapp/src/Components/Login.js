@@ -5,10 +5,11 @@ import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { AdminContext } from "../App";
+import { AdminContext, CookieContext } from "../App";
 
 const Login = (props) => {
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
+  const { setCookie } = useContext(CookieContext);
 
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false);
@@ -31,11 +32,7 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (adminChecked) {
-      fetchLogin("/user/login/admin");
-    } else {
-      fetchLogin("/user/login");
-    }
+    fetchLogin("/user/login");
   };
 
   const fetchLogin = async (URL) => {
@@ -50,16 +47,13 @@ const Login = (props) => {
       });
       if (!response.ok) {
         const data = await response.json();
-        console.log(0);
         throw new Error(data.Message);
       } else {
-        console.log(1);
-        localStorage.setItem("cinemaSharpUser", username);
-        if (adminChecked) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
+        const data = await response.json();
+        const token = data.token;
+        console.log(token);
+        console.log(JSON.parse(atob(token.split(".")[1])).role);
+        setCookie("jwt_token", token, 1);
         props.onSuccessfulLogin(username);
       }
     } catch (error) {

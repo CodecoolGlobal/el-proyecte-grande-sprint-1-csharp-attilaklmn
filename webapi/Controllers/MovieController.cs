@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.Model.DTOs;
 using webapi.Model.Entity;
 using webapi.Service;
@@ -40,6 +41,7 @@ public class MovieController : ControllerBase
     //}
     
     [HttpPost]
+    [Authorize(Roles = "admin")]
     public IActionResult AddMovie([FromBody] MovieModelDto movieModelDto)
     {
         var addedMovie = _movieService.AddMovie(movieModelDto);
