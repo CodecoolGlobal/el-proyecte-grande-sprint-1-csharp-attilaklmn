@@ -52,6 +52,7 @@ public class UserController : ControllerBase
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Admin ? "admin" : "user"),
             }),
             Expires = DateTime.UtcNow.AddHours(1),
