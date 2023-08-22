@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { CookieContext } from "../../../App";
 import "./MovieForm.css";
 
 const MovieForm = ({ movieList, setMovieList }) => {
+  const { getCookie } = useContext(CookieContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -24,17 +27,20 @@ const MovieForm = ({ movieList, setMovieList }) => {
       }
     }
 
+    const jwtToken = getCookie("jwt_token");
+
     fetch(`/list`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
       },
       body: JSON.stringify(movieData),
     })
       .then((res) => res.json())
       .then((movie) => setMovieList([...movieList, movie]));
 
-      document.getElementById("movie-form").reset();
+    document.getElementById("movie-form").reset();
   };
 
   return (
