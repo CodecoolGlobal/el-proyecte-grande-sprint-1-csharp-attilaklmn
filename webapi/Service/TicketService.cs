@@ -20,10 +20,10 @@ namespace webapi.Service
             return tickets;
         }
 
-        public async Task<IEnumerable<long>> GetReservedSeatIdsByScreeningId(long Id)
+        public async Task<IEnumerable<Ticket>> GetTicketsByScreeningId(long Id)
         {
-            var seatIds = await _context.Tickets.Where(t => t.Screening.Id == Id).Select(e => e.Seat.Id).ToListAsync();
-            return seatIds;
+            var tickets = await _context.Tickets.Where(t => t.Screening.Id == Id).ToListAsync();
+            return tickets;
         }
 
         public async Task<bool> ReserveTicket(ReserveTicketRequest request)

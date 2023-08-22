@@ -36,19 +36,11 @@ namespace webapi.Controllers
             }
         }
 
-        //[HttpPost("isseatreserved")]
-        //public IActionResult IsSeatReserved([FromBody] ReservedChecker reservedChecker)
-        //{
-        //    bool isSeatReserved = _reservationService.IsSeatReserved(reservedChecker);
-
-        //    return Ok(new { reserved = isSeatReserved });
-        //}
-
         [HttpGet("screening/{screeningId}")]
         public async Task<IActionResult> GetReservedSeatIdsByScreeningId(long screeningId)
         {
-            IEnumerable<long> reservedSeats = await _ticketService.GetReservedSeatIdsByScreeningId(screeningId);
-            return Ok(reservedSeats);
+            IEnumerable<Ticket> reservedTickets = await _ticketService.GetTicketsByScreeningId(screeningId);
+            return Ok(reservedTickets);
         }
     }
 }
