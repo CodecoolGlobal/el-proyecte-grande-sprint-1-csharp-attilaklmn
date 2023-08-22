@@ -8,8 +8,8 @@ import { AdminContext } from "../App";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
-  const [choiceState, setChoiseState] = useState("initial");
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
+  const [choiceState, setChoiseState] = useState("initial");
 
   const handleLogout = (e) => {
     localStorage.clear();

@@ -18,9 +18,20 @@ export const AdminContext = createContext({
   setIsAdmin: () => {},
 });
 
+export const CookieContext = createContext({
+  setCookie: () => {},
+});
+
 function App() {
   const [user, setUser] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const setCookie = (name, value, hours) => {
+    const expires = new Date(Date.now() + hours * 3600 * 1000).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(
+      value
+    )}; expires=${expires}; path=/`;
+  };
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("cinemaSharpUser");
@@ -34,21 +45,23 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <UserContext.Provider value={{ user, setUser }}>
-          <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
-            <ResponsiveAppBar />
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route path="/filmlist" element={<Filmlist />} />
-              <Route path="/program" element={<Program />} />
-              <Route
-                path="/reservation/:screeningId/:roomId"
-                element={<Reservation />}
-              />
-              <Route path="/user" element={<User />} />
-            </Routes>
-          </AdminContext.Provider>
-        </UserContext.Provider>
+        <CookieContext.Provider value={{ setCookie }}>
+          <UserContext.Provider value={{ user, setUser }}>
+            <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
+              <ResponsiveAppBar />
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/filmlist" element={<Filmlist />} />
+                <Route path="/program" element={<Program />} />
+                <Route
+                  path="/reservation/:screeningId/:roomId"
+                  element={<Reservation />}
+                />
+                <Route path="/user" element={<User />} />
+              </Routes>
+            </AdminContext.Provider>
+          </UserContext.Provider>
+        </CookieContext.Provider>
       </BrowserRouter>
     </div>
   );
