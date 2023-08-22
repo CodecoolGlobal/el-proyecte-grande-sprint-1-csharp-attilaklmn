@@ -188,6 +188,7 @@ function ResponsiveAppBar() {
                 key="user"
                 onClick={() => {
                   handleCloseNavMenu();
+                  handleCloseUserMenu();
                   navigate("/user");
                 }}
               >
