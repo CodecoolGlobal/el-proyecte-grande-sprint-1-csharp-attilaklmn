@@ -21,6 +21,7 @@ export const AdminContext = createContext({
 export const CookieContext = createContext({
   setCookie: () => {},
   getCookie: () => {},
+  clearCookie: () => {},
 });
 
 function App() {
@@ -32,6 +33,10 @@ function App() {
     document.cookie = `${name}=${encodeURIComponent(
       value
     )}; expires=${expires}; path=/`;
+  };
+
+  const clearCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   };
 
   const getCookie = (name) => {
@@ -55,18 +60,12 @@ function App() {
         JSON.parse(atob(jwtToken.split(".")[1])).role === "admin" ? true : false
       );
     }
-    /* const loggedInUser = localStorage.getItem("cinemaSharpUser");
-    if (loggedInUser) {
-      setUser(loggedInUser);
-    } else {
-      setIsAdmin(false);
-    }*/
   }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
-        <CookieContext.Provider value={{ setCookie }}>
+        <CookieContext.Provider value={{ setCookie, getCookie, clearCookie }}>
           <UserContext.Provider value={{ user, setUser }}>
             <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
               <ResponsiveAppBar />

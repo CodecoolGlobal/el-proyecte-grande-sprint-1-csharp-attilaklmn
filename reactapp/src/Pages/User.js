@@ -3,18 +3,18 @@ import Button from "@mui/material/Button";
 import { useState, Fragment, useContext, useEffect } from "react";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
-import { UserContext } from "../App";
-import { AdminContext } from "../App";
+import { AdminContext, CookieContext, UserContext } from "../App";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
   const { isAdmin, setIsAdmin } = useContext(AdminContext);
+  const { clearCookie } = useContext(CookieContext);
   const [choiceState, setChoiseState] = useState("initial");
 
   const handleLogout = (e) => {
-    localStorage.clear();
     setUser();
     setIsAdmin(false);
+    clearCookie('jwt_token');
   };
 
   useEffect(() => {
