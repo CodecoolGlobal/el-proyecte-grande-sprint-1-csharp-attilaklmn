@@ -54,13 +54,13 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
           </div>
         );
       }
-      setSeatGrid(seatGrid);
       setIsLoading(false);
+      setSeatGrid(seatGrid);
     };
 
     
   
-    return isLoading? <div>Loading..</div> : <div>{seatGrid}</div>;
+    return <div>{seatGrid}</div>;
   };
   
   export default SeatGrid;

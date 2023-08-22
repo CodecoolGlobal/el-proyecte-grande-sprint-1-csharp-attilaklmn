@@ -1,3 +1,6 @@
+import { Button } from "@mui/material";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const fetchIsSeatReserved = async (screeningId, seatId) => {
     const response = await fetch("/reservation/isseatreserved", {
@@ -35,6 +38,12 @@ const reserveSeat = async (screeningId, seatId, user, reRender) => {
 }
 
 const Seat = ({seat, screeningId, isReserved, setIsLoading, user, reRender}) => {
+
+    const [isClicked, setIsClicked] = useState(false);
+
+    useEffect(() => {
+        setIsClicked(false);
+    }, [isReserved])
     
   const seatStyle = {
     width: "50px",
@@ -50,11 +59,16 @@ const Seat = ({seat, screeningId, isReserved, setIsLoading, user, reRender}) => 
     cursor: "pointer"
   };
   const clickHandler = () => {
+    setIsClicked(true);
     setIsLoading(true);
     reserveSeat(screeningId, seat.id, user, reRender);
       }
 
-  return (<div onClick={clickHandler} style={seatStyle}>{seat.row}-{seat.number}</div>);
+  return (<Button sx={{
+    height: 45,
+    marginTop: 0.5,
+    cursor: isReserved ? "not-allowed" : "pointer"
+  }} variant="contained" color={isReserved ? "error" : "success"} onClick={clickHandler} disabled={isClicked} >{seat.row}-{seat.number}</Button>);
 };
 
 export default Seat;
