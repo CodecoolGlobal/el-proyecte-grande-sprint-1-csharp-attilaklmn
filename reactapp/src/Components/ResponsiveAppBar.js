@@ -172,25 +172,6 @@ function ResponsiveAppBar() {
               User
             </Button>
           </Box>
-          {isAdmin && (
-            <FormGroup
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={adminChecked}
-                    onChange={handleAdminCheckChange}
-                  />
-                }
-                label="Login as admin"
-              />
-            </FormGroup>
-          )}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -219,6 +200,25 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">{e}</Typography>
                 </MenuItem>
               ))}
+              {isAdmin && (
+                <FormGroup
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={adminChecked}
+                        onChange={handleAdminCheckChange}
+                      />
+                    }
+                    label="Adminview"
+                  />
+                </FormGroup>
+              )}
             </Menu>
           </Box>
         </Toolbar>

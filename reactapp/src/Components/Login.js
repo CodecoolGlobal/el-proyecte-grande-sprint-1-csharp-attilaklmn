@@ -46,6 +46,7 @@ const Login = (props) => {
         console.log(JSON.parse(atob(token.split(".")[1])).role);
         setCookie("jwt_token", token, 1);
         props.onSuccessfulLogin(username);
+        window.location.reload();
       }
     } catch (error) {
       alert("Error: " + error.message);
