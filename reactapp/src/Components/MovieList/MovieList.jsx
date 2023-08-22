@@ -6,7 +6,7 @@ import "./MovieList.css";
 
 const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
-  const { adminView, setAdminView } = useContext(AdminContext);
+  const { adminView } = useContext(AdminContext);
 
   useEffect(() => {
     fetch("/list")

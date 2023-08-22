@@ -17,14 +17,13 @@ import { useContext, useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { AdminContext, CookieContext } from "../App";
+import { AdminContext } from "../App";
 
 const pages = ["Filmlist", "Program", "Reservation", "Login"];
 const userMenu = ["usermenu1", "usermenu2"];
 
 function ResponsiveAppBar() {
-  const { isAdmin, setIsAdmin, adminView, setAdminView } =
-    useContext(AdminContext);
+  const { isAdmin, adminView, setAdminView } = useContext(AdminContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -215,7 +214,7 @@ function ResponsiveAppBar() {
                         onChange={handleAdminCheckChange}
                       />
                     }
-                    label="Adminview"
+                    label="Admin view"
                   />
                 </FormGroup>
               )}
