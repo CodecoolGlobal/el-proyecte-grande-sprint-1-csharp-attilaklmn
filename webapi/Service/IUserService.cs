@@ -5,7 +5,7 @@ namespace webapi.Service;
 
 public interface IUserService
 {
-    Task LoginUserAsync(LoginModelDto loginModelDto);
+    Task<User> LoginUserAsync(LoginModelDto loginModelDto);
     Task LoginAdminAsync(LoginModelDto loginModelDto);
     Task RegisterUserAsync(RegistrationModelDto registrationModelDto);
 }

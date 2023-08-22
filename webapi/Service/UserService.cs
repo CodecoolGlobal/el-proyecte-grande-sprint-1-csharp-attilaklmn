@@ -18,7 +18,7 @@ public class UserService : IUserService
         _userDataValidator = userDataValidator;
     }
 
-    public async Task LoginUserAsync(LoginModelDto loginModelDto)
+    public async Task<User> LoginUserAsync(LoginModelDto loginModelDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);
 
@@ -31,6 +31,7 @@ public class UserService : IUserService
         {
             throw new UnauthorizedAccessException("Invalid username or password!");
         }
+        return user;
     }
 
     public async Task LoginAdminAsync(LoginModelDto loginModelDto)
