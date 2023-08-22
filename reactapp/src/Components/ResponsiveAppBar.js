@@ -192,7 +192,9 @@ function ResponsiveAppBar() {
                   navigate("/user");
                 }}
               >
-                <Typography textAlign="center">Login/Logout</Typography>
+                <Typography textAlign="center">
+                  {user ? "Logout" : "Login/Register"}
+                </Typography>
               </MenuItem>
               {isAdmin && (
                 <FormGroup
