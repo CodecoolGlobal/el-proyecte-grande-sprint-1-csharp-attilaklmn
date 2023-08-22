@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Seat from "./Seat";
 
-const fetchReservedSeatIds = async (screeningId) => {
+const fetchReservedTickets = async (screeningId) => {
     const response = await fetch(`/ticket/screening/${screeningId}`);
     const data = response.json();
     return data;
@@ -12,31 +12,30 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
     const [seatGrid, setSeatGrid] = useState(null);
 
     useEffect(() => {
-        fetchReservedSeatIds(screeningId).then((data) => {
+        fetchReservedTickets(screeningId).then((data) => {
             createTable(data)
             setIsLoading(false);
         });
     }, [])
 
     const reRender = () => {
-      fetchReservedSeatIds(screeningId).then((data) => {
-        createTable(data)
+      fetchReservedTickets(screeningId).then((tickets) => {
+        createTable(tickets)
     });
     }
 
-    const createTable = (data) => {
+    const createTable = (tickets) => {
       const seatGrid = [];
       const seatsToRender = [...seats];
       for (let row = 0; row < room.rowNumber; row++) {
         const seatRow = [];
         for (let col = 0; col < room.columnNumber; col++) {
           const seat = seatsToRender.shift();
-          
-          const isReserved = data.includes(seat.id);
+          const ticket = tickets.find(t => t.seatId == seat.id);
           const seatComponent = (
             <Seat
               key={seat.id}
-              isReserved={isReserved}
+              isReserved={ticket ? true : false}
               seat={seat}
               screeningId={screeningId}
               setIsLoading={e => setIsLoading(e)}
