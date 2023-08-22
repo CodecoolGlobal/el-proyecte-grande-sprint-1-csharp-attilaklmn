@@ -2,23 +2,14 @@ import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { AdminContext, CookieContext } from "../App";
+import { CookieContext } from "../App";
 
 const Login = (props) => {
-  const { isAdmin, setIsAdmin } = useContext(AdminContext);
   const { setCookie } = useContext(CookieContext);
 
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
-  const [adminChecked, setAdminChecked] = useState(false);
-
-  const handleAdminCheckChange = (event) => {
-    setAdminChecked(!adminChecked);
-  };
 
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
@@ -54,7 +45,7 @@ const Login = (props) => {
         console.log(token);
         console.log(JSON.parse(atob(token.split(".")[1])).role);
         setCookie("jwt_token", token, 1);
-        props.onSuccessfulLogin(username);
+        window.location.reload();
       }
     } catch (error) {
       alert("Error: " + error.message);
@@ -116,23 +107,6 @@ const Login = (props) => {
             />
           </div>
         </div>
-        <FormGroup
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={adminChecked}
-                onChange={handleAdminCheckChange}
-              />
-            }
-            label="Login as admin"
-          />
-        </FormGroup>
         <Button variant="contained" type="submit">
           Login
         </Button>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { CookieContext } from "../../../App";
 import "./MovieForm.css";
 
