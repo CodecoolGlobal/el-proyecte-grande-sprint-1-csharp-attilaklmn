@@ -41,13 +41,6 @@ public class UserController : ControllerBase
         return Ok("User created successfully!");
     }
 
-    [HttpPost("login/admin")]
-    public async Task<IActionResult> LoginAdmin([FromBody] LoginModelDto loginModelDto)
-    {
-        await _userService.LoginAdminAsync(loginModelDto);
-        return Ok("Admin logged in!");
-    }
-    
     private string GenerateJwtToken(User user)
     {
         var secretKey = _configuration["JWTSettings:SecretKey"];
