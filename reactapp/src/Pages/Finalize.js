@@ -15,6 +15,18 @@ const fetchReservedTickets = async (screeningId, userId, jwtToken) => {
     return data;
 }
 
+const fetchToFinalizeTickets = async (screeningId, userId, jwtToken) => {
+    const response = await fetch(`/ticket/${screeningId}/${userId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        }
+      });
+    const data = response.json();
+    return data;
+}
+
 
 const Finalize = () => {
     const { getCookie } = useContext(CookieContext)
@@ -33,6 +45,9 @@ const Finalize = () => {
         })
     }, [])
     
+    const handleFinalize = () => {
+        fetchToFinalizeTickets(screeningId, userId, jwtToken);
+    }
     
 
     return (
@@ -40,7 +55,7 @@ const Finalize = () => {
             {!isLoading && tickets.map(t => {
                 return (<div>{t.id}</div>)
             })}
-            <Button>Finalize</Button>
+            <Button onClick={handleFinalize}>Finalize</Button>
         </div>
     )
 }
