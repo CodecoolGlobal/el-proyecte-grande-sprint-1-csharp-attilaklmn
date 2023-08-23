@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Paper } from "@mui/material";
+import AccountCredentials from "../Components/AccountCredentials";
 
 const Account = () => {
   return (
@@ -19,7 +20,9 @@ const Account = () => {
           margin: 3,
         }}
         elevation={3}
-      ></Paper>
+      >
+        <AccountCredentials></AccountCredentials>
+      </Paper>
     </Container>
   );
 };

@@ -6,73 +6,38 @@ import { useState } from "react";
 import {
   checkEmailRegex,
   checkPasswordRegex,
-  checkUsernameRegex,
   checkIfPasswordsMatch,
 } from "../Utilities/AccountUtils";
 
-const Register = (props) => {
-  const [username, setUsername] = useState("");
+const AccountCredentials = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
-  const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [secondPasswordError, setSecondPasswordError] = useState(false);
   const [emailErrorText, setEmailErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
-  const [usernameErrorText, setUsernameErrorText] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (checkFields()) {
-      fetchRegister();
+  const handleEmailChangeSubmit = () => {
+    if (checkEmailRegex(email, setEmailError, setEmailErrorText)) {
+      // fetchEmailChange
     }
   };
 
-  const fetchRegister = async () => {
-    try {
-      const response = await fetch("/user/register", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password,
-        }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.Message);
-      } else {
-        alert("registered");
-        window.location.reload(false);
-      }
-    } catch (error) {
-      alert("Error: " + error.message);
+  const handlePasswordChangeSubmit = () => {
+    if (
+      checkPasswordRegex(password, setPasswordError, setPasswordErrorText) &&
+      checkIfPasswordsMatch(
+        password,
+        secondPassword,
+        setSecondPasswordError,
+        setSecondPasswordErrorText
+      )
+    ) {
+      //fetchPasswordChange
     }
-  };
-
-  const checkFields = () => {
-    const usernameError = checkUsernameRegex(
-      username,
-      setUsernameError,
-      setUsernameErrorText
-    );
-    const emailError = checkEmailRegex(email, setEmailError, setEmailErrorText);
-    const passwordError = checkPasswordRegex(
-      password,
-      setPasswordError,
-      setPasswordErrorText
-    );
-    const secondPasswordError = checkIfPasswordsMatch(
-      password,
-      secondPassword,
-      setSecondPasswordError,
-      setSecondPasswordErrorText
-    );
-    return usernameError && emailError && passwordError && secondPasswordError;
   };
 
   const handleEmailChange = (e) => {
@@ -90,14 +55,9 @@ const Register = (props) => {
     setSecondPassword(newPassword);
   };
 
-  const handleUsernameChange = (e) => {
-    const newUsername = e.target.value;
-    setUsername(newUsername);
-  };
-
   return (
     <div>
-      Registration
+      AccountCredentials
       <Box
         component="form"
         sx={{
@@ -105,7 +65,6 @@ const Register = (props) => {
         }}
         noValidate
         autoComplete="off"
-        onSubmit={handleSubmit}
       >
         <div
           style={{
@@ -116,15 +75,6 @@ const Register = (props) => {
           }}
         >
           <TextField
-            id="username"
-            label="Username"
-            type="username"
-            value={username}
-            onChange={handleUsernameChange}
-            error={usernameError}
-            helperText={usernameError ? usernameErrorText : ""}
-          />
-          <TextField
             id="email"
             label="Email"
             type="email"
@@ -133,6 +83,13 @@ const Register = (props) => {
             error={emailError}
             helperText={emailError ? emailErrorText : ""}
           />
+          <Button
+            variant="contained"
+            type="button"
+            onClick={handleEmailChangeSubmit}
+          >
+            Change E-mail
+          </Button>
           <TextField
             id="password"
             label="Password"
@@ -152,15 +109,16 @@ const Register = (props) => {
             helperText={secondPasswordError ? secondPasswordErrorText : ""}
           />
         </div>
-        <Button variant="contained" type="submit">
-          Register
+        <Button
+          variant="contained"
+          type="button"
+          onClick={handlePasswordChangeSubmit}
+        >
+          Change password
         </Button>
       </Box>
-      <Button variant="contained" onClick={() => props.onBackClick("initial")}>
-        Back
-      </Button>
     </div>
   );
 };
 
-export default Register;
+export default AccountCredentials;
