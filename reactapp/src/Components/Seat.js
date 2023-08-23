@@ -45,7 +45,11 @@ const Seat = ({seat, screeningId, setIsLoading, user, reRender, ticket}) => {
             return "success";
         }
         if (ticket.userId == user.id) {
-            return "secondary";
+            if (ticket.finalized) {
+                return "bought";
+            } else {
+                return "reserved";
+            }
         } else {
             return "error"
         }
