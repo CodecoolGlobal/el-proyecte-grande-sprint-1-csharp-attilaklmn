@@ -24,7 +24,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<Movie> GetMovieById(long id)
+    public async Task<IEnumerable<Movie>> GetMovieById(long id)
     {
         return await _movieService.GetMovieById(id);
     }

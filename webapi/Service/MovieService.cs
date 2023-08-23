@@ -36,10 +36,11 @@ public class MovieService : IMovieService
         return movieEntity;
     }
 
-    public async Task<Movie> GetMovieById(long movieId)
+    public async Task<IEnumerable<Movie>> GetMovieById(long movieId)
     {
         List<Movie> movies = await _context.Movies.ToListAsync();
-        Movie movie = movies.FirstOrDefault(x => x.IsThisThatMovie(movieId));
+        List<Movie> movie = new List<Movie>();
+        movie.Add(movies.FirstOrDefault(x => x.IsThisThatMovie(movieId)));
         return movie;
     }
 }
