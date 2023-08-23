@@ -3,18 +3,19 @@ import Button from "@mui/material/Button";
 import { useState, Fragment, useContext, useEffect } from "react";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
-import { UserContext } from "../App";
-import { AdminContext } from "../App";
+import { AdminContext, CookieContext, UserContext } from "../App";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
+  const { setIsAdmin, setAdminView } = useContext(AdminContext);
+  const { clearCookie } = useContext(CookieContext);
   const [choiceState, setChoiseState] = useState("initial");
-  const { isAdmin, setIsAdmin } = useContext(AdminContext);
 
   const handleLogout = (e) => {
-    localStorage.clear();
     setUser();
     setIsAdmin(false);
+    setAdminView(false);
+    clearCookie("jwt_token");
   };
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const User = () => {
           </Button>
         )}
         {choiceState === "login" ? (
-          <Login onSuccessfulLogin={setUser} onBackClick={setChoiseState} />
+          <Login onBackClick={setChoiseState} />
         ) : null}
         {choiceState === "register" ? (
           <Register onBackClick={setChoiseState} />
