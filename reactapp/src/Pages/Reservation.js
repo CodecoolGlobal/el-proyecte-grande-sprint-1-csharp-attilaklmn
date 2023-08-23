@@ -1,5 +1,5 @@
-import { Container, Paper } from "@mui/material";
-import { useParams } from "react-router";
+import { Button, Container, Paper } from "@mui/material";
+import { useParams, useNavigate } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import SeatGrid from "../Components/SeatGrid";
 import { CookieContext } from "../App";
@@ -23,6 +23,8 @@ const Reservation = () => {
     const [seats, setSeats] = useState(null);
     const { getCookie } = useContext(CookieContext)
     const [user, setUser] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchRoom(roomId).then(room => {
@@ -49,7 +51,6 @@ const Reservation = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        width: "100%",
       }}
     >
       <Paper
@@ -69,6 +70,9 @@ const Reservation = () => {
         {isLoading && <p>Loading..</p>}
         {!isLoading && !user && <div>Please login for ticket reservation.</div>}
         {!isLoading && user && <SeatGrid screeningId={screeningId} room={room} seats={seats} user={user} />}
+        {!isLoading && user && <Button onClick={() => navigate(
+                      `/reservation/${screeningId}/finalize`
+                    )} >Finalize reservation</Button>}
       </Paper>
     </Container>
     )
