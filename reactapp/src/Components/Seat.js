@@ -31,9 +31,13 @@ const Seat = ({seat, screeningId, setIsLoading, user, reRender, ticket}) => {
     }, [ticket])
     
     const clickHandler = () => {
-        setIsClicked(true);
-        setIsLoading(true);
-        reserveSeat(screeningId, seat.id, user.name, reRender);
+        if (!ticket) {
+            setIsClicked(true);
+            setIsLoading(true);
+            reserveSeat(screeningId, seat.id, user.name, reRender);
+        } else {
+            alert("ticket unavailable")
+        }
     }
 
     const setColor = (ticket, user) => {
@@ -41,7 +45,7 @@ const Seat = ({seat, screeningId, setIsLoading, user, reRender, ticket}) => {
             return "success";
         }
         if (ticket.userId == user.id) {
-            return "primary";
+            return "secondary";
         } else {
             return "error"
         }
@@ -49,15 +53,18 @@ const Seat = ({seat, screeningId, setIsLoading, user, reRender, ticket}) => {
 
     return (
         <Button sx={{
-            height: 45,
-            marginTop: 0.5,
-            cursor: ticket ? "not-allowed" : "pointer"
+            height: 35,
+            minWidth: 50,
+            width: 50,
+            margin: 0.1,
+            cursor: ticket ? "not-allowed" : "pointer",
+            fontSize: 12
             }}
             variant="contained" 
             color={setColor(ticket, user)} 
             onClick={clickHandler} 
             disabled={isClicked} >
-                {seat.row}-{seat.number}
+                {seat.number}
         </Button>);
 };
 
