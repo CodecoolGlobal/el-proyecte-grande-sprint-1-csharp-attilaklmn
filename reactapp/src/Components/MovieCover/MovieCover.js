@@ -1,4 +1,4 @@
-import API_KEY from "../config";
+import API_KEY from "../../config";
 
 import React, { useEffect, useState } from "react";
 
@@ -14,20 +14,18 @@ const MovieCover = ({ movieTitle, size }) => {
       .then((movieData) => {
         setLoading(false);
         if (movieData.results.length > 0) {
-          setResponse(movieData.results[0].poster_path);
+          setResponse(
+            "http://image.tmdb.org/t/p/" +
+              size +
+              movieData.results[0].poster_path
+          );
+        } else {
+          setResponse(process.env.PUBLIC_URL + `/DefaultCover/defaultCover-${size}.jpg`);
         }
       });
-  });
+  }, []);
 
-  return response !== "" ? (
-    loading === false ? (
-      <img src={`http://image.tmdb.org/t/p/${size}` + response} alt="" />
-    ) : (
-      <p>Image loading...</p>
-    )
-  ) : (
-    <p>No cover available.</p>
-  );
+  return loading ? <p>Image loading...</p> : <img src={response} alt="" />;
 };
 
 export default MovieCover;
