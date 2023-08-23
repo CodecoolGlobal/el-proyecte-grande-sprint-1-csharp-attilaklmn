@@ -26,6 +26,12 @@ namespace webapi.Service
             return tickets;
         }
 
+        public async Task<IEnumerable<Ticket>> GetUnfinalizedTickets(long screeningId, long userId)
+        {
+            var tickets = await _context.Tickets.Where(t => t.Screening.Id == screeningId && t.UserId == userId && !t.Finalized).ToListAsync();
+            return tickets;
+        }
+
         public async Task<bool> ReserveTicket(ReserveTicketRequest request)
         {
             using var transaction = _context.Database.BeginTransaction();

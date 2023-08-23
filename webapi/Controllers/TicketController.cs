@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.Model;
 using webapi.Model.Entity;
 using webapi.Service;
@@ -40,6 +41,13 @@ namespace webapi.Controllers
         public async Task<IActionResult> GetReservedSeatIdsByScreeningId(long screeningId)
         {
             IEnumerable<Ticket> reservedTickets = await _ticketService.GetTicketsByScreeningId(screeningId);
+            return Ok(reservedTickets);
+        }
+
+        [HttpGet("{screeningId}/{userId}")]
+        public async Task<IActionResult> GetUnfinalizedTickets(long screeningId, long userId)
+        {
+            IEnumerable<Ticket> reservedTickets = await _ticketService.GetUnfinalizedTickets(screeningId, userId);
             return Ok(reservedTickets);
         }
     }
