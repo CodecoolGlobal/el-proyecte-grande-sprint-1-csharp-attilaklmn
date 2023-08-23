@@ -1,7 +1,10 @@
-import MovieCover from "../../MovieCover";
+import { useNavigate } from "react-router";
+import MovieCover from "../../MovieCover/MovieCover";
 import "./MovieCard.css";
 
 const MovieCard = ({ movieList }) => {
+  const navigate = useNavigate();
+
   return movieList.map((movie) => {
     return (
       <div className="movieCard" key={movie.id}>
@@ -16,6 +19,11 @@ const MovieCard = ({ movieList }) => {
             })}
           </div>
           <div className="movieSummary">{movie.summary}</div>
+          <div className="watchButton"><button onClick={() => {
+                    navigate(
+                      `/program/${movie.id}`
+                    );
+                  }}>Buy Ticket</button></div>
         </div>
       </div>
     );

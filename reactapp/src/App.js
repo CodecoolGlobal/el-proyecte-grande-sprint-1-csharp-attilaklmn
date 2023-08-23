@@ -78,7 +78,7 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/filmlist" element={<Filmlist />} />
-                <Route path="/program" element={<Program />} />
+                <Route path="/program/:movieId?" element={<Program />} />
                 <Route
                   path="/reservation/:screeningId/:roomId"
                   element={<Reservation />}
