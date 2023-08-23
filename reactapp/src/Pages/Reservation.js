@@ -2,7 +2,7 @@ import { Container, Paper } from "@mui/material";
 import { useParams } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import SeatGrid from "../Components/SeatGrid";
-import { UserContext } from "../App";
+import { CookieContext, UserContext } from "../App";
 
 const fetchRoom = async (roomId) => {
     const response = await fetch(`/room/${roomId}`);
@@ -21,7 +21,8 @@ const Reservation = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [room, setRoom] = useState(null);
     const [seats, setSeats] = useState(null);
-    const { user, setUser } = useContext(UserContext);
+    const { getCookie } = useContext(CookieContext)
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetchRoom(roomId).then(room => {
@@ -30,6 +31,13 @@ const Reservation = () => {
             setSeats(seats);
             setIsLoading(false);
         });;
+    }, [])
+
+    useEffect(() => {
+      const userFromCookie = {}
+      userFromCookie.name = JSON.parse(atob(getCookie("jwt_token").split(".")[1])).unique_name;
+      userFromCookie.id = JSON.parse(atob(getCookie("jwt_token").split(".")[1])).nameid;
+      setUser(userFromCookie);
     }, [])
 
     return (
@@ -56,8 +64,8 @@ const Reservation = () => {
       >
         {!isLoading && `Reservation of (Screening)${screeningId} in ${room.name}`}
         {isLoading && <p>Loading..</p>}
-        {!isLoading && !user && <div>Please login for ticket reservation.</div>}
-        {!isLoading && user && <SeatGrid screeningId={screeningId} room={room} seats={seats} user={user} />}
+        {!isLoading && !getCookie && <div>Please login for ticket reservation.</div>}
+        {!isLoading && getCookie && <SeatGrid screeningId={screeningId} room={room} seats={seats} user={user} />}
       </Paper>
     </Container>
     )
