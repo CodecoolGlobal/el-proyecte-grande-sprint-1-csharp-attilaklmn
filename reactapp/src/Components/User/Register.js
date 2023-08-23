@@ -8,7 +8,7 @@ import {
   checkPasswordRegex,
   checkUsernameRegex,
   checkIfPasswordsMatch,
-} from "../Utilities/AccountUtils";
+} from "../../Utilities/AccountUtils";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");

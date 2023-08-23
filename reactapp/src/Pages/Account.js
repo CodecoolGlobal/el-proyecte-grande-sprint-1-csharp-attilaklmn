@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Paper } from "@mui/material";
-import AccountCredentials from "../Components/AccountCredentials";
+import AccountCredentials from "../Components/User/AccountCredentials";
 
 const Account = () => {
   return (

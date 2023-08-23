@@ -7,7 +7,8 @@ import {
   checkEmailRegex,
   checkPasswordRegex,
   checkIfPasswordsMatch,
-} from "../Utilities/AccountUtils";
+} from "../../Utilities/AccountUtils";
+import DialogPopUp from "../Utilities/DialogPopUp";
 
 const AccountCredentials = () => {
   const [email, setEmail] = useState("");
@@ -19,11 +20,21 @@ const AccountCredentials = () => {
   const [emailErrorText, setEmailErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleEmailChangeSubmit = () => {
     if (checkEmailRegex(email, setEmailError, setEmailErrorText)) {
+      handleClickOpen(true);
       // fetchEmailChange
     }
+  };
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
   };
 
   const handlePasswordChangeSubmit = () => {
@@ -76,7 +87,7 @@ const AccountCredentials = () => {
         >
           <TextField
             id="email"
-            label="Email"
+            label="New Email"
             type="email"
             value={email}
             onChange={handleEmailChange}
@@ -92,7 +103,7 @@ const AccountCredentials = () => {
           </Button>
           <TextField
             id="password"
-            label="Password"
+            label="New Password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
@@ -117,6 +128,7 @@ const AccountCredentials = () => {
           Change password
         </Button>
       </Box>
+      <DialogPopUp open={dialogOpen} handleClose={handleClose}></DialogPopUp>
     </div>
   );
 };
