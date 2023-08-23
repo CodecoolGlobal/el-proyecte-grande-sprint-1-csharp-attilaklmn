@@ -13,14 +13,20 @@ const MovieCover = ({ movieTitle, size }) => {
       .then((res) => res.json())
       .then((movieData) => {
         setLoading(false);
-        setResponse(movieData.results[0].poster_path);
+        if (movieData.results.length > 0) {
+          setResponse(movieData.results[0].poster_path);
+        }
       });
   });
 
-  return loading === false ? (
-    <img src={`http://image.tmdb.org/t/p/${size}` + response} alt="" />
+  return response !== "" ? (
+    loading === false ? (
+      <img src={`http://image.tmdb.org/t/p/${size}` + response} alt="" />
+    ) : (
+      <p>Image loading...</p>
+    )
   ) : (
-    <p>Image loading...</p>
+    <p>No cover available.</p>
   );
 };
 

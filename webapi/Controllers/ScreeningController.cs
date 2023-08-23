@@ -21,11 +21,13 @@ namespace webapi.Controllers
             return await _screeningService.GetAll();
         }
 
-        //[HttpGet("/screeningByMovieId/{id}")]
-        //public IActionResult GetScreenings(Guid id)
-        //{
-        //    return Ok(_screeningService.GetAll().Where(x => x.IsThisThatMovie(id)).ToList());
-        //}
+        [HttpGet("screeningByMovieId/{id}")]
+        public async Task<IActionResult> GetScreeningsById(long id)
+        {
+            var screenings = await _screeningService.GetAll();
+            var filteredScreenings = screenings.Where(x => x.MovieId == id).ToList();
+            return Ok(filteredScreenings);
+        }
 
         //[HttpGet("/isThereScreening/{id}")]
         //public IActionResult IsThereScreen(Guid id)
