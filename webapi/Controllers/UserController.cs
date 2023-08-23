@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using webapi.Model;
@@ -39,6 +40,21 @@ public class UserController : ControllerBase
     {
         await _userService.RegisterUserAsync(registrationModelDto);
         return Ok("User created successfully!");
+    }
+
+    [Authorize]
+    [HttpPost("passcheck")]
+    public async Task<IActionResult> CheckPassword([FromBody] string password)
+    {
+        var uniqueNameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        string username = uniqueNameClaim?.Value;
+
+        if (string.IsNullOrEmpty(username))
+        {
+            return BadRequest("Username claim not found in token.");
+        }
+        await _userService.CheckPasswordMatchAsync(username, password);
+        return Ok("Password match!");
     }
 
     private string GenerateJwtToken(User user)

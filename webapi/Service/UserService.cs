@@ -18,6 +18,19 @@ public class UserService : IUserService
         _userDataValidator = userDataValidator;
     }
 
+    public async Task CheckPasswordMatchAsync(string username, string password)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        if (user == null)
+        {
+            throw new UnauthorizedAccessException("Username database error!");
+        }
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(password, user.Password))
+        {
+            throw new UnauthorizedAccessException("Password mismatch!");
+        }
+    }
+
     public async Task<User> LoginUserAsync(LoginModelDto loginModelDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);

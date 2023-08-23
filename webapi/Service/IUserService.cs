@@ -7,4 +7,5 @@ public interface IUserService
 {
     Task<User> LoginUserAsync(LoginModelDto loginModelDto);
     Task RegisterUserAsync(RegistrationModelDto registrationModelDto);
+    Task CheckPasswordMatchAsync(string username, string password);
 }

@@ -13,9 +13,7 @@ export default function DialogPopUp(props) {
       <Dialog open={props.open} onClose={props.handleClose}>
         <DialogTitle>Confirm with password</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To confirm credential changes, please enter your current password!
-          </DialogContentText>
+          <DialogContentText>{props.text}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -24,11 +22,13 @@ export default function DialogPopUp(props) {
             type="password"
             fullWidth
             variant="standard"
+            value={props.textFieldValue}
+            onChange={props.handleTextChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose}>Cancel</Button>
-          <Button onClick={props.handleClose}>Confirm</Button>
+          <Button onClick={props.handleConfirmClick}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>

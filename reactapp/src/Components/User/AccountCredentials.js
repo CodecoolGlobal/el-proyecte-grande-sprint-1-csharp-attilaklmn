@@ -2,15 +2,18 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   checkEmailRegex,
   checkPasswordRegex,
   checkIfPasswordsMatch,
 } from "../../Utilities/AccountUtils";
 import DialogPopUp from "../Utilities/DialogPopUp";
+import { CookieContext } from "../../App";
 
 const AccountCredentials = () => {
+  const { getCookie } = useContext(CookieContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
@@ -21,11 +24,11 @@ const AccountCredentials = () => {
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleEmailChangeSubmit = () => {
     if (checkEmailRegex(email, setEmailError, setEmailErrorText)) {
       handleClickOpen(true);
-      // fetchEmailChange
     }
   };
 
@@ -35,6 +38,38 @@ const AccountCredentials = () => {
 
   const handleClose = () => {
     setDialogOpen(false);
+    setConfirmPassword("");
+  };
+
+  const handleConfirmClick = async () => {
+    const success = await fetchPasswordCheck();
+    if (success) {
+      console.log("success");
+    }
+  };
+
+  const fetchPasswordCheck = async () => {
+    const jwtToken = getCookie("jwt_token");
+    try {
+      const response = await fetch("/user/passcheck", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        body: JSON.stringify({
+          password: confirmPassword,
+        }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.Message);
+      } else {
+        return true;
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
   };
 
   const handlePasswordChangeSubmit = () => {
@@ -49,6 +84,11 @@ const AccountCredentials = () => {
     ) {
       //fetchPasswordChange
     }
+  };
+
+  const handleConfirmTextChange = (e) => {
+    const newPassword = e.target.value;
+    setConfirmPassword(newPassword);
   };
 
   const handleEmailChange = (e) => {
@@ -68,7 +108,7 @@ const AccountCredentials = () => {
 
   return (
     <div>
-      AccountCredentials
+      Account Credentials
       <Box
         component="form"
         sx={{
@@ -128,7 +168,14 @@ const AccountCredentials = () => {
           Change password
         </Button>
       </Box>
-      <DialogPopUp open={dialogOpen} handleClose={handleClose}></DialogPopUp>
+      <DialogPopUp
+        open={dialogOpen}
+        handleClose={handleClose}
+        handleConfirmClick={handleConfirmClick}
+        handleTextChange={handleConfirmTextChange}
+        textFieldValue={confirmPassword}
+        text="To confirm credential changes, please enter your current password!"
+      ></DialogPopUp>
     </div>
   );
 };
