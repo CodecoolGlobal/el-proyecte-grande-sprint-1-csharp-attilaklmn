@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { checkEmailRegex, checkPasswordRegex } from "../Utilities/AccountUtils";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");
@@ -64,32 +65,14 @@ const Register = (props) => {
 
   const checkFields = () => {
     const usernameError = checkUsernameRegex();
-    const emailError = checkEmailRegex();
-    const passwordError = checkPasswordRegex();
+    const emailError = checkEmailRegex(email, setEmailError, setEmailErrorText);
+    const passwordError = checkPasswordRegex(
+      password,
+      setPasswordError,
+      setPasswordErrorText
+    );
     const secondPasswordError = checkIfPasswordsMatch(password, secondPassword);
     return usernameError && emailError && passwordError && secondPasswordError;
-  };
-
-  const checkEmailRegex = () => {
-    if (emailValidatorRegex.test(email)) {
-      setEmailError(false);
-      return true;
-    } else {
-      setEmailError(true);
-      setEmailErrorText(notValidFormatText);
-      return false;
-    }
-  };
-
-  const checkPasswordRegex = () => {
-    if (passwordValidatorRegex.test(password)) {
-      setPasswordError(false);
-      return true;
-    } else {
-      setPasswordError(true);
-      setPasswordErrorText(notValidPasswordFormatText);
-      return false;
-    }
   };
 
   const checkUsernameRegex = () => {
@@ -136,7 +119,7 @@ const Register = (props) => {
 
   return (
     <div>
-      Register
+      Registration
       <Box
         component="form"
         sx={{
@@ -154,7 +137,6 @@ const Register = (props) => {
             alignItems: "center",
           }}
         >
-          Password
           <TextField
             id="username"
             label="Username"
