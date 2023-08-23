@@ -31,6 +31,34 @@ public class UserService : IUserService
         }
     }
 
+    public async Task ChangeEmailAsync(string username, string password, string newEmail)
+    {
+        Console.WriteLine(username + " " + password);
+        await CheckPasswordMatchAsync(username, password);
+        var existingUser = await _context.Users.SingleOrDefaultAsync(user => user.Username == username);
+        if (!_userDataValidator.ValidateEmailRegex(newEmail))
+        {
+            throw new UnauthorizedAccessException("Wrong e-mail format!");
+        }
+        if (existingUser == null)
+        {
+            throw new DataConflictionException("User not found.");
+        }
+        
+        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Email == newEmail);
+
+        if (isEmailTaken)
+        {
+            throw new DataConflictionException("E-mail already registered!");
+        }
+
+        existingUser.Email = newEmail;
+
+        _context.Users.Update(existingUser);
+        await _context.SaveChangesAsync();
+        
+    }
+
     public async Task<User> LoginUserAsync(LoginModelDto loginModelDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);
@@ -71,7 +99,7 @@ public class UserService : IUserService
             throw new DataConflictionException("Username is already taken!");
         }
 
-        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Password == registrationModelDto.Password);
+        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Email == registrationModelDto.Email);
 
         if (isEmailTaken)
         {

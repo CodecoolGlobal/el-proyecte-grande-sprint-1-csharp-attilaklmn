@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using webapi.Model.Entity;
 using webapi.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using webapi.Model.DTOs;
 
 namespace webapi.Controllers;
 
@@ -43,18 +45,24 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("passcheck")]
-    public async Task<IActionResult> CheckPassword([FromBody] string password)
+    [HttpPost("mailchange")]
+    public async Task<IActionResult> ChangeMail([FromBody] MailChangeModel mailChangeModel)
     {
-        var uniqueNameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+
+        var authorizationHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+        var token = authorizationHeader.Parameter;
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+        var uniqueNameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "unique_name");
         string username = uniqueNameClaim?.Value;
 
         if (string.IsNullOrEmpty(username))
         {
             return BadRequest("Username claim not found in token.");
         }
-        await _userService.CheckPasswordMatchAsync(username, password);
-        return Ok("Password match!");
+        await _userService.ChangeEmailAsync(username, mailChangeModel.Password, mailChangeModel.Email);
+        return Ok("Email changed!");
     }
 
     private string GenerateJwtToken(User user)

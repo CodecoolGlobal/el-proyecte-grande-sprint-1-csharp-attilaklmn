@@ -25,9 +25,14 @@ const AccountCredentials = () => {
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [fetchFunction, setFetchFunction] = useState();
+
+  let jwtToken = getCookie("jwt_token");
 
   const handleEmailChangeSubmit = () => {
     if (checkEmailRegex(email, setEmailError, setEmailErrorText)) {
+      jwtToken = getCookie("jwt_token");
+      setFetchFunction(() => fetchEmailChange);
       handleClickOpen(true);
     }
   };
@@ -42,28 +47,28 @@ const AccountCredentials = () => {
   };
 
   const handleConfirmClick = async () => {
-    const success = await fetchPasswordCheck();
-    if (success) {
+    const changeSuccess = await fetchFunction(email, confirmPassword);
+    if (changeSuccess) {
       console.log("success");
     }
   };
 
-  const fetchPasswordCheck = async () => {
-    const jwtToken = getCookie("jwt_token");
+  const fetchEmailChange = async (email, confirmPassword) => {
     try {
-      const response = await fetch("/user/passcheck", {
+      const response = await fetch("/user/mailchange", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({
+          email: email,
           password: confirmPassword,
         }),
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.Message);
+        throw new Error(data.message);
       } else {
         return true;
       }
