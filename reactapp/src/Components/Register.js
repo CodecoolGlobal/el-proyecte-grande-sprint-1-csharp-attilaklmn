@@ -3,7 +3,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { checkEmailRegex, checkPasswordRegex } from "../Utilities/AccountUtils";
+import {
+  checkEmailRegex,
+  checkPasswordRegex,
+  checkUsernameRegex,
+  checkIfPasswordsMatch,
+} from "../Utilities/AccountUtils";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");
@@ -18,18 +23,6 @@ const Register = (props) => {
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
   const [usernameErrorText, setUsernameErrorText] = useState("");
-
-  const emailValidatorRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordValidatorRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-  const notValidFormatText = "Not valid format!";
-  const notValidPasswordFormatText =
-    "Password must contain at least 6 characters, upper and lower case letters and a number";
-  const notMatchingPasswordsText = "The passwords must match!";
-  const minimumUsernameLength = 4;
-  const notLongEnoughUserNameText =
-    "The username must be at least " +
-    minimumUsernameLength +
-    " characters long!";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,37 +57,24 @@ const Register = (props) => {
   };
 
   const checkFields = () => {
-    const usernameError = checkUsernameRegex();
+    const usernameError = checkUsernameRegex(
+      username,
+      setUsernameError,
+      setUsernameErrorText
+    );
     const emailError = checkEmailRegex(email, setEmailError, setEmailErrorText);
     const passwordError = checkPasswordRegex(
       password,
       setPasswordError,
       setPasswordErrorText
     );
-    const secondPasswordError = checkIfPasswordsMatch(password, secondPassword);
+    const secondPasswordError = checkIfPasswordsMatch(
+      password,
+      secondPassword,
+      setSecondPasswordError,
+      setSecondPasswordErrorText
+    );
     return usernameError && emailError && passwordError && secondPasswordError;
-  };
-
-  const checkUsernameRegex = () => {
-    if (username.length < minimumUsernameLength) {
-      setUsernameError(true);
-      setUsernameErrorText(notLongEnoughUserNameText);
-      return false;
-    } else {
-      setUsernameError(false);
-      return true;
-    }
-  };
-
-  const checkIfPasswordsMatch = (password, secondPassword) => {
-    if (password !== secondPassword) {
-      setSecondPasswordError(true);
-      setSecondPasswordErrorText(notMatchingPasswordsText);
-      return false;
-    } else {
-      setSecondPasswordError(false);
-      return true;
-    }
   };
 
   const handleEmailChange = (e) => {
