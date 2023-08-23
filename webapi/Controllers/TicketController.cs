@@ -36,19 +36,27 @@ namespace webapi.Controllers
                 return BadRequest("Failed to reserve the ticket.");
             }
         }
-
+        
         [HttpGet("screening/{screeningId}")]
         public async Task<IActionResult> GetReservedSeatIdsByScreeningId(long screeningId)
         {
             IEnumerable<Ticket> reservedTickets = await _ticketService.GetTicketsByScreeningId(screeningId);
             return Ok(reservedTickets);
         }
-
+        [Authorize]
         [HttpGet("{screeningId}/{userId}")]
         public async Task<IActionResult> GetUnfinalizedTickets(long screeningId, long userId)
         {
             IEnumerable<Ticket> reservedTickets = await _ticketService.GetUnfinalizedTickets(screeningId, userId);
             return Ok(reservedTickets);
+        }
+
+        [Authorize]
+        [HttpPatch("{screeningId}/{userId}")]
+        public async Task<IActionResult> FinalizeTickets(long screeningId, long userId)
+        {
+            IEnumerable<Ticket> finalizedTickets = await _ticketService.FinalizeTickets(screeningId, userId);
+            return Ok(finalizedTickets);
         }
     }
 }
