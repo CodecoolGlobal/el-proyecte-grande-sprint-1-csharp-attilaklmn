@@ -22,28 +22,39 @@ const reserveSeat = async (screeningId, seatId, user, reRender) => {
     reRender();
 }
 
-const Seat = ({seat, screeningId, isReserved, setIsLoading, user, reRender}) => {
+const Seat = ({seat, screeningId, setIsLoading, user, reRender, ticket}) => {
 
     const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
         setIsClicked(false);
-    }, [isReserved])
+    }, [ticket])
     
     const clickHandler = () => {
         setIsClicked(true);
         setIsLoading(true);
-        reserveSeat(screeningId, seat.id, user, reRender);
+        reserveSeat(screeningId, seat.id, user.name, reRender);
+    }
+
+    const setColor = (ticket, user) => {
+        if (!ticket) {
+            return "success";
+        }
+        if (ticket.userId == user.id) {
+            return "primary";
+        } else {
+            return "error"
+        }
     }
 
     return (
         <Button sx={{
             height: 45,
             marginTop: 0.5,
-            cursor: isReserved ? "not-allowed" : "pointer"
-            }} 
+            cursor: ticket ? "not-allowed" : "pointer"
+            }}
             variant="contained" 
-            color={isReserved ? "error" : "success"} 
+            color={setColor(ticket, user)} 
             onClick={clickHandler} 
             disabled={isClicked} >
                 {seat.row}-{seat.number}

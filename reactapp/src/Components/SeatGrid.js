@@ -35,12 +35,12 @@ const SeatGrid = ({ seats, room, screeningId, user }) => {
           const seatComponent = (
             <Seat
               key={seat.id}
-              isReserved={ticket ? true : false}
               seat={seat}
               screeningId={screeningId}
               setIsLoading={e => setIsLoading(e)}
               user={user}
               reRender={reRender}
+              ticket={ticket}
             />
           );
 
