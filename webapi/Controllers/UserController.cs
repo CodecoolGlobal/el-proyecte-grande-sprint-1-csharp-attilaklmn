@@ -45,7 +45,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("mailchange")]
+    [HttpPatch("mailchange")]
     public async Task<IActionResult> ChangeMail([FromBody] MailChangeModel mailChangeModel)
     {
 

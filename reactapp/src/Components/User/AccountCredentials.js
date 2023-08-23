@@ -56,7 +56,7 @@ const AccountCredentials = () => {
   const fetchEmailChange = async (email, confirmPassword) => {
     try {
       const response = await fetch("/user/mailchange", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwtToken}`,
