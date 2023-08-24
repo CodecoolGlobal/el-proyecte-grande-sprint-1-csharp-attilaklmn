@@ -8,6 +8,7 @@ import {
   checkPasswordRegex,
   checkUsernameRegex,
   checkIfPasswordsMatch,
+  handleFieldValueChange,
 } from "../../Utilities/AccountUtils";
 
 const Register = (props) => {
@@ -75,26 +76,6 @@ const Register = (props) => {
     return usernameError && emailError && passwordError && secondPasswordError;
   };
 
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-  };
-
-  const handleSecondPasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setSecondPassword(newPassword);
-  };
-
-  const handleUsernameChange = (e) => {
-    const newUsername = e.target.value;
-    setUsername(newUsername);
-  };
-
   return (
     <div>
       Registration
@@ -120,7 +101,7 @@ const Register = (props) => {
             label="Username"
             type="username"
             value={username}
-            onChange={handleUsernameChange}
+            onChange={(e) => handleFieldValueChange(e, setUsername)}
             error={usernameError}
             helperText={usernameError ? usernameErrorText : ""}
           />
@@ -129,7 +110,7 @@ const Register = (props) => {
             label="Email"
             type="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => handleFieldValueChange(e, setEmail)}
             error={emailError}
             helperText={emailError ? emailErrorText : ""}
           />
@@ -138,7 +119,7 @@ const Register = (props) => {
             label="Password"
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => handleFieldValueChange(e, setPassword)}
             error={passwordError}
             helperText={passwordError ? passwordErrorText : ""}
           />
@@ -147,7 +128,7 @@ const Register = (props) => {
             label="Confirm Password"
             type="password"
             value={secondPassword}
-            onChange={handleSecondPasswordChange}
+            onChange={(e) => handleFieldValueChange(e, setSecondPassword)}
             error={secondPasswordError}
             helperText={secondPasswordError ? secondPasswordErrorText : ""}
           />

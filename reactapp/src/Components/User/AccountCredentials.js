@@ -7,8 +7,9 @@ import {
   checkEmailRegex,
   checkPasswordRegex,
   checkIfPasswordsMatch,
+  handleFieldValueChange,
 } from "../../Utilities/AccountUtils";
-import DialogPopUp from "../Utilities/DialogPopUp";
+import DialogPopUp from "../../Utilities/DialogPopUp";
 import { CookieContext } from "../../App";
 
 const AccountCredentials = () => {
@@ -117,26 +118,6 @@ const AccountCredentials = () => {
     }
   };
 
-  const handleConfirmTextChange = (e) => {
-    const newPassword = e.target.value;
-    setConfirmPassword(newPassword);
-  };
-
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-  };
-
-  const handleSecondPasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setSecondPassword(newPassword);
-  };
-
   return (
     <div>
       Account Credentials
@@ -161,7 +142,7 @@ const AccountCredentials = () => {
             label="New Email"
             type="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => handleFieldValueChange(e, setEmail)}
             error={emailError}
             helperText={emailError ? emailErrorText : ""}
           />
@@ -177,7 +158,7 @@ const AccountCredentials = () => {
             label="New Password"
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => handleFieldValueChange(e, setPassword)}
             error={passwordError}
             helperText={passwordError ? passwordErrorText : ""}
           />
@@ -186,7 +167,7 @@ const AccountCredentials = () => {
             label="Confirm Password"
             type="password"
             value={secondPassword}
-            onChange={handleSecondPasswordChange}
+            onChange={(e) => handleFieldValueChange(e, setSecondPassword)}
             error={secondPasswordError}
             helperText={secondPasswordError ? secondPasswordErrorText : ""}
           />
@@ -203,7 +184,7 @@ const AccountCredentials = () => {
         open={dialogOpen}
         handleClose={handleClose}
         handleConfirmClick={handleConfirmClick}
-        handleTextChange={handleConfirmTextChange}
+        handleTextChange={(e) => handleFieldValueChange(e, setConfirmPassword)}
         textFieldValue={confirmPassword}
         text="To confirm credential changes, please enter your current password!"
       ></DialogPopUp>

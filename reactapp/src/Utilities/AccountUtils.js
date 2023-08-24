@@ -66,3 +66,8 @@ export const checkIfPasswordsMatch = (
     return true;
   }
 };
+
+export const handleFieldValueChange = (e, setFunction) => {
+  const newValue = e.target.value;
+  setFunction(newValue);
+};
