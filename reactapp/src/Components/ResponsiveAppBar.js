@@ -55,7 +55,12 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img
+            style={{ width: "5%" }}
+            alt="cinemasharp"
+            src={process.env.PUBLIC_URL + "transparent_minilogo.png"}
+          ></img>
+
           <Typography
             variant="h6"
             noWrap
@@ -110,6 +115,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -161,7 +167,11 @@ function ResponsiveAppBar() {
               Reservation
             </Button>
           </Box>
-
+          <img
+            style={{ width: "15%" }}
+            alt="cinemasharp"
+            src={process.env.PUBLIC_URL + "transparent_logo_text.png"}
+          ></img>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open user menu">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
