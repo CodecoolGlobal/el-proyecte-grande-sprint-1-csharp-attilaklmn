@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { CookieContext } from "../../../App";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import Select from "react-select";
 import dayjs from "dayjs";
 
@@ -109,7 +109,7 @@ const ProgramForm = ({ movieList, screenings, setScreenings }) => {
               />
             </div>
             <div className="button-row">
-              <Button className="save-button" type="submit">
+              <Button variant="contained" className="save-button" type="submit">
                 Save
               </Button>
             </div>
