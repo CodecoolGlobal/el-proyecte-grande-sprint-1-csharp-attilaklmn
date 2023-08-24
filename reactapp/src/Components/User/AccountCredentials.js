@@ -11,6 +11,7 @@ import {
 } from "../../Utilities/AccountUtils";
 import DialogPopUp from "../../Utilities/DialogPopUp";
 import { CookieContext } from "../../App";
+import CircularBackdrop from "../../Utilities/CircularBackdrop";
 
 const AccountCredentials = () => {
   const { getCookie } = useContext(CookieContext);
@@ -27,6 +28,8 @@ const AccountCredentials = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [fetchFunction, setFetchFunction] = useState();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   let jwtToken = getCookie("jwt_token");
 
@@ -64,7 +67,9 @@ const AccountCredentials = () => {
   };
 
   const handleConfirmClick = async () => {
+    setIsLoading(true);
     const changeSuccess = await fetchFunction(email, password, confirmPassword);
+    setIsLoading(false);
     if (changeSuccess) {
       setEmail("");
       setPassword("");
@@ -185,6 +190,7 @@ const AccountCredentials = () => {
           Change password
         </Button>
       </Box>
+      <CircularBackdrop open={isLoading}></CircularBackdrop>
       <DialogPopUp
         open={dialogOpen}
         handleClose={handleClose}
