@@ -18,6 +18,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { AdminContext, UserContext } from "../App";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const pages = ["Filmlist", "Program", "Reservation", "Login"];
 
@@ -65,7 +66,7 @@ function ResponsiveAppBar() {
                 width: "20%",
               }}
             >
-              <div style={{ maxWidth: "20%" }}>
+              <div style={{ maxWidth: "20%", marginRight: "0.5vw" }}>
                 <img
                   style={{
                     objectFit: "contain",
@@ -123,6 +124,9 @@ function ResponsiveAppBar() {
                     my: 2,
                     color: "white",
                     display: "block",
+                    "&:hover": {
+                      color: "lightblue",
+                    },
                   }}
                 >
                   Filmlist
@@ -146,6 +150,9 @@ function ResponsiveAppBar() {
                     my: 2,
                     color: "white",
                     display: "block",
+                    "&:hover": {
+                      color: "lightblue",
+                    },
                   }}
                 >
                   Program
@@ -169,6 +176,9 @@ function ResponsiveAppBar() {
                     my: 2,
                     color: "white",
                     display: "block",
+                    "&:hover": {
+                      color: "lightblue",
+                    },
                   }}
                 >
                   Reservation
@@ -184,7 +194,15 @@ function ResponsiveAppBar() {
               <Tooltip title="Open user menu">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    sx={{ height: "4vw", width: "4vw", marginLeft: "3vw" }}
+                    sx={{
+                      height: "4vw",
+                      width: "4vw",
+                      marginLeft: "3vw",
+                      "&:hover": {
+                        color: "white",
+                        backgroundColor: "lightblue",
+                      },
+                    }}
                     alt={user}
                     src="/static/images/avatar/2.jpg"
                   />
