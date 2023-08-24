@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Render from "./Render";
+import { AdminContext } from "../../App";
+
+import ProgramForm from "./ProgramForm/ProgramForm";
 
 const FilterByScreening = ({ movieList, movieId }) => {
   const [screenings, setScreenings] = useState([]);
+  const { adminView } = useContext(AdminContext);
 
   useEffect(() => {
     setScreenings([]);
@@ -19,15 +23,24 @@ const FilterByScreening = ({ movieList, movieId }) => {
     }
   }, [movieId]);
 
-  return screenings.length > 0 ? (
-    <Render
-      moviesScreened={movieList.filter((movie) =>
-        screenings.some((screening) => screening.movieId === movie.id)
+  return (
+    <>
+      {adminView && (
+        <div id="programForm">
+          {<ProgramForm movieList={movieList} screenings={screenings} setScreenings={setScreenings} />}
+        </div>
       )}
-      allScreenings={screenings}
-    />
-  ) : (
-    <h1>There are no upcoming screenings.</h1>
+      {screenings.length > 0 ? (
+        <Render
+          moviesScreened={movieList.filter((movie) =>
+            screenings.some((screening) => screening.movieId === movie.id)
+          )}
+          allScreenings={screenings}
+        />
+      ) : (
+        <h1>There are no upcoming screenings.</h1>
+      )}
+    </>
   );
 };
 
