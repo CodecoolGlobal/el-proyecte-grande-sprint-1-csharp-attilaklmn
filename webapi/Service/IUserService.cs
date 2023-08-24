@@ -9,4 +9,5 @@ public interface IUserService
     Task RegisterUserAsync(RegistrationModelDto registrationModelDto);
     Task CheckPasswordMatchAsync(string username, string password);
     Task ChangeEmailAsync(string username, string password, string email);
+    Task ChangePasswordAsync(string username, string password, string confirmPassword);
 }

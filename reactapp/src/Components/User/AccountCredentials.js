@@ -37,6 +37,22 @@ const AccountCredentials = () => {
     }
   };
 
+  const handlePasswordChangeSubmit = () => {
+    if (
+      checkPasswordRegex(password, setPasswordError, setPasswordErrorText) &&
+      checkIfPasswordsMatch(
+        password,
+        secondPassword,
+        setSecondPasswordError,
+        setSecondPasswordErrorText
+      )
+    ) {
+      jwtToken = getCookie("jwt_token");
+      setFetchFunction(() => fetchPasswordChange);
+      handleClickOpen(true);
+    }
+  };
+
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -47,13 +63,37 @@ const AccountCredentials = () => {
   };
 
   const handleConfirmClick = async () => {
-    const changeSuccess = await fetchFunction(email, confirmPassword);
+    const changeSuccess = await fetchFunction(email, password, confirmPassword);
     if (changeSuccess) {
       console.log("success");
     }
   };
 
-  const fetchEmailChange = async (email, confirmPassword) => {
+  const fetchPasswordChange = async (email, passsword, confirmPassword) => {
+    try {
+      const response = await fetch("/user/passwordChange", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        body: JSON.stringify({
+          password: password,
+          confirmPassword: confirmPassword,
+        }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      } else {
+        return true;
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+
+  const fetchEmailChange = async (email, password, confirmPassword) => {
     try {
       const response = await fetch("/user/mailchange", {
         method: "PATCH",
@@ -74,20 +114,6 @@ const AccountCredentials = () => {
       }
     } catch (error) {
       alert("Error: " + error.message);
-    }
-  };
-
-  const handlePasswordChangeSubmit = () => {
-    if (
-      checkPasswordRegex(password, setPasswordError, setPasswordErrorText) &&
-      checkIfPasswordsMatch(
-        password,
-        secondPassword,
-        setSecondPasswordError,
-        setSecondPasswordErrorText
-      )
-    ) {
-      //fetchPasswordChange
     }
   };
 

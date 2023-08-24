@@ -31,9 +31,29 @@ public class UserService : IUserService
         }
     }
 
+    public async Task ChangePasswordAsync(string username, string password, string confirmPassword)
+    {
+        await CheckPasswordMatchAsync(username, confirmPassword);
+        var existingUser = await _context.Users.SingleOrDefaultAsync(user => user.Username == username);
+        
+        if (!_userDataValidator.ValidatePasswordRegex(password))
+        {
+            throw new UnauthorizedAccessException("Wrong password format!");
+        }
+        if (existingUser == null)
+        {
+            throw new DataConflictionException("User not found.");
+        }
+
+        existingUser.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+
+        _context.Users.Update(existingUser);
+        await _context.SaveChangesAsync();
+        
+    }
+
     public async Task ChangeEmailAsync(string username, string password, string newEmail)
     {
-        Console.WriteLine(username + " " + password);
         await CheckPasswordMatchAsync(username, password);
         var existingUser = await _context.Users.SingleOrDefaultAsync(user => user.Username == username);
         if (!_userDataValidator.ValidateEmailRegex(newEmail))

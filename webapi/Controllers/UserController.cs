@@ -64,6 +64,27 @@ public class UserController : ControllerBase
         await _userService.ChangeEmailAsync(username, mailChangeModel.Password, mailChangeModel.Email);
         return Ok("Email changed!");
     }
+    
+    [Authorize]
+    [HttpPatch("passwordChange")]
+    public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeModel passwordChangeModel)
+    {
+
+        var authorizationHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+        var token = authorizationHeader.Parameter;
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+        var uniqueNameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "unique_name");
+        string username = uniqueNameClaim?.Value;
+
+        if (string.IsNullOrEmpty(username))
+        {
+            return BadRequest("Username claim not found in token.");
+        }
+        await _userService.ChangePasswordAsync(username, passwordChangeModel.Password, passwordChangeModel.ConfirmPassword);
+        return Ok("Password changed!");
+    }
 
     private string GenerateJwtToken(User user)
     {
