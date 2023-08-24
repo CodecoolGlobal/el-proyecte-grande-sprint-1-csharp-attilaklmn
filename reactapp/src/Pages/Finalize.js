@@ -8,23 +8,29 @@ const fetchReservedTickets = async (screeningId, userId, jwtToken) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
+          Authorization: `Bearer ${jwtToken}`
         }
       });
-    const data = response.json();
+    const data = await response.json();
     return data;
 }
 
-const fetchToFinalizeTickets = async (screeningId, userId, jwtToken) => {
-    const response = await fetch(`/ticket/${screeningId}/${userId}`, {
+const fetchToFinalizeTickets = async (tickets, userId, jwtToken) => {
+    const ticketIds = tickets.map(t => t.id);
+    console.log(JSON.stringify(ticketIds))
+    const response = await fetch(`/ticket/finalize/${userId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
-        }
+          Authorization: `Bearer ${jwtToken}`
+        }, 
+        body: JSON.stringify(ticketIds)
       });
-    const data = response.json();
-    return data;
+    if (response.ok) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -46,7 +52,13 @@ const Finalize = () => {
     }, [])
     
     const handleFinalize = () => {
-        fetchToFinalizeTickets(screeningId, userId, jwtToken);
+        fetchToFinalizeTickets(tickets, userId, jwtToken).then(success => {
+            if (success) {
+                alert("tickets finalized successfully");
+            } else {
+                alert("something went wrong");
+            }
+        })
     }
     
 
