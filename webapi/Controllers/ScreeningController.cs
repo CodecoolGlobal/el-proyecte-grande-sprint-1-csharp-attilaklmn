@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using webapi.Model.DTOs;
 using webapi.Model.Entity;
 using webapi.Service;
 
@@ -8,7 +10,7 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class ScreeningController : ControllerBase
     {
-        private IScreeningService _screeningService;
+        private readonly IScreeningService _screeningService;
 
         public ScreeningController(IScreeningService screeningService)
         {
@@ -35,5 +37,14 @@ namespace webapi.Controllers
         //    bool answer = _screeningService.GetAll().Any(x => x.IsThisThatMovie(id));
         //    return Ok((new { result = answer }));
         //}
+        
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public IActionResult AddScreening([FromBody] ScreeningModelDto screeningModelDto)
+        {
+            var addedScreening = _screeningService.AddScreening(screeningModelDto);
+
+            return Ok(addedScreening);
+        }
     }
 }
