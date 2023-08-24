@@ -71,9 +71,14 @@ function ResponsiveAppBar() {
                     objectFit: "contain",
                     width: "100%",
                     height: "100%",
+                    cursor: "pointer",
                   }}
                   alt="cinemasharp"
                   src={process.env.PUBLIC_URL + "transparent_minilogo.png"}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/");
+                  }}
                 ></img>
               </div>
               <div style={{ maxWidth: "80%" }}>
@@ -82,43 +87,93 @@ function ResponsiveAppBar() {
                     objectFit: "contain",
                     width: "100%",
                     height: "100%",
+                    cursor: "pointer",
                   }}
                   alt="cinemasharp"
                   src={process.env.PUBLIC_URL + "transparent_logo_text.png"}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/");
+                  }}
                 ></img>
               </div>
             </div>
-            <div style={{ display: "flex" }}>
-              <Button
-                key="filmlist"
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate("/filmlist");
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "50%",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  width: "33%",
+                  justifyContent: "center",
                 }}
-                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
               >
-                Filmlist
-              </Button>
-              <Button
-                key="program"
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate("/program");
+                <Button
+                  key="filmlist"
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/filmlist");
+                  }}
+                  sx={{
+                    fontSize: "2.5vw",
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                  }}
+                >
+                  Filmlist
+                </Button>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "33%",
+                  justifyContent: "center",
                 }}
-                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
               >
-                Program
-              </Button>
-              <Button
-                key="reservation"
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate("/reservation");
+                <Button
+                  key="program"
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/program");
+                  }}
+                  sx={{
+                    fontSize: "2.5vw",
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                  }}
+                >
+                  Program
+                </Button>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "33%",
+                  justifyContent: "center",
                 }}
-                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
               >
-                Reservation
-              </Button>
+                <Button
+                  key="reservation"
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/reservation");
+                  }}
+                  sx={{
+                    fontSize: "2.5vw",
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                  }}
+                >
+                  Reservation
+                </Button>
+              </div>
             </div>
             <div
               style={{
@@ -129,7 +184,7 @@ function ResponsiveAppBar() {
               <Tooltip title="Open user menu">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    sx={{ height: 50, width: 50 }}
+                    sx={{ height: "4vw", width: "4vw", marginLeft: "3vw" }}
                     alt={user}
                     src="/static/images/avatar/2.jpg"
                   />
