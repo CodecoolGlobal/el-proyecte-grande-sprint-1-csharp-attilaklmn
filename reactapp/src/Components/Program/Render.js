@@ -15,13 +15,25 @@ const Render = ({ moviesScreened, allScreenings }) => {
     return startingDate.split("T")[1].substr(0,5);
   }
 
+  const getUniqueDates = (movie) => {
+    const uniqueDates = new Set();
+    allScreenings.forEach(screening => {
+      if(screening.movieId === movie.id){
+        uniqueDates.add(formatDate(screening.startingDate))
+      }
+    })
+    return Array.from(uniqueDates);
+  }
+
   const handleSelectDateChange = (e) => {
     setDateChosen(e.target.value)
   }
 
   const handleSelectTimeChange = (e) => {
+    console.log(e.target.value)
     const selectedScreeningId = e.target.value;
-    const selectedScreening = allScreenings.find(x => x.id === selectedScreeningId);
+    const selectedScreening = allScreenings.find(x => x.id === parseInt(selectedScreeningId));
+    console.log(selectedScreening)
     if (selectedScreening) {
       const { id: screeningId, roomId } = selectedScreening;
       navigate(`/reservation/${screeningId}/${roomId}`);
@@ -39,12 +51,11 @@ const Render = ({ moviesScreened, allScreenings }) => {
            <label htmlFor="screeningDates">
               <select name='ScreeningDates' defaultValue="" onChange={handleSelectDateChange}>
               <option value="" disabled>Select Screening Date</option>
-                 {allScreenings
-                  .filter((screening) => screening.movieId === movie.id)
-                  .map((screening) => {
+                 {getUniqueDates(movie)
+                  .map((date) => {
                     return (
-                      <option key={screening.id} value={screening.startingDate.split("T")[0]}>
-                        {formatDate(screening.startingDate)}
+                      <option key={movie.id} value={date}>
+                        {date}
                       </option>)})}
               </select>
             </label>
