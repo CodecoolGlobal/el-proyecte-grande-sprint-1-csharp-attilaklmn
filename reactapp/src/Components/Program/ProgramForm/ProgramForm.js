@@ -1,15 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { CookieContext } from "../../../App";
+import { Button } from "@mui/material";
 import Select from "react-select";
-import DateTimePicker from "react-datetime-picker";
 import dayjs from "dayjs";
-import "dayjs/locale/en";
-import "./ProgramForm.css";
-
-dayjs.locale("en");
 
 const ProgramForm = ({ movieList, screenings, setScreenings }) => {
-  const startDate = new Date(dayjs().add(2, "hour").format("YYYY-MM-DDTHH:mm"));
+  const startDate = new Date(dayjs().add(4, "hour").format("YYYY-MM-DDTHH:mm"))
+    .toISOString()
+    .split(".")[0];
 
   const [movies, setMovies] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -26,8 +24,6 @@ const ProgramForm = ({ movieList, screenings, setScreenings }) => {
     }
   }, [movieList]);
 
-  console.log(date);
-
   useEffect(() => {
     fetch(`/Room/all`)
       .then((res) => res.json())
@@ -39,6 +35,11 @@ const ProgramForm = ({ movieList, screenings, setScreenings }) => {
         setRooms(roomOptions);
       });
   }, []);
+
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    setDate(value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,19 +101,17 @@ const ProgramForm = ({ movieList, screenings, setScreenings }) => {
             </div>
             <div className="program-form-row">
               <span className="program-form-label">Date: </span>
-              <DateTimePicker
-                locale="en"
-                minDate={startDate}
-                timeFormat={"HH:mm"}
-                timeIntervals={15}
+              <input
+                type="datetime-local"
+                min={startDate}
                 value={date}
-                onChange={(newDate) => setDate(newDate)}
+                onChange={handleDateChange}
               />
             </div>
             <div className="button-row">
-              <button className="save-button" type="submit">
+              <Button className="save-button" type="submit">
                 Save
-              </button>
+              </Button>
             </div>
           </form>
         </div>
