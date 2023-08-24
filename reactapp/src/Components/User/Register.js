@@ -10,6 +10,7 @@ import {
   checkIfPasswordsMatch,
   handleFieldValueChange,
 } from "../../Utilities/AccountUtils";
+import CircularBackdrop from "../../Utilities/CircularBackdrop";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");
@@ -25,10 +26,14 @@ const Register = (props) => {
   const [secondPasswordErrorText, setSecondPasswordErrorText] = useState("");
   const [usernameErrorText, setUsernameErrorText] = useState("");
 
-  const handleSubmit = (e) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (checkFields()) {
-      fetchRegister();
+      setIsLoading(true);
+      await fetchRegister();
+      setIsLoading(false);
     }
   };
 
@@ -140,6 +145,7 @@ const Register = (props) => {
       <Button variant="contained" onClick={() => props.onBackClick("initial")}>
         Back
       </Button>
+      <CircularBackdrop open={isLoading}></CircularBackdrop>
     </div>
   );
 };
