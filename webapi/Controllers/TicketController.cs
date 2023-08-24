@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using webapi.Model;
 using webapi.Model.Entity;
 using webapi.Service;
@@ -52,11 +53,22 @@ namespace webapi.Controllers
         }
 
         [Authorize]
-        [HttpPatch("{screeningId}/{userId}")]
-        public async Task<IActionResult> FinalizeTickets(long screeningId, long userId)
+        [HttpPatch("finalize/{userId}")]
+        public async Task<IActionResult> FinalizeTickets(long userId, [FromBody] IEnumerable<long> ticketIds)
         {
-            IEnumerable<Ticket> finalizedTickets = await _ticketService.FinalizeTickets(screeningId, userId);
-            return Ok(finalizedTickets);
+            var userIdFromToken = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdFromToken != userId.ToString())
+            {
+                return Forbid();
+            }
+            bool isFinalized = await _ticketService.FinalizeTickets(ticketIds);
+            if (isFinalized)
+            {
+                return Ok("oks");
+            } else
+            {
+                return BadRequest();
+            }
         }
     }
 }

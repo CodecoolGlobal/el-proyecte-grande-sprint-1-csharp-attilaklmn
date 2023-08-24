@@ -13,7 +13,7 @@ namespace webapi.Model.Entity
         public long UserId { get; set; }
         public bool Finalized { get; set; }
 
-        public void SetFinalized()
+        public void Finalize()
         {
             Finalized = true;
         }

@@ -14,17 +14,32 @@ namespace webapi.Service
             _context = context;
         }
 
-        public async Task<IEnumerable<Ticket>> FinalizeTickets(long screeningId, long userId)
+        public async Task<bool> FinalizeTickets(IEnumerable<long> ticketIds)
         {
-            var finalizedTickets = await _context.Tickets.Where(t => t.Screening.Id == screeningId && t.UserId == userId && !t.Finalized).ToListAsync();
-            foreach (var ticket in finalizedTickets)
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                ticket.SetFinalized();
+                var ticketsToFinalize = await _context.Tickets
+                    .Where(t => ticketIds.Contains(t.Id))
+                    .ToListAsync();
+
+                foreach (var ticket in ticketsToFinalize)
+                {
+                    ticket.Finalize();
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return false;
             }
 
-            _context.SaveChanges();
-
-            return finalizedTickets;
 
         }
 
