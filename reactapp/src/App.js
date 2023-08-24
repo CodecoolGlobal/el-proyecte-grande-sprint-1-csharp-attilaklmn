@@ -4,6 +4,7 @@ import Filmlist from "./Pages/Filmlist";
 import Program from "./Pages/Program";
 import Reservation from "./Pages/Reservation";
 import User from "./Pages/User";
+import Account from "./Pages/Account";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { createContext, useState, useEffect } from "react";
@@ -83,6 +84,7 @@ function App() {
                   element={<Reservation />}
                 />
                 <Route path="/user" element={<User />} />
+                <Route path="/account" element={<Account />} />
               </Routes>
             </AdminContext.Provider>
           </UserContext.Provider>
