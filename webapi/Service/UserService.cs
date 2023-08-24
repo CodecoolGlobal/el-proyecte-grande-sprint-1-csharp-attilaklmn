@@ -18,6 +18,67 @@ public class UserService : IUserService
         _userDataValidator = userDataValidator;
     }
 
+    public async Task CheckPasswordMatchAsync(string username, string password)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        if (user == null)
+        {
+            throw new UnauthorizedAccessException("Username database error!");
+        }
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(password, user.Password))
+        {
+            throw new UnauthorizedAccessException("Password mismatch!");
+        }
+    }
+
+    public async Task ChangePasswordAsync(string username, string password, string confirmPassword)
+    {
+        await CheckPasswordMatchAsync(username, confirmPassword);
+        var existingUser = await _context.Users.SingleOrDefaultAsync(user => user.Username == username);
+        
+        if (!_userDataValidator.ValidatePasswordRegex(password))
+        {
+            throw new UnauthorizedAccessException("Wrong password format!");
+        }
+        if (existingUser == null)
+        {
+            throw new DataConflictionException("User not found.");
+        }
+
+        existingUser.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+
+        _context.Users.Update(existingUser);
+        await _context.SaveChangesAsync();
+        
+    }
+
+    public async Task ChangeEmailAsync(string username, string password, string newEmail)
+    {
+        await CheckPasswordMatchAsync(username, password);
+        var existingUser = await _context.Users.SingleOrDefaultAsync(user => user.Username == username);
+        if (!_userDataValidator.ValidateEmailRegex(newEmail))
+        {
+            throw new UnauthorizedAccessException("Wrong e-mail format!");
+        }
+        if (existingUser == null)
+        {
+            throw new DataConflictionException("User not found.");
+        }
+        
+        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Email == newEmail);
+
+        if (isEmailTaken)
+        {
+            throw new DataConflictionException("E-mail already registered!");
+        }
+
+        existingUser.Email = newEmail;
+
+        _context.Users.Update(existingUser);
+        await _context.SaveChangesAsync();
+        
+    }
+
     public async Task<User> LoginUserAsync(LoginModelDto loginModelDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginModelDto.Username);
@@ -58,7 +119,7 @@ public class UserService : IUserService
             throw new DataConflictionException("Username is already taken!");
         }
 
-        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Password == registrationModelDto.Password);
+        bool isEmailTaken = await _context.Users.AnyAsync(u => u.Email == registrationModelDto.Email);
 
         if (isEmailTaken)
         {
