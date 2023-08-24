@@ -8,6 +8,7 @@ import Account from "./Pages/Account";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { createContext, useState, useEffect } from "react";
+import Finalize from "./Pages/Finalize";
 
 export const UserContext = createContext({
   user: null,
@@ -83,6 +84,7 @@ function App() {
                   path="/reservation/:screeningId/:roomId"
                   element={<Reservation />}
                 />
+                <Route path="/reservation/:screeningId/finalize" element={<Finalize />} />
                 <Route path="/user" element={<User />} />
                 <Route path="/account" element={<Account />} />
               </Routes>

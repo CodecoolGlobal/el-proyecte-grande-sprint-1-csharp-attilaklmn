@@ -7,6 +7,8 @@ namespace webapi.Service
     {
         Task<IEnumerable<Ticket>> GetAll();
         Task<bool> ReserveTicket(ReserveTicketRequest request);
-        Task<IEnumerable<long>> GetReservedSeatIdsByScreeningId(long Id);
+        Task<IEnumerable<Ticket>> GetTicketsByScreeningId(long Id);
+        Task<IEnumerable<Ticket>> GetUnfinalizedTickets(long screeningId, long userId);
+        Task<bool> FinalizeTickets(IEnumerable<long> ticketIds);
     }
 }

@@ -1,8 +1,8 @@
-import { Container, Paper } from "@mui/material";
-import { useParams } from "react-router";
+import { Button, Container, Paper } from "@mui/material";
+import { useParams, useNavigate } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import SeatGrid from "../Components/SeatGrid";
-import { UserContext } from "../App";
+import { CookieContext } from "../App";
 
 const fetchRoom = async (roomId) => {
     const response = await fetch(`/room/${roomId}`);
@@ -21,7 +21,10 @@ const Reservation = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [room, setRoom] = useState(null);
     const [seats, setSeats] = useState(null);
-    const { user, setUser } = useContext(UserContext);
+    const { getCookie } = useContext(CookieContext)
+    const [user, setUser] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchRoom(roomId).then(room => {
@@ -32,6 +35,15 @@ const Reservation = () => {
         });;
     }, [])
 
+    useEffect(() => {
+      if (getCookie("jwt_token")) {
+        const userFromCookie = {}
+        userFromCookie.name = JSON.parse(atob(getCookie("jwt_token").split(".")[1])).unique_name;
+        userFromCookie.id = JSON.parse(atob(getCookie("jwt_token").split(".")[1])).nameid;
+        setUser(userFromCookie);
+      }
+    }, [])
+
     return (
         <Container
       sx={{
@@ -39,7 +51,6 @@ const Reservation = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        width: "100%",
       }}
     >
       <Paper
@@ -48,6 +59,7 @@ const Reservation = () => {
           minHeight: 200,
           margin: 3,
           display: "flex",
+
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
@@ -58,6 +70,9 @@ const Reservation = () => {
         {isLoading && <p>Loading..</p>}
         {!isLoading && !user && <div>Please login for ticket reservation.</div>}
         {!isLoading && user && <SeatGrid screeningId={screeningId} room={room} seats={seats} user={user} />}
+        {!isLoading && user && <Button onClick={() => navigate(
+                      `/reservation/${screeningId}/finalize`
+                    )} >Finalize reservation</Button>}
       </Paper>
     </Container>
     )

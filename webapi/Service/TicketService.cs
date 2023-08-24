@@ -14,16 +14,51 @@ namespace webapi.Service
             _context = context;
         }
 
+        public async Task<bool> FinalizeTickets(IEnumerable<long> ticketIds)
+        {
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var ticketsToFinalize = await _context.Tickets
+                    .Where(t => ticketIds.Contains(t.Id))
+                    .ToListAsync();
+
+                foreach (var ticket in ticketsToFinalize)
+                {
+                    ticket.Finalize();
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                return false;
+            }
+
+
+        }
+
         public async Task<IEnumerable<Ticket>> GetAll()
         {
             var tickets = await _context.Tickets.ToListAsync();
             return tickets;
         }
 
-        public async Task<IEnumerable<long>> GetReservedSeatIdsByScreeningId(long Id)
+        public async Task<IEnumerable<Ticket>> GetTicketsByScreeningId(long Id)
         {
-            var seatIds = await _context.Tickets.Where(t => t.Screening.Id == Id).Select(e => e.Seat.Id).ToListAsync();
-            return seatIds;
+            var tickets = await _context.Tickets.Where(t => t.Screening.Id == Id).ToListAsync();
+            return tickets;
+        }
+
+        public async Task<IEnumerable<Ticket>> GetUnfinalizedTickets(long screeningId, long userId)
+        {
+            var tickets = await _context.Tickets.Where(t => t.Screening.Id == screeningId && t.UserId == userId && !t.Finalized).ToListAsync();
+            return tickets;
         }
 
         public async Task<bool> ReserveTicket(ReserveTicketRequest request)
