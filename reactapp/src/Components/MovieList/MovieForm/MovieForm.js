@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CookieContext } from "../../../App";
+import { Button } from "@mui/material";
 import "./MovieForm.css";
 
 const MovieForm = ({ movieList, setMovieList }) => {
@@ -61,9 +62,9 @@ const MovieForm = ({ movieList, setMovieList }) => {
               <input className="movie-form-input" name="summary" />
             </div>
             <div className="button-row">
-              <button className="save-button" type="submit">
+              <Button className="save-button" type="submit">
                 Save
-              </button>
+              </Button>
             </div>
           </form>
         </div>
