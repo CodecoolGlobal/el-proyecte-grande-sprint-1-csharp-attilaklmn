@@ -200,10 +200,12 @@ function ResponsiveAppBar() {
                     sx={{
                       height: "4vw",
                       width: "4vw",
+                      backgroundColor: "sandybrown",
                       "&:hover": {
                         color: "white",
                         backgroundColor: "lightblue",
                       },
+                      fontSize: "3vw",
                     }}
                     alt={user}
                     src="/static/images/avatar/2.jpg"
