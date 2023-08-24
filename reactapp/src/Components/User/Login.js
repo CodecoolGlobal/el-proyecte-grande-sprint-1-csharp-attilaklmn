@@ -2,7 +2,9 @@ import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { CookieContext } from "../App";
+import { CookieContext } from "../../App";
+import { handleFieldValueChange } from "../../Utilities/AccountUtils";
+import CircularBackdrop from "../../Utilities/CircularBackdrop";
 
 const Login = (props) => {
   const { setCookie } = useContext(CookieContext);
@@ -11,19 +13,13 @@ const Login = (props) => {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleUsernameChange = (event) => {
-    const newUsername = event.target.value;
-    setUsername(newUsername);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetchLogin("/user/login");
+    setIsLoading(true);
+    await fetchLogin("/user/login");
+    setIsLoading(false);
   };
 
   const fetchLogin = async (URL) => {
@@ -84,7 +80,7 @@ const Login = (props) => {
               label="Username"
               type="username"
               value={username}
-              onChange={handleUsernameChange}
+              onChange={(e) => handleFieldValueChange(e, setUsername)}
               error={error}
             />
           </div>
@@ -102,7 +98,7 @@ const Login = (props) => {
               label="Password"
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => handleFieldValueChange(e, setPassword)}
               error={error}
             />
           </div>
@@ -114,6 +110,7 @@ const Login = (props) => {
       <Button variant="contained" onClick={() => props.onBackClick("initial")}>
         Back
       </Button>
+      <CircularBackdrop open={isLoading}></CircularBackdrop>
     </div>
   );
 };

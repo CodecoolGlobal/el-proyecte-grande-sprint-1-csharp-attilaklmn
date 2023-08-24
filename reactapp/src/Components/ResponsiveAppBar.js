@@ -196,6 +196,18 @@ function ResponsiveAppBar() {
                   {user ? "Logout" : "Login/Register"}
                 </Typography>
               </MenuItem>
+              {user && (
+                <MenuItem
+                  key="account"
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleCloseUserMenu();
+                    navigate("/account");
+                  }}
+                >
+                  <Typography textAlign="center">Account</Typography>
+                </MenuItem>
+              )}
               {isAdmin && (
                 <FormGroup
                   style={{

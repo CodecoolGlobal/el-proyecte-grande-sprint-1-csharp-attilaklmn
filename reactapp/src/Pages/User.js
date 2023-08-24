@@ -1,8 +1,8 @@
 import { Container, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useState, Fragment, useContext, useEffect } from "react";
-import Login from "../Components/Login";
-import Register from "../Components/Register";
+import Login from "../Components/User/Login";
+import Register from "../Components/User/Register";
 import { AdminContext, CookieContext, UserContext } from "../App";
 
 const User = () => {
