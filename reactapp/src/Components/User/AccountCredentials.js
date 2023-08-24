@@ -66,11 +66,14 @@ const AccountCredentials = () => {
   const handleConfirmClick = async () => {
     const changeSuccess = await fetchFunction(email, password, confirmPassword);
     if (changeSuccess) {
+      setEmail("");
+      setPassword("");
+      setSecondPassword("");
       handleClose();
     }
   };
 
-  const fetchPasswordChange = async (email, passsword, confirmPassword) => {
+  const fetchPasswordChange = async (email, password, confirmPassword) => {
     try {
       const response = await fetch("/user/passwordChange", {
         method: "PATCH",
