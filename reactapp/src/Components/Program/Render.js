@@ -6,6 +6,13 @@ const Render = ({ moviesScreened, allScreenings }) => {
 
   const navigate = useNavigate();
 
+  const formatDate = (startingDate) => {
+    const date = startingDate.split("T")[0];
+    const time = startingDate.split("T")[1].substr(0,5);
+    const result = `${date}  ${time}`;
+    return result
+  }
+
   const handleSelectChange = (e) => {
     const selectedDate = e.target.value;
     const selectedScreening = allScreenings.find(x => x.startingDate === selectedDate);
@@ -32,7 +39,7 @@ const Render = ({ moviesScreened, allScreenings }) => {
                   .map((screening) => {
                     return (
                       <option key={screening.id} value={screening.startingDate}>
-                        {`${screening.startingDate.split("T")[0]}  ${screening.startingDate.split("T")[1].replace(/(?<=\d{2}:\d{2}).{1,}/, "")}`}
+                        {formatDate(screening.startingDate)}
                       </option>)})}
               </select>
             </label>
