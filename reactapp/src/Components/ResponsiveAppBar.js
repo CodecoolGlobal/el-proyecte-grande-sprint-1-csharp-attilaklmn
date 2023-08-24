@@ -53,192 +53,150 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container
+        maxWidth="false"
+        sx={{ display: "flex", justifyContent: "center" }}
+      >
         <Toolbar disableGutters>
-          <img
-            style={{ width: "5%" }}
-            alt="cinemasharp"
-            src={process.env.PUBLIC_URL + "transparent_minilogo.png"}
-          ></img>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            CINEMA#SHARP
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                width: "20%",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Helló</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              key="filmlist"
-              onClick={() => {
-                handleCloseNavMenu();
-                navigate("/filmlist");
-              }}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Filmlist
-            </Button>
-            <Button
-              key="program"
-              onClick={() => {
-                handleCloseNavMenu();
-                navigate("/program");
-              }}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Program
-            </Button>
-            <Button
-              key="reservation"
-              onClick={() => {
-                handleCloseNavMenu();
-                navigate("/reservation");
-              }}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Reservation
-            </Button>
-          </Box>
-          <img
-            style={{ width: "15%" }}
-            alt="cinemasharp"
-            src={process.env.PUBLIC_URL + "transparent_logo_text.png"}
-          ></img>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open user menu">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user} src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem
-                key="user"
+              <div style={{ maxWidth: "20%" }}>
+                <img
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  alt="cinemasharp"
+                  src={process.env.PUBLIC_URL + "transparent_minilogo.png"}
+                ></img>
+              </div>
+              <div style={{ maxWidth: "80%" }}>
+                <img
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  alt="cinemasharp"
+                  src={process.env.PUBLIC_URL + "transparent_logo_text.png"}
+                ></img>
+              </div>
+            </div>
+            <div style={{ display: "flex" }}>
+              <Button
+                key="filmlist"
                 onClick={() => {
                   handleCloseNavMenu();
-                  handleCloseUserMenu();
-                  navigate("/user");
+                  navigate("/filmlist");
                 }}
+                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
               >
-                <Typography textAlign="center">
-                  {user ? "Logout" : "Login/Register"}
-                </Typography>
-              </MenuItem>
-              {user && (
+                Filmlist
+              </Button>
+              <Button
+                key="program"
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigate("/program");
+                }}
+                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
+              >
+                Program
+              </Button>
+              <Button
+                key="reservation"
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigate("/reservation");
+                }}
+                sx={{ fontSize: 40, my: 2, color: "white", display: "block" }}
+              >
+                Reservation
+              </Button>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                width: "20%",
+              }}
+            >
+              <Tooltip title="Open user menu">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    sx={{ height: 50, width: 50 }}
+                    alt={user}
+                    src="/static/images/avatar/2.jpg"
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
                 <MenuItem
-                  key="account"
+                  key="user"
                   onClick={() => {
                     handleCloseNavMenu();
                     handleCloseUserMenu();
-                    navigate("/account");
+                    navigate("/user");
                   }}
                 >
-                  <Typography textAlign="center">Account</Typography>
+                  <Typography textAlign="center">
+                    {user ? "Logout" : "Login/Register"}
+                  </Typography>
                 </MenuItem>
-              )}
-              {isAdmin && (
-                <FormGroup
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignContent: "center",
-                  }}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={adminChecked}
-                        onChange={handleAdminCheckChange}
-                      />
-                    }
-                    label="Admin view"
-                  />
-                </FormGroup>
-              )}
-            </Menu>
-          </Box>
+                {user && (
+                  <MenuItem
+                    key="account"
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      handleCloseUserMenu();
+                      navigate("/account");
+                    }}
+                  >
+                    <Typography textAlign="center">Account</Typography>
+                  </MenuItem>
+                )}
+                {isAdmin && (
+                  <FormGroup
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                    }}
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={adminChecked}
+                          onChange={handleAdminCheckChange}
+                        />
+                      }
+                      label="Admin view"
+                    />
+                  </FormGroup>
+                )}
+              </Menu>
+            </div>
+          </div>
         </Toolbar>
       </Container>
     </AppBar>
