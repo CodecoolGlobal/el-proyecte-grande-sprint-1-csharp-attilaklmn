@@ -66,7 +66,7 @@ const AccountCredentials = () => {
   const handleConfirmClick = async () => {
     const changeSuccess = await fetchFunction(email, password, confirmPassword);
     if (changeSuccess) {
-      console.log("success");
+      handleClose();
     }
   };
 
@@ -87,6 +87,7 @@ const AccountCredentials = () => {
         const data = await response.json();
         throw new Error(data.message);
       } else {
+        alert("Password updated!");
         return true;
       }
     } catch (error) {
@@ -111,6 +112,7 @@ const AccountCredentials = () => {
         const data = await response.json();
         throw new Error(data.message);
       } else {
+        alert("E-mail updated!");
         return true;
       }
     } catch (error) {
