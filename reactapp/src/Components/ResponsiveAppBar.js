@@ -191,13 +191,15 @@ function ResponsiveAppBar() {
                 width: "20%",
               }}
             >
-              <Tooltip title="Open user menu">
+              <Tooltip
+                style={{ marginLeft: "3vw" }}
+                title={<h1 style={{}}>Open user menu</h1>}
+              >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     sx={{
                       height: "4vw",
                       width: "4vw",
-                      marginLeft: "3vw",
                       "&:hover": {
                         color: "white",
                         backgroundColor: "lightblue",
