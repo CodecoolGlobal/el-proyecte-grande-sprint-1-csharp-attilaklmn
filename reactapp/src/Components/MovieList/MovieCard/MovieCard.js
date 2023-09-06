@@ -20,11 +20,16 @@ const MovieCard = ({ movieList }) => {
             })}
           </div>
           <div className="movieSummary">{movie.summary}</div>
-          <div className="watchButton"><Button onClick={() => {
-                    navigate(
-                      `/program/${movie.id}`
-                    );
-                  }}>Buy Ticket</Button></div>
+          <div className="watchButton">
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate(`/program/${movie.id}`);
+              }}
+            >
+              Buy Ticket
+            </Button>
+          </div>
         </div>
       </div>
     );
