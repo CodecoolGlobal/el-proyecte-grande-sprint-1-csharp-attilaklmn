@@ -34,5 +34,21 @@ namespace webapi.Service
 
             return screeningEntity;
         }
+
+        public bool DeleteScreening(List<long> outdatedScreeningIds)
+        {
+            var screeningsToDelete = _context.Screenings.Where(screening => outdatedScreeningIds.Contains(screening.Id))
+                .ToList();
+            
+            if (screeningsToDelete.Count == 0)
+            {
+                return false;
+            }
+            
+            _context.Screenings.RemoveRange(screeningsToDelete);
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }

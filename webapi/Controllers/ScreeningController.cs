@@ -46,5 +46,14 @@ namespace webapi.Controllers
 
             return Ok(addedScreening);
         }
+        
+        [HttpDelete]
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteScreening([FromBody] List<long> outdatedScreeningIds)
+        {
+            bool deletion = _screeningService.DeleteScreening(outdatedScreeningIds);
+
+            return Ok(deletion);
+        }
     }
 }

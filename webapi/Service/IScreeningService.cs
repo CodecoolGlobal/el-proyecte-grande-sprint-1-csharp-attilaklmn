@@ -8,5 +8,7 @@ namespace webapi.Service
         Task<IEnumerable<Screening>> GetAll();
 
         Screening AddScreening(ScreeningModelDto screeningModelDto);
+
+        bool DeleteScreening(List<long> outdatedScreeningIds);
     }
 }
