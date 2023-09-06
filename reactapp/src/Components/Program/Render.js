@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import MovieCover from "../MovieCover/MovieCover";
 import { useState } from "react";
+import "./Render.css";
 
 const Render = ({ moviesScreened, allScreenings }) => {
   const navigate = useNavigate();
@@ -43,10 +44,13 @@ const Render = ({ moviesScreened, allScreenings }) => {
   return moviesScreened.map((movie) => {
     return (
       <div className="ScreeningsForMovie" key={movie.id}>
+        <div className="movieColumn">
         <div className="movieImg">
           <MovieCover movieTitle={movie.title.replace(" ", "+")} size="w200" />
         </div>
         <div className="title">{movie.title}</div>
+        </div>
+        <div className="dropdownColumn">
         <div className="screeningDates">
            <label htmlFor="screeningDates">
               <select name='ScreeningDates' defaultValue="" onChange={handleSelectDateChange}>
@@ -75,6 +79,7 @@ const Render = ({ moviesScreened, allScreenings }) => {
              </select>
            </label>
          </div>}
+        </div>
         </div>
     );
   });
