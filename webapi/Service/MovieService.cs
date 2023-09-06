@@ -65,4 +65,17 @@ public class MovieService : IMovieService
 
         return true;
     }
+    
+    public Movie UpdateMovie(MovieUpdateDto movieUpdateDto)
+    {
+        var movieToUpdate = _context.Movies.SingleOrDefault(movie => movie.Id == movieUpdateDto.Id);
+        
+        movieToUpdate.Title = movieUpdateDto.Title;
+        movieToUpdate.Cast = movieUpdateDto.Cast;
+        movieToUpdate.Summary = movieUpdateDto.Summary;
+        
+        _context.SaveChanges();
+
+        return movieToUpdate;
+    }
 }

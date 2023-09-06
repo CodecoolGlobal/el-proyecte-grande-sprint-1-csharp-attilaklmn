@@ -12,4 +12,6 @@ public interface IMovieService
     Movie AddMovie(MovieModelDto movieModelDto);
     
     bool DeleteMovie(long movieId);
+    
+    Movie UpdateMovie(MovieUpdateDto movieUpdateDto);
 }

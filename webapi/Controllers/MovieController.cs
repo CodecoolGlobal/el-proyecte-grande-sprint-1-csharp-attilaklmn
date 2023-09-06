@@ -51,10 +51,19 @@ public class MovieController : ControllerBase
     
     [HttpDelete]
     [Authorize(Roles = "admin")]
-    public IActionResult DeleteScreening([FromBody] long movieId)
+    public IActionResult DeleteMovie([FromBody] long movieId)
     {
         bool deletion = _movieService.DeleteMovie(movieId);
 
         return Ok(deletion);
+    }
+    
+    [HttpPatch]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateMovie([FromBody] MovieUpdateDto movieUpdateDto)
+    {
+        var updatedMovie = _movieService.UpdateMovie(movieUpdateDto);
+
+        return Ok(updatedMovie);
     }
 }
