@@ -12,6 +12,11 @@ namespace webapi.Service
         {
             _context = context;
         }
+        
+        public async Task<IEnumerable<Room>> GetAll()
+        {
+            return await _context.Rooms.ToListAsync();
+        }
 
         public async Task<Room> GetById(long id)
         {

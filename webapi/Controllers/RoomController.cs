@@ -14,6 +14,12 @@ namespace webapi.Controllers
         {
             _roomService = roomService;
         }
+        
+        [HttpGet("all")]
+        public async Task<IEnumerable<Room>> GetAll()
+        {
+            return await _roomService.GetAll();
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
