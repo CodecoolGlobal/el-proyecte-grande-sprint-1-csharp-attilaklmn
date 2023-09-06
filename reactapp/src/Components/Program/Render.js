@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Render = ({ moviesScreened, allScreenings }) => {
   const navigate = useNavigate();
-  const [dateChosen, setDateChosen] = useState(null)
+  const [datesChosen, setDatesChosen] = useState({})
 
 
   const formatDate = (startingDate) => {
@@ -25,8 +25,8 @@ const Render = ({ moviesScreened, allScreenings }) => {
     return Array.from(uniqueDates);
   }
 
-  const handleSelectDateChange = (e) => {
-    setDateChosen(e.target.value)
+  const handleSelectDateChange = (e, movieId) => {
+    setDatesChosen({...datesChosen, [movieId]: e.target.value})
   }
 
   const handleSelectTimeChange = (e) => {
@@ -49,7 +49,7 @@ const Render = ({ moviesScreened, allScreenings }) => {
         <div className="title">{movie.title}</div>
         <div className="screeningDates">
            <label htmlFor="screeningDates">
-              <select name='ScreeningDates' defaultValue="" onChange={handleSelectDateChange}>
+              <select name='ScreeningDates' defaultValue="" onChange={(e) => handleSelectDateChange(e, movie.id)}>
               <option value="" disabled>Select Screening Date</option>
                  {getUniqueDates(movie)
                   .map((date) => {
@@ -60,16 +60,16 @@ const Render = ({ moviesScreened, allScreenings }) => {
               </select>
             </label>
           </div>
-          {dateChosen && 
+          {datesChosen[movie.id] && 
           <div className="screeningTimes">
           <label htmlFor="screeningTimes">
              <select name='ScreeningTimes' defaultValue="" onChange={handleSelectTimeChange}>
              <option value="" disabled>Select Screening Time</option>
                 {allScreenings
-                 .filter((screening) => screening.movieId === movie.id && screening.startingDate.split("T")[0] === dateChosen)
+                 .filter((screening) => screening.movieId === movie.id && screening.startingDate.split("T")[0] === datesChosen[movie.id])
                  .map((screening) => {
                    return (
-                     <option key={screening.id} value={screening.id}>
+                     <option key={screening.movieId} value={screening.id}>
                        {formatTime(screening.startingDate)}
                      </option>)})}
              </select>
