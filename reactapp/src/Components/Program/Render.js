@@ -5,36 +5,37 @@ import "./Render.css";
 
 const Render = ({ moviesScreened, allScreenings }) => {
   const navigate = useNavigate();
-  const [dateChosen, setDateChosen] = useState(null)
-
+  const [dateChosen, setDateChosen] = useState("");
 
   const formatDate = (startingDate) => {
     return startingDate.split("T")[0];
-  }
+  };
 
   const formatTime = (startingDate) => {
-    return startingDate.split("T")[1].substr(0,5);
-  }
+    return startingDate.split("T")[1].substr(0, 5);
+  };
 
   const getUniqueDates = (movie) => {
     const uniqueDates = new Set();
-    allScreenings.forEach(screening => {
-      if(screening.movieId === movie.id){
-        uniqueDates.add(formatDate(screening.startingDate))
+    allScreenings.forEach((screening) => {
+      if (screening.movieId === movie.id) {
+        uniqueDates.add(formatDate(screening.startingDate));
       }
-    })
+    });
     return Array.from(uniqueDates);
-  }
+  };
 
   const handleSelectDateChange = (e) => {
-    setDateChosen(e.target.value)
-  }
+    setDateChosen(e.target.value);
+  };
 
   const handleSelectTimeChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     const selectedScreeningId = e.target.value;
-    const selectedScreening = allScreenings.find(x => x.id === parseInt(selectedScreeningId));
-    console.log(selectedScreening)
+    const selectedScreening = allScreenings.find(
+      (x) => x.id === parseInt(selectedScreeningId)
+    );
+    console.log(selectedScreening);
     if (selectedScreening) {
       const { id: screeningId, roomId } = selectedScreening;
       navigate(`/reservation/${screeningId}/${roomId}`);
@@ -58,9 +59,11 @@ const Render = ({ moviesScreened, allScreenings }) => {
                  {getUniqueDates(movie)
                   .map((date) => {
                     return (
-                      <option key={movie.id} value={date}>
-                        {date}
-                      </option>)})}
+                      <option key={screening.id} value={screening.id}>
+                        {formatTime(screening.startingDate)}
+                      </option>
+                    );
+                  })}
               </select>
             </label>
           </div>

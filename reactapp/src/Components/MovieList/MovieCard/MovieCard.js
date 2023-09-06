@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import MovieCover from "../../MovieCover/MovieCover";
+import { Button } from "@mui/material";
 import "./MovieCard.css";
 
 const MovieCard = ({ movieList }) => {
@@ -19,11 +20,16 @@ const MovieCard = ({ movieList }) => {
             })}
           </div>
           <div className="movieSummary">{movie.summary}</div>
-          <div className="watchButton"><button onClick={() => {
-                    navigate(
-                      `/program/${movie.id}`
-                    );
-                  }}>Buy Ticket</button></div>
+          <div className="watchButton">
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate(`/program/${movie.id}`);
+              }}
+            >
+              Buy Ticket
+            </Button>
+          </div>
         </div>
       </div>
     );
