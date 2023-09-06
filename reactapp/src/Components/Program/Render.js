@@ -59,8 +59,8 @@ const Render = ({ moviesScreened, allScreenings }) => {
                  {getUniqueDates(movie)
                   .map((date) => {
                     return (
-                      <option key={screening.id} value={screening.id}>
-                        {formatTime(screening.startingDate)}
+                      <option key={movie.id} value={date}>
+                        {formatDate(date)}
                       </option>
                     );
                   })}
