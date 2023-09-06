@@ -16,18 +16,31 @@ namespace webapi.Service
 
         public async Task<bool> FinalizeTickets(IEnumerable<long> ticketIds)
         {
-
             using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                var ticketsToFinalize = await _context.Tickets
+                var ticketsToFinalize = await _context.Tickets.Include(ticket => ticket.Screening)
+                    .Include(ticket => ticket.User)
+                    .Include(ticket => ticket.Seat)
                     .Where(t => ticketIds.Contains(t.Id))
                     .ToListAsync();
+                
+
+                List<Room> rooms = await _context.Rooms.ToListAsync();
+                Room room = rooms.FirstOrDefault(room => room.Id == ticketsToFinalize[0].Screening.RoomId);
+                string roomName = room.Name;
+                
+                List<Movie> movies = await _context.Movies.ToListAsync();
+                Movie movie = movies.FirstOrDefault(movie => movie.Id == ticketsToFinalize[0].Screening.MovieId);
+                string movieName = movie.Title;
+
+                byte[] pdfFile = ticketsToFinalize.GeneratePdf(movieName, roomName);
 
                 foreach (var ticket in ticketsToFinalize)
                 {
                     ticket.Finalize();
+                    ticket.PdfTicket = pdfFile;
                 }
 
                 await _context.SaveChangesAsync();
@@ -104,6 +117,12 @@ namespace webapi.Service
                 transaction.Rollback();
                 return false;
             }
+        }
+
+        public async Task<byte[]> GetTicket(long ticketId)
+        {
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(ticket => ticket.Id == ticketId);
+            return ticket.PdfTicket;
         }
     }
 }

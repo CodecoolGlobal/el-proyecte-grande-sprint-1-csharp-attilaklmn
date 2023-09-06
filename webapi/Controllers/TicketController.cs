@@ -70,5 +70,21 @@ namespace webapi.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize]
+        [HttpGet("finalize/download/{userId}/{ticketId}")]
+        public async Task<IActionResult> GetTicket(long userId, long ticketId)
+        {
+            var userIdFromToken = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdFromToken != userId.ToString())
+            {
+                return Forbid();
+            }
+            byte[] pdfTicket = await _ticketService.GetTicket(ticketId);
+            string contentType = "application/pdf";
+            string fileName = "ticket.pdf";
+
+            return File(pdfTicket, contentType, fileName);
+        }
     }
 }

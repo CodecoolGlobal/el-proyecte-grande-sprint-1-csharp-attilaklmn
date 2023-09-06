@@ -10,10 +10,10 @@ using webapi.Service.SubService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionString");
 
 builder.Services.AddDbContext<CinemaSharpContext>(options =>
-                options.UseNpgsql("Host=trumpet.db.elephantsql.com;Port=5432;Database=jfteeekn;Username=jfteeekn;Password=5408W67bMpL4DB3O7BMlvoo_YhAs_dlm;"));
+                options.UseNpgsql($"{connectionString}CinemaSharp;"));
 
 // Auth
 var configuration = new ConfigurationBuilder()

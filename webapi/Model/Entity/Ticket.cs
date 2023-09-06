@@ -13,6 +13,8 @@ namespace webapi.Model.Entity
         public long UserId { get; set; }
         public bool Finalized { get; set; }
 
+        public byte[]? PdfTicket { get; set; } = null;
+
         public void Finalize()
         {
             Finalized = true;
