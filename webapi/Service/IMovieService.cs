@@ -10,4 +10,6 @@ public interface IMovieService
     Task<IEnumerable<Movie>> GetMovieById(long movieId);
     
     Movie AddMovie(MovieModelDto movieModelDto);
+    
+    bool DeleteMovie(long movieId);
 }
