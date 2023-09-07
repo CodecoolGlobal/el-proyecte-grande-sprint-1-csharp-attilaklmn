@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import MovieCover from "../../MovieCover/MovieCover";
+import { AdminContext } from "../../../App";
 import { Button } from "@mui/material";
 import "./MovieCard.css";
 
-const MovieCard = ({ movieList }) => {
+const MovieCard = ({ movieList, handleDelete }) => {
+  const { adminView } = useContext(AdminContext);
   const navigate = useNavigate();
 
   return movieList
@@ -51,6 +54,21 @@ const MovieCard = ({ movieList }) => {
                 Buy Ticket
               </Button>
             </div>
+            {adminView && (
+              <div className="updateButtons">
+                <div className="deleteButton">
+                  <Button
+                    variant="contained"
+                    onClick={() => handleDelete(movie.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+                <div className="editButton">
+                  <Button variant="contained">Edit</Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       );
