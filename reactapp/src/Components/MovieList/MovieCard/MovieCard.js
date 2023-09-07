@@ -4,8 +4,16 @@ import MovieCover from "../../MovieCover/MovieCover";
 import { AdminContext } from "../../../App";
 import { Button } from "@mui/material";
 import "./MovieCard.css";
+import UpdateForm from "../UpdateForm";
 
-const MovieCard = ({ movieList, handleDelete }) => {
+const MovieCard = ({
+  movieList,
+  handleDelete,
+  editMode,
+  toggleEditMode,
+  updateText,
+  handleUpdate
+}) => {
   const { adminView } = useContext(AdminContext);
   const navigate = useNavigate();
 
@@ -38,24 +46,38 @@ const MovieCard = ({ movieList, handleDelete }) => {
             />
           </div>
           <div className="movieDetails">
-            <div className="movieTitle">{movie.title}</div>
-            <div className="movieCast">
-              {movie.cast.map((star, index) => {
-                return <div key={movie.id + "-cast-" + index}>{star}</div>;
-              })}
-            </div>
-            <div className="movieSummary">{movie.summary}</div>
-            <div className="watchButton">
-              <Button
-                onClick={() => {
-                  navigate(`/program/${movie.id}`);
-                }}
-              >
-                Buy Ticket
-              </Button>
-            </div>
+            {editMode[movie.id] ? (
+              <UpdateForm movie={movie} toggleEditMode={toggleEditMode} handleUpdate={handleUpdate}/>
+            ) : (
+              <>
+                <div className="movieTitle">{movie.title}</div>
+                <div className="movieCast">
+                  {movie.cast.map((star, index) => {
+                    return <div key={movie.id + "-cast-" + index}>{star}</div>;
+                  })}
+                </div>
+                <div className="movieSummary">{movie.summary}</div>
+                <div className="watchButton">
+                  <Button
+                    onClick={() => {
+                      navigate(`/program/${movie.id}`);
+                    }}
+                  >
+                    Buy Ticket
+                  </Button>
+                </div>
+              </>
+            )}
             {adminView && (
               <div className="updateButtons">
+                <div className="editButton">
+                  <Button
+                    variant="contained"
+                    onClick={() => toggleEditMode(movie.id)}
+                  >
+                    {updateText[movie.id] || "Edit"}
+                  </Button>
+                </div>
                 <div className="deleteButton">
                   <Button
                     variant="contained"
@@ -63,9 +85,6 @@ const MovieCard = ({ movieList, handleDelete }) => {
                   >
                     Delete
                   </Button>
-                </div>
-                <div className="editButton">
-                  <Button variant="contained">Edit</Button>
                 </div>
               </div>
             )}
