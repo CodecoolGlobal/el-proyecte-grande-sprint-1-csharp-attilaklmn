@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router";
 import MovieCover from "../MovieCover/MovieCover";
 import { useState } from "react";
-import Select from "@mui/material/Select";
-import { FormControl, MenuItem, Input } from "@mui/material";
+import "./Render.css";
 
 const Render = ({ moviesScreened, allScreenings }) => {
   const navigate = useNavigate();
-  const [dateChosen, setDateChosen] = useState("");
+  const [datesChosen, setDatesChosen] = useState({})
 
   const formatDate = (startingDate) => {
     return startingDate.split("T")[0];
@@ -26,9 +25,9 @@ const Render = ({ moviesScreened, allScreenings }) => {
     return Array.from(uniqueDates);
   };
 
-  const handleSelectDateChange = (e) => {
-    setDateChosen(e.target.value);
-  };
+  const handleSelectDateChange = (e, movieId) => {
+    setDatesChosen({...datesChosen, [movieId]: e.target.value})
+  }
 
   const handleSelectTimeChange = (e) => {
     console.log(e.target.value);
@@ -46,67 +45,45 @@ const Render = ({ moviesScreened, allScreenings }) => {
   return moviesScreened.map((movie) => {
     return (
       <div className="ScreeningsForMovie" key={movie.id}>
+        <div className="movieColumn">
         <div className="movieImg">
           <MovieCover movieTitle={movie.title.replace(" ", "+")} size="w200" />
         </div>
         <div className="title">{movie.title}</div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          className="screeningDates"
-        >
-          <select
-            name="ScreeningDates"
-            sx={{
-              minWidth: 240,
-            }}
-            value={dateChosen}
-            onChange={handleSelectDateChange}
-          >
-            <option value="" disabled>
-              <em>Select Screening Date</em>
-            </option>
-            {getUniqueDates(movie).map((date) => {
-              return (
-                <option key={movie.id} value={date}>
-                  {date}
-                </option>
-              );
-            })}
-          </select>
         </div>
-        {dateChosen && (
-          <div className="screeningTimes">
-            <label htmlFor="screeningTimes">
-              <select
-                name="ScreeningTimes"
-                defaultValue=""
-                onChange={handleSelectTimeChange}
-              >
-                <option value="" disabled>
-                  Select Screening Time
-                </option>
-                {allScreenings
-                  .filter(
-                    (screening) =>
-                      screening.movieId === movie.id &&
-                      screening.startingDate.split("T")[0] === dateChosen
-                  )
-                  .map((screening) => {
+        <div className="dropdownColumn">
+        <div className="screeningDates">
+           <label htmlFor="screeningDates">
+              <select name='ScreeningDates' defaultValue="" onChange={(e) => handleSelectDateChange(e, movie.id)}>
+              <option value="" disabled>Select Screening Date</option>
+                 {getUniqueDates(movie)
+                  .map((date) => {
                     return (
-                      <option key={screening.id} value={screening.id}>
-                        {formatTime(screening.startingDate)}
+                      <option key={movie.id} value={date}>
+                        {formatDate(date)}
                       </option>
                     );
                   })}
               </select>
             </label>
           </div>
-        )}
-      </div>
+          {datesChosen[movie.id] && 
+          <div className="screeningTimes">
+          <label htmlFor="screeningTimes">
+             <select name='ScreeningTimes' defaultValue="" onChange={handleSelectTimeChange}>
+             <option value="" disabled>Select Screening Time</option>
+                {allScreenings
+                 .filter((screening) => screening.movieId === movie.id && screening.startingDate.split("T")[0] === datesChosen[movie.id])
+                 .map((screening) => {
+                   return (
+                     <option key={screening.movieId} value={screening.id}>
+                       {formatTime(screening.startingDate)}
+                     </option>)})}
+             </select>
+           </label>
+         </div>}
+        </div>
+        </div>
     );
   });
 };
