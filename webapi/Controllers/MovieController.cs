@@ -48,4 +48,22 @@ public class MovieController : ControllerBase
 
         return Ok(addedMovie);
     }
+    
+    [HttpDelete]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeleteMovie([FromBody] long movieId)
+    {
+        bool deletion = _movieService.DeleteMovie(movieId);
+
+        return Ok(deletion);
+    }
+    
+    [HttpPatch]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateMovie([FromBody] MovieUpdateDto movieUpdateDto)
+    {
+        var updatedMovie = _movieService.UpdateMovie(movieUpdateDto);
+
+        return Ok(updatedMovie);
+    }
 }

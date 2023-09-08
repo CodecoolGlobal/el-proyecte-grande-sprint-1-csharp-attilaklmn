@@ -43,4 +43,39 @@ public class MovieService : IMovieService
         movie.Add(movies.FirstOrDefault(x => x.IsThisThatMovie(movieId)));
         return movie;
     }
+    
+    public bool DeleteMovie(long movieId)
+    {
+        var movieToDelete = _context.Movies.SingleOrDefault(movie => movie.Id == movieId);
+        
+        if (movieToDelete == null)
+        {
+            return false;
+        }
+        
+        var screeningsToDelete = _context.Screenings.Where(screening => screening.MovieId == movieId).ToList();
+
+        if (screeningsToDelete.Count > 0)
+        {
+            _context.Screenings.RemoveRange(screeningsToDelete);
+        }
+
+        _context.Movies.Remove(movieToDelete);
+        _context.SaveChanges();
+
+        return true;
+    }
+    
+    public Movie UpdateMovie(MovieUpdateDto movieUpdateDto)
+    {
+        var movieToUpdate = _context.Movies.SingleOrDefault(movie => movie.Id == movieUpdateDto.Id);
+        
+        movieToUpdate.Title = movieUpdateDto.Title;
+        movieToUpdate.Cast = movieUpdateDto.Cast;
+        movieToUpdate.Summary = movieUpdateDto.Summary;
+        
+        _context.SaveChanges();
+
+        return movieToUpdate;
+    }
 }

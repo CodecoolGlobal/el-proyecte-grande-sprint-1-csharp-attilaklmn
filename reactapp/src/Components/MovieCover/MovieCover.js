@@ -20,10 +20,12 @@ const MovieCover = ({ movieTitle, size }) => {
               movieData.results[0].poster_path
           );
         } else {
-          setResponse(process.env.PUBLIC_URL + `/DefaultCover/defaultCover-${size}.jpg`);
+          setResponse(
+            process.env.PUBLIC_URL + `/DefaultCover/defaultCover-${size}.jpg`
+          );
         }
       });
-  }, []);
+  }, [movieTitle]);
 
   return loading ? <p>Image loading...</p> : <img src={response} alt="" />;
 };
