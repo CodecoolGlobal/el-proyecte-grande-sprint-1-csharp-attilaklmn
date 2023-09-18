@@ -87,9 +87,9 @@
     <img src="/CS_Reservation.png" alt="Logo" width="960" height="374">
     <h3>Seat reservation with database transaction management</h3>
     <img src="/CS_MovieList.png" alt="Logo" width="480" height="374">
-    <h3>Movie & screening list with admin user features</h3>
+    <h4>Movie & screening list with admin user features</h4>
     <img src="/CS_Registration.png" alt="Logo" width="480" height="374">
-    <h3>User management with JWT token handling and authorities</h3>
+    <h4>User management with JWT token handling and authorities</h4>
 </div>
 
 ### Built With
@@ -153,9 +153,15 @@ Currently, the easiest way to run the application is to clone the repo and run t
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+This application can be used to simulate a movie theater's ticket reservation web service both from customer and admin side.
+Customer side:
+ - Register/login user
+ - View movie list/upcoming screenings
+ - Reserve tickets for selected screening
+Admin side:
+ - Currently admin user can not be registered, but feel free to use this test account: Username: Gabika, Password: Gabika32. (After login select the admin view option in the dropdown menu)
+ - Add movies to the list
+ - Add new screenings
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -164,12 +170,17 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Frontend layout base & backend structure
+- [ ] Initial movie list, seat reservation & user management with dummy db objects
+- [ ] PostgreSQL database connection with Entity Framework
+    - [ ] Database transactions for seat reservation
+- [ ] JWT management
+    - [ ] Authorization + admin view
+- [ ] Better user experience
+    - [ ] Connect movies to screenings on the frontend + user data management options
+- [ ] Admin options on the frontend for the management of movies and screenings
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -192,36 +203,31 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- CONTACT -->
+## Contact
+
+Gábor Szajkó - szajkoggg@gmail.com
+
+Project Link: [https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn](https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+## Team & Acknowledgments
+
+ - Evelin Mandics
+ - Attila Örs Kálmán
+ - Bálint Csányi
+ - Gábor Szajkó
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Readme template distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
