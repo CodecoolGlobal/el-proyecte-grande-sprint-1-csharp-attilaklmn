@@ -34,9 +34,9 @@
     <img src="/reactapp/public/logo_transparent_cut.png" alt="Logo" width="960" height="374">
   </a>
 
-<h3 align="center">Cinema#Sharp</h3>
-
   <p align="center">
+    <br />
+  <br />
     This is the group project for the final module of our education at CodeCool.
     The project aimed to create a fullstack web service for a movie theater with seat reservation, management of the screenings and user account & role management, as well as the intuitive UI.
     <br />
@@ -84,12 +84,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <div align="center">
-    <img src="/CS_Reservation.png" alt="Logo" width="960" height="374">
-    <h3>Seat reservation with database transaction management</h3>
+    <h2>Seat reservation with database transaction management</h2>
+    <img src="/CS_Reservation.png" alt="Logo" width="960" height="374"> 
+    <h2>Movie & screening list with admin user features</h2>
     <img src="/CS_MovieList.png" alt="Logo" width="480" height="374">
-    <h4>Movie & screening list with admin user features</h4>
+    <h2>User management with JWT token handling and authorities</h2>
     <img src="/CS_Registration.png" alt="Logo" width="480" height="374">
-    <h4>User management with JWT token handling and authorities</h4>
+
 </div>
 
 ### Built With
