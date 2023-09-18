@@ -73,9 +73,9 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#team-and-acknowledgments">Team & acknowledgments</a></li>
+    <li><a href="#license">License</a></li>
   </ol>
 </details>
 
@@ -214,8 +214,9 @@ Project Link: [https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csh
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
-## Team & Acknowledgments
+## Team and Acknowledgments
 
+Creators:
  - Evelin Mandics
  - Attila Örs Kálmán
  - Bálint Csányi
