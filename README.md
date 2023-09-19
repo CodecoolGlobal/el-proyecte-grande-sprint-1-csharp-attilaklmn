@@ -171,15 +171,19 @@ Admin side:
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Frontend layout base & backend structure
-- [ ] Initial movie list, seat reservation & user management with dummy db objects
-- [ ] PostgreSQL database connection with Entity Framework
-    - [ ] Database transactions for seat reservation
-- [ ] JWT management
-    - [ ] Authorization + admin view
-- [ ] Better user experience
-    - [ ] Connect movies to screenings on the frontend + user data management options
-- [ ] Admin options on the frontend for the management of movies and screenings
+- [X] Frontend layout base & backend structure
+- [X] Initial movie list, seat reservation & user management with dummy db objects
+- [X] PostgreSQL database connection with Entity Framework
+    - [X] Database transactions for seat reservation
+- [X] JWT management
+    - [X] Authorization + admin view
+- [X] Better user experience
+    - [X] Connect movies to screenings on the frontend + user data management options
+- [X] Admin options on the frontend for the management of movies and screenings
+- [ ] Token refresh
+- [ ] Oauth2 login options
+- [ ] UI update
+- [ ] CI/CD
 
 See the [open issues](https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn/issues) for a full list of proposed features (and known issues).
 
