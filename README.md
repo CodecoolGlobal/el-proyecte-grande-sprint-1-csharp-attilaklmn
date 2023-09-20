@@ -159,10 +159,9 @@ Customer side:
  - Register/login user
  - View movie list/upcoming screenings
  - Reserve tickets for selected screening
-Admin side:
  - Currently admin user can not be registered, but feel free to use this test account: Username: Gabika, Password: Gabika32. (After login select the admin view option in the dropdown menu)
- - Add movies to the list
- - Add new screenings
+ - As admin: add movies to the list
+ - As admin: add new screenings
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
