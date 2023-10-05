@@ -58,6 +58,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+
+
 using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
@@ -74,6 +79,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -81,5 +87,12 @@ app.UseAuthorization();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints => 
+    {
+        endpoints.MapFallbackToFile("index.html");
+    });
 
 app.Run();
