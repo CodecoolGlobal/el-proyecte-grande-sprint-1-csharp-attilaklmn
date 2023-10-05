@@ -23,7 +23,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
@@ -208,6 +207,7 @@ Don't forget to give the project a star! Thanks again!
 ## Contact
 
 Gábor Szajkó - szajkoggg@gmail.com
+Attila Kálmán - kalmanattila04@gmail.com
 
 Project Link: [https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn](https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn)
 
