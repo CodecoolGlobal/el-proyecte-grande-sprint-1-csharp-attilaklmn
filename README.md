@@ -211,6 +211,7 @@ Don't forget to give the project a star! Thanks again!
 
 <p>Gábor Szajkó - szajkoggg@gmail.com</p>
 <p>Attila Kálmán - kalmanattila04@gmail.com</p>
+<p>Balint Csanyi - mehty8@gmail.com</p>
 
 <p>Project Link: [https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn](https://github.com/CodecoolGlobal/el-proyecte-grande-sprint-1-csharp-attilaklmn)</p>
 
